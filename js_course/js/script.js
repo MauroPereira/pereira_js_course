@@ -1,9 +1,15 @@
+// Variables
+
 // Funciones
 
 // Declaraciones de funciones
-function saludar() {
-  console.log("Hola Mundo")
+function saludarConNombreApellido(nombre = "desconocido", apellido = "desconocido") {
+  console.log("Buen dia " + nombre + ", de apellido " + apellido);
 }
 
+let nombre = prompt("Ingrese un nombre"); // si no se ingresa nada toma un valor ""
+let apellido = prompt("Ingrese un nombre");
+
 // Invocaciones
-saludar();
+saludarConNombreApellido();
+saludarConNombreApellido(nombre, apellido);
