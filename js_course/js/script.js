@@ -11,6 +11,8 @@ function sumar(num1, num2) {
   console.log(num1 + num2)
 }
 
+const suma = (a, b) => a + b;
+
 //let nombre = prompt("Ingrese un nombre"); // si no se ingresa nada toma un valor ""
 //let apellido = prompt("Ingrese un nombre");
 
@@ -22,7 +24,7 @@ let numero2 = parseInt(prompt("Ingrese el segundo número"));
 //saludarConNombreApellido();
 //saludarConNombreApellido(nombre, apellido);
 sumar(numero1, numero2);
-
+console.log(suma(numero1, numero2));
 
 
 
