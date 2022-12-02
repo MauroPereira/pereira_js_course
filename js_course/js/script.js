@@ -6,7 +6,8 @@
 function saludarConNombreApellido(nombre = "desconocido", apellido = "desconocido") {
   console.log("Buen dia " + nombre + ", de apellido " + apellido);
 }
-const sumar = function (num1, num2) {
+
+function sumar(num1, num2) {
   console.log(num1 + num2)
 }
 
@@ -21,8 +22,6 @@ let numero2 = parseInt(prompt("Ingrese el segundo número"));
 //saludarConNombreApellido();
 //saludarConNombreApellido(nombre, apellido);
 sumar(numero1, numero2);
-otro_nombre = sumar;
-otro_nombre(numero1, numero2)
 
 
 
