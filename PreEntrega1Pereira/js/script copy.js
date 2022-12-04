@@ -15,11 +15,12 @@ let prec_arandelas = 4.52;
 
 
 // Declaración de funciones
-const mostrarTablaStock = (n_torn, n_tuer, n_clav, n_aran, p_torn, p_tuer, p_clav, p_aran) => {
+// 
+const mostrarTablaStock => (n_torn, n_tuer, n_clav, n_aran, p_torn, p_tuer, p_clav, p_aran) => {
   /* Se encarga de retornar en forma de tabla todos los productos
   */
   return (
-    "######## E-Shop de Ferretería ########" + "\n\n" +
+    "######## Stock ########" + "\n\n" +
     "Items\t\tCantidad\tPrecio por unidad\n" +
     "Tornillos\t" + n_torn + "\t\t\t" + p_torn + "\n" +
     "Tuercas\t\t" + n_tuer + "\t\t\t" + p_tuer + "\n" +
@@ -28,11 +29,25 @@ const mostrarTablaStock = (n_torn, n_tuer, n_clav, n_aran, p_torn, p_tuer, p_cla
   )
 }
 
+function mostrarMenuPrincipal() {
+  /* Se encarga de retornar en forma de tabla el menú principal
+  */
+  return (
+    "######## E-Shop de Ferretería ########" + "\n\n" +
+    "Opciones\n" +
+    "1 - Ver Stock" + "\n" +
+    "2 - Realizar pedido" +
+    "0 - Salir" + "\n"
+  )
+}
+
 // Main
 console.log("Inicio");
-console.log(mostrarTablaStock(cant_tornillos, cant_tuercas,
-  cant_clavos, cant_arandelas, prec_tornillos, prec_tuercas,
-  prec_clavos, prec_arandelas));
+console.log(mostrarMenuPrincipal);
+
+// console.log(mostrarTablaStock(cant_tornillos, cant_tuercas,
+//   cant_clavos, cant_arandelas, prec_tornillos, prec_tuercas,
+//   prec_clavos, prec_arandelas));
 
 // while (repetir) {
 //   foo = parseInt(prompt("Pepe"));
@@ -42,3 +57,8 @@ console.log(mostrarTablaStock(cant_tornillos, cant_tuercas,
 // };
 console.log("Fin");
 
+
+
+/* Nota:
+Comentarios de funciones: https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Lexical_grammar
+*/
