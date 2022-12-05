@@ -33,7 +33,7 @@ const mostrarMenuPrincipal = () => {
   */
   return (
     "######## E-Shop de Ferretería ########" + "\n\n" +
-    "Opciones\n" +
+    "Opciones:\n" +
     "1 - Ver Stock" + "\n" +
     "2 - Realizar pedido" + "\n" +
     "0 - Salir" + "\n\n" +
@@ -53,8 +53,7 @@ while (opcion != 0) {
       alert("Saliendo... Gracias por su visita.");
       break;
     default:
-      alert("Opción no valida o apretado botón 'Cancelar'. " +
-        "Ingrese un nuevo valor");
+      alert("Error: Opción no valida o apretado botón 'Cancelar'");
       break;
   }
 }
