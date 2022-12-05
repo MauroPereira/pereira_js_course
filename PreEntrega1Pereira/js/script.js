@@ -1,5 +1,5 @@
 // Declaración de variables
-let repetir = false
+let opcion = -1
 
 let cant_tornillos = 10;
 let prec_tornillos = 1.5;
@@ -19,7 +19,7 @@ const mostrarTablaStock = (n_torn, n_tuer, n_clav, n_aran, p_torn, p_tuer, p_cla
   /* Se encarga de retornar en forma de tabla todos los productos
   */
   return (
-    "######## E-Shop de Ferretería ########" + "\n\n" +
+    "######## Stock ########" + "\n\n" +
     "Items\t\tCantidad\tPrecio por unidad\n" +
     "Tornillos\t" + n_torn + "\t\t\t" + p_torn + "\n" +
     "Tuercas\t\t" + n_tuer + "\t\t\t" + p_tuer + "\n" +
@@ -28,17 +28,36 @@ const mostrarTablaStock = (n_torn, n_tuer, n_clav, n_aran, p_torn, p_tuer, p_cla
   )
 }
 
+const mostrarMenuPrincipal = () => {
+  /* Se encarga de retornar en forma de tabla el menú principal
+  */
+  return (
+    "######## E-Shop de Ferretería ########" + "\n\n" +
+    "Opciones\n" +
+    "1 - Ver Stock" + "\n" +
+    "2 - Realizar pedido" + "\n" +
+    "0 - Salir" + "\n\n" +
+    "Ingrese alguna de las opciones " +
+    "que figurar en consola"
+  )
+}
+
 // Main
 console.log("Inicio");
-console.log(mostrarTablaStock(cant_tornillos, cant_tuercas,
-  cant_clavos, cant_arandelas, prec_tornillos, prec_tuercas,
-  prec_clavos, prec_arandelas));
 
-// while (repetir) {
-//   foo = parseInt(prompt("Pepe"));
-//   if (foo < 0) {
-//     repetir = false;
-//   }
-// };
+while (opcion != 0) {
+  opcion = parseInt(prompt(mostrarMenuPrincipal()))
+
+  switch (opcion) {
+    case 0:
+      alert("Saliendo... Gracias por su visita.");
+      break;
+    default:
+      alert("Opción no valida o apretado botón 'Cancelar'. " +
+        "Ingrese un nuevo valor");
+      break;
+  }
+}
+
 console.log("Fin");
 
