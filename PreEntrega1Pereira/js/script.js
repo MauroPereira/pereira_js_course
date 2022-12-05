@@ -37,8 +37,7 @@ const mostrarMenuPrincipal = () => {
     "1 - Ver Stock" + "\n" +
     "2 - Realizar pedido" + "\n" +
     "0 - Salir" + "\n\n" +
-    "Ingrese alguna de las opciones " +
-    "que figurar en consola"
+    "Ingrese alguna de las opciones."
   )
 }
 
@@ -53,7 +52,7 @@ while (opcion != 0) {
       alert("Saliendo... Gracias por su visita.");
       break;
     default:
-      alert("Error: Opción no valida o apretado botón 'Cancelar'");
+      alert("Error por opción no valida ingresada o por haber clickeado sobre el botón 'Cancelar'");
       break;
   }
 }
