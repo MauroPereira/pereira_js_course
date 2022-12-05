@@ -50,8 +50,8 @@ const menuPrincipalPedido = () => {
 
 // Main
 console.log("Inicio");
-opcion = parseInt(prompt(mostrarTablaStock()));
-opcion = 0;
+// opcion = parseInt(prompt(mostrarTablaStock(cantTornillos, cantTuercas, cantClavos, cantArandelas, precTornillos, precTuercas, precClavos, precArandelas)));
+// opcion = 0;
 while (opcion != 0) {
   opcion = parseInt(prompt(mostrarMenuPrincipal()))
 
