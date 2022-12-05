@@ -43,9 +43,41 @@ const mostrarMenuPrincipal = () => {
   )
 }
 
+const mostrarProductos = () => {
+  /* Se encarga de retornar en forma de tabla el menú principal
+  */
+  return (
+    "######## Pedido - Producto ########" + "\n\n" +
+    "IDs:\n" +
+    "1 - Tornillos" + "\n" +
+    "2 - Tuercas" + "\n" +
+    "3 - Clavos" + "\n" +
+    "4 - Arandelas" + "\n\n" +
+    "Ingrese algún ID de producto."
+  )
+}
+
+const preguntarCantidad = (producto) => {
+  /* Se encarga de retornar en forma de tabla el menú principal
+  */
+  return (
+    "######## Pedido - Cantidad ########" + "\n\n" +
+    "Ingrese la cantidad de " + producto + " :"
+  )
+}
+
 const menuPrincipalPedido = () => {
   /* Se encarga del proceso de tomar el pedido */
-  alert(enConstruccion);
+  let producto;
+
+  let productoId = parseInt(prompt(mostrarProductos()));
+  let productoQty = parseInt(prompt(preguntarCantidad(productoNombre)));
+  let nombresComprador = prompt(preguntarNombres());
+  let apellidosComprador = prompt(preguntarApellidos());
+  let direccionComprador = prompt(preguntarDireccion());
+  let emailComprador = prompt(preguntarEmail());
+  let confirmaCompra = prompt(confirmaCompra(producto, productoQty, nombresComprador, apellidosComprador, direccionComprador, emailComprador));
+  return -1;
 }
 
 // Main
@@ -74,4 +106,5 @@ while (opcion != 0) {
 }
 
 console.log("Fin");
+
 
