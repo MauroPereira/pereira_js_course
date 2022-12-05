@@ -13,18 +13,19 @@ let prec_clavos = 3.5;
 let cant_arandelas = 10;
 let prec_arandelas = 4.52;
 
+let enConstruccion = "En construcción"
 
 // Declaración de funciones
-const mostrarTablaStock = (n_torn, n_tuer, n_clav, n_aran, p_torn, p_tuer, p_clav, p_aran) => {
+const mostrarTablaStock = (nTorn, nTuer, nClav, nAran, pTorn, pTuer, pClav, pAran) => {
   /* Se encarga de retornar en forma de tabla todos los productos
   */
   return (
     "######## Stock ########" + "\n\n" +
     "Items\t\tCantidad\tPrecio por unidad\n" +
-    "Tornillos\t" + n_torn + "\t\t\t" + p_torn + "\n" +
-    "Tuercas\t\t" + n_tuer + "\t\t\t" + p_tuer + "\n" +
-    "Clavos\t\t" + n_clav + "\t\t\t" + p_clav + "\n" +
-    "Arandelas\t" + n_aran + "\t\t\t" + p_aran + "\n"
+    "Tornillos\t" + nTorn + "\t\t\t" + pTorn + "\n" +
+    "Tuercas\t\t" + nTuer + "\t\t\t" + pTuer + "\n" +
+    "Clavos\t\t" + nClav + "\t\t\t" + pClav + "\n" +
+    "Arandelas\t" + nAran + "\t\t\t" + pAran + "\n"
   )
 }
 
@@ -41,6 +42,11 @@ const mostrarMenuPrincipal = () => {
   )
 }
 
+const menuPrincipalPedido = () => {
+  /* Se encarga del proceso de tomar el pedido */
+  alert(enConstruccion);
+}
+
 // Main
 console.log("Inicio");
 
@@ -50,6 +56,14 @@ while (opcion != 0) {
   switch (opcion) {
     case 0:
       alert("Saliendo... Gracias por su visita.");
+      break;
+    case 1:
+      opcion = parseInt(prompt(mostrarTablaStock()));
+      if (opcion == 1) {
+        menuPrincipalPedido();
+      } else {
+        opcion = -1;
+      }
       break;
     default:
       alert("Error por opción no valida ingresada o por haber clickeado sobre el botón 'Cancelar'");
