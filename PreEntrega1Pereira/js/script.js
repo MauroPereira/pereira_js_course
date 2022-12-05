@@ -1,17 +1,17 @@
 // Declaración de variables
 let opcion = -1
 
-let cant_tornillos = 10;
-let prec_tornillos = 1.5;
+let cantTornillos = 10;
+let precTornillos = 1.5;
 
-let cant_tuercas = 100;
-let prec_tuercas = 2.0;
+let cantTuercas = 100;
+let precTuercas = 2.0;
 
-let cant_clavos = 50;
-let prec_clavos = 3.5;
+let cantClavos = 50;
+let precClavos = 3.5;
 
-let cant_arandelas = 10;
-let prec_arandelas = 4.52;
+let cantArandelas = 10;
+let precArandelas = 4.52;
 
 let enConstruccion = "En construcción"
 
@@ -21,11 +21,12 @@ const mostrarTablaStock = (nTorn, nTuer, nClav, nAran, pTorn, pTuer, pClav, pAra
   */
   return (
     "######## Stock ########" + "\n\n" +
-    "Items\t\tCantidad\tPrecio por unidad\n" +
-    "Tornillos\t" + nTorn + "\t\t\t" + pTorn + "\n" +
-    "Tuercas\t\t" + nTuer + "\t\t\t" + pTuer + "\n" +
-    "Clavos\t\t" + nClav + "\t\t\t" + pClav + "\n" +
-    "Arandelas\t" + nAran + "\t\t\t" + pAran + "\n"
+    "Items    Cantidad    Precio por unidad\n" +
+    "Tornillos    " + nTorn + "    " + pTorn + "\n" +
+    "Tuercas    " + nTuer + "    " + pTuer + "\n" +
+    "Clavos    " + nClav + "    " + pClav + "\n" +
+    "Arandelas    " + nAran + "    " + pAran + "\n\n" +
+    "Ingrese 1 para realizar un pedido. 'Cancelar' o ingresar cualquier otra caracter para volver al menú principal."
   )
 }
 
@@ -49,7 +50,8 @@ const menuPrincipalPedido = () => {
 
 // Main
 console.log("Inicio");
-
+opcion = parseInt(prompt(mostrarTablaStock()));
+opcion = 0;
 while (opcion != 0) {
   opcion = parseInt(prompt(mostrarMenuPrincipal()))
 
@@ -58,7 +60,7 @@ while (opcion != 0) {
       alert("Saliendo... Gracias por su visita.");
       break;
     case 1:
-      opcion = parseInt(prompt(mostrarTablaStock()));
+      opcion = parseInt(prompt(mostrarTablaStock(cantTornillos, cantTuercas, cantClavos, cantArandelas, precTornillos, precTuercas, precClavos, precArandelas)));
       if (opcion == 1) {
         menuPrincipalPedido();
       } else {
