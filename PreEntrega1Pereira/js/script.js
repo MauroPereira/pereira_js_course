@@ -74,7 +74,7 @@ const preguntarCantidad = (producto) => {
   while (true) {
     value = parseInt(prompt((
       "######## Pedido - Cantidad ########" + "\n\n" +
-      "Ingrese la cantidad de " + producto + " :"
+      "Ingrese la cantidad de " + producto + ":"
     )));
     if (value > 0) {
       return value;
@@ -108,6 +108,15 @@ const preguntarDireccion = () => {
   return (
     "######## Pedido - Dirección ########" + "\n\n" +
     "Ingrese su dirección:"
+  )
+}
+
+const preguntarEmail = () => {
+  /* Se encarga de preguntar el email
+  */
+  return (
+    "######## Pedido - E-mail ########" + "\n\n" +
+    "Ingrese la dirección de su correo:"
   )
 }
 
@@ -150,10 +159,10 @@ const chequearStock = (stock, cantSolicitada) => {
   /* Algoritmo que chequea si hay stock suficiente, caso contrario lo advierte 
   y devuelve true
   */
-  if (stock - cantSolicitada < 0) {
+  if (stock - cantSolicitada >= 0) {
     return false;
   } else {
-    alert("Error: cantidad pedida supera el stock");
+    alert("Error: cantidad pedida supera el stock de " + stock + " unidades");
   }
 
   return true;
@@ -176,13 +185,32 @@ const convierteIdNombre = (id) => {
   }
 }
 
+const calcularPrecioFinal = (productoId, productoQty, ivaComprador){
+  /* Algoritmo que se encarga de calcular el precio final, que puede ser
+  con o sin el IVA del 21%
+  */
+
+  let precioFinal = productoQty * productoId
+
+  if (ivaComprador == 2) {
+    return precioFinal * 1.21;
+  }
+
+  return precioFinal;
+}
+
 
 const menuPrincipalPedido = () => {
   /* Se encarga del proceso de tomar el pedido */
   let repeat = true;
   let productoId;
   let productoQty;
-  let productoNombre;
+  let nombresComprador;
+  let apellidosComprador;
+  let emailComprador;
+  let ivaComprador;
+  let precioFinal;
+  let confirmaCompra;
 
   while (repeat == true) {
 
@@ -208,12 +236,13 @@ const menuPrincipalPedido = () => {
     }
   }
 
-  let nombresComprador = prompt(preguntarNombres());
-  let apellidosComprador = prompt(preguntarApellidos());
-  let direccionComprador = prompt(preguntarDireccion());
-  let emailComprador = prompt(preguntarEmail());
-  let ivaComprador = prompt(preguntarCondicionIva());
-  let confirmaCompra = parseInt(prompt(confirmarCompra(producto, productoQty, ivaComprador, precioFinal, nombresComprador, apellidosComprador, direccionComprador, emailComprador)));
+  nombresComprador = prompt(preguntarNombres());
+  apellidosComprador = prompt(preguntarApellidos());
+  direccionComprador = prompt(preguntarDireccion());
+  emailComprador = prompt(preguntarEmail());
+  ivaComprador = prompt(preguntarCondicionIva());
+  precioFinal = calcularPrecioFinal(productoId, productoQty, ivaComprador);
+  confirmaCompra = parseInt(prompt(confirmarCompra(convierteIdNombre(productoId), productoQty, ivaComprador, precioFinal, nombresComprador, apellidosComprador, direccionComprador, emailComprador)));
   if (confirmaCompra == 1) {
     alert(graciasCompra());
   }
