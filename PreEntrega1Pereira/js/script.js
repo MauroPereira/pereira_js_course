@@ -132,13 +132,23 @@ const emailComprador = () => {
 const preguntarCondicionIva = () => {
   /* Se encarga de preguntar la dirección
   */
-  return (
-    "######## Pedido - IVA ########" + "\n" +
-    "Condiciones frente al IVA:\n" +
-    "1 - Exento" + "\n" +
-    "2 - No exento" + "\n\n" +
-    "Ingrese su condición:"
-  )
+  let condicion = -1;
+
+  while (condicion == -1) {
+    condicion = parseInt(prompt(
+      "######## Pedido - IVA ########" + "\n" +
+      "Condiciones frente al IVA:\n" +
+      "1 - Exento" + "\n" +
+      "2 - No exento" + "\n\n" +
+      "Ingrese su condición:"
+    ));
+    if (!(condicion > 0 && condicion <= 2)) {
+      condicion = -1;
+      mensajeOpcionNoValida();
+    }
+  }
+
+  return condicion;
 }
 
 const confirmarCompra = (productoNombre, productoQty, ivaComprador, precioFinal, nombresComprador, apellidosComprador, direccionComprador, emailComprador) => {
@@ -153,7 +163,7 @@ const confirmarCompra = (productoNombre, productoQty, ivaComprador, precioFinal,
   return parseInt(prompt((
     "######## Confirmar compra ########" + "\n" +
     productoQty + " uni de " + productoNombre + condicionIva + "  | Precio final: $" + precioFinal + "\n" +
-    "A nombre de: " + apellidosComprador + ", " + nombresComprador + "\n" +
+    "A nombre de: " + apellidosComprador + ", " + nombresComprador + ".\n" +
     "Dirección de entrega: " + direccionComprador + ". E-mail: " + emailComprador + "\n\n" +
     "Ingrese 1 para confirmar la compra. Cualquier otro valor o click en 'Cancelar' cancelará la compra."
   )));
@@ -293,7 +303,7 @@ const menuPrincipalPedido = () => {
   apellidosComprador = prompt(preguntarApellidos());
   direccionComprador = prompt(preguntarDireccion());
   emailComprador = prompt(preguntarEmail());
-  ivaComprador = prompt(preguntarCondicionIva());
+  ivaComprador = preguntarCondicionIva();
   precioFinal = calcularPrecioFinal(productoId, productoQty, ivaComprador);
   confirmaCompra = confirmarCompra(convierteIdNombre(productoId), productoQty, ivaComprador, precioFinal, nombresComprador, apellidosComprador, direccionComprador, emailComprador);
   if (confirmaCompra == 1) {
