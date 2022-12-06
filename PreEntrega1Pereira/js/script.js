@@ -20,7 +20,7 @@ const mostrarTablaStock = (nTorn, nTuer, nClav, nAran, pTorn, pTuer, pClav, pAra
   /* Se encarga de retornar en forma de tabla todos los productos
   */
   return (
-    "######## Stock ########" + "\n\n" +
+    "######## Stock ########" + "\n" +
     "Items    Cantidad    Precio por unidad\n" +
     "Tornillos    " + nTorn + "    " + pTorn + "\n" +
     "Tuercas    " + nTuer + "    " + pTuer + "\n" +
@@ -34,7 +34,7 @@ const mostrarMenuPrincipal = () => {
   /* Se encarga de retornar en forma de tabla el menú principal
   */
   return (
-    "######## E-Shop de Ferretería ########" + "\n\n" +
+    "######## E-Shop de Ferretería ########" + "\n" +
     "Opciones:\n" +
     "1 - Ver Stock" + "\n" +
     "2 - Realizar pedido" + "\n" +
@@ -50,7 +50,7 @@ const menuMostrarProductos = () => {
 
   while (repeat = true) {
     productoId = parseInt(prompt((
-      "######## Pedido - Producto ########" + "\n\n" +
+      "######## Pedido - Producto ########" + "\n" +
       "IDs:\n" +
       "1 - Tornillos" + "\n" +
       "2 - Tuercas" + "\n" +
@@ -73,7 +73,7 @@ const preguntarCantidad = (producto) => {
 
   while (true) {
     value = parseInt(prompt((
-      "######## Pedido - Cantidad ########" + "\n\n" +
+      "######## Pedido - Cantidad ########" + "\n" +
       "Ingrese la cantidad de " + producto + ":"
     )));
     if (value > 0) {
@@ -88,7 +88,7 @@ const preguntarNombres = () => {
   /* Se encarga de preguntar nombres
   */
   return (
-    "######## Pedido - Nombres ########" + "\n\n" +
+    "######## Pedido - Nombres ########" + "\n" +
     "Ingrese su/s nombre/s:"
   )
 }
@@ -97,7 +97,7 @@ const preguntarApellidos = () => {
   /* Se encarga de preguntar apellidos
   */
   return (
-    "######## Pedido - Apellidos ########" + "\n\n" +
+    "######## Pedido - Apellidos ########" + "\n" +
     "Ingrese su/s apellido/s:"
   )
 }
@@ -106,7 +106,7 @@ const preguntarDireccion = () => {
   /* Se encarga de preguntar la dirección
   */
   return (
-    "######## Pedido - Dirección ########" + "\n\n" +
+    "######## Pedido - Dirección ########" + "\n" +
     "Ingrese su dirección:"
   )
 }
@@ -115,7 +115,7 @@ const preguntarEmail = () => {
   /* Se encarga de preguntar el email
   */
   return (
-    "######## Pedido - E-mail ########" + "\n\n" +
+    "######## Pedido - E-mail ########" + "\n" +
     "Ingrese la dirección de su correo:"
   )
 }
@@ -124,7 +124,7 @@ const emailComprador = () => {
   /* Se encarga de preguntar la dirección
   */
   return (
-    "######## Pedido - Dirección ########" + "\n\n" +
+    "######## Pedido - Dirección ########" + "\n" +
     "Ingrese su dirección:"
   )
 }
@@ -133,7 +133,7 @@ const preguntarCondicionIva = () => {
   /* Se encarga de preguntar la dirección
   */
   return (
-    "######## Pedido - IVA ########" + "\n\n" +
+    "######## Pedido - IVA ########" + "\n" +
     "Condiciones frente al IVA:\n" +
     "1 - Exento" + "\n" +
     "2 - No exento" + "\n\n" +
@@ -144,20 +144,19 @@ const preguntarCondicionIva = () => {
 const confirmarCompra = (productoNombre, productoQty, ivaComprador, precioFinal, nombresComprador, apellidosComprador, direccionComprador, emailComprador) => {
   /* Se encarga de retornar en forma de tabla todos los productos
   */
-  let condicionIva = " (IVA no exento)";
-  let condicion = -1;
+  let condicionIva = " (IVA exento)";
 
   if (ivaComprador == 2) {
-    condicionIva = " (IVA Exento)"
+    condicionIva = " (IVA no exento)";
   }
+
   return parseInt(prompt((
-    "######## Confirmar compra ########" + "\n\n" +
-    "Compra:\n" +
-    productoQty + " uni de " + productoNombre + condicionIva + "  | Precio final: $" + precioFinal + "\n\n" +
+    "######## Confirmar compra ########" + "\n" +
+    productoQty + " uni de " + productoNombre + condicionIva + "  | Precio final: $" + precioFinal + "\n" +
     "A nombre de: " + apellidosComprador + ", " + nombresComprador + "\n" +
-    "Dirección:" + emailComprador + ". E-mail: " + "\n\n" +
+    "Dirección de entrega: " + direccionComprador + ". E-mail: " + emailComprador + "\n\n" +
     "Ingrese 1 para confirmar la compra. Cualquier otro valor o click en 'Cancelar' cancelará la compra."
-  )))
+  )));
 }
 
 const chequearStock = (stock, cantSolicitada) => {
@@ -190,18 +189,67 @@ const convierteIdNombre = (id) => {
   }
 }
 
-const calcularPrecioFinal = (productoId, productoQty, ivaComprador){
+const calcularPrecioFinal = (productoId, productoQty, ivaComprador) => {
   /* Algoritmo que se encarga de calcular el precio final, que puede ser
   con o sin el IVA del 21%
   */
+  let precioPorUnidad;
 
-  let precioFinal = productoQty * productoId
+  switch (productoId) {
+    case 1:
+      precioPorUnidad = precTornillos;
+      break;
+    case 2:
+      precioPorUnidad = precTuercas;
+      break;
+    case 3:
+      precioPorUnidad = precClavos;
+      break;
+    case 4:
+      precioPorUnidad = precArandelas;
+      break;
+    default:
+      precioPorUnidad = 0;
+      break;
+
+  }
+
+  let precioFinal = productoQty * precioPorUnidad;
 
   if (ivaComprador == 2) {
     return precioFinal * 1.21;
   }
 
   return precioFinal;
+}
+
+const graciasCompra = () => {
+  alert("Muchas gracias por su compra!");
+}
+
+const compraCancelada = () => {
+  alert("Atención: Compra cancelada!");
+}
+
+const descontarStock = (productoId, productoQty) => {
+  switch (productoId) {
+    case 1:
+      cantTornillos = cantTornillos - productoQty;
+      break;
+    case 2:
+      cantTuercas = cantTuercas - productoQty;
+      break;
+    case 3:
+      cantClavos = cantClavos - productoQty;
+      break;
+    case 4:
+      cantArandelas = cantArandelas - productoQty;
+      break;
+    default:
+      alert("Error");
+      break;
+
+  }
 }
 
 
@@ -249,7 +297,10 @@ const menuPrincipalPedido = () => {
   precioFinal = calcularPrecioFinal(productoId, productoQty, ivaComprador);
   confirmaCompra = confirmarCompra(convierteIdNombre(productoId), productoQty, ivaComprador, precioFinal, nombresComprador, apellidosComprador, direccionComprador, emailComprador);
   if (confirmaCompra == 1) {
-    alert(graciasCompra());
+    descontarStock(productoId, productoQty);
+    graciasCompra();
+  } else {
+    compraCancelada();
   }
 
   return -1;
