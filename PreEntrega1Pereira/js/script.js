@@ -141,18 +141,23 @@ const preguntarCondicionIva = () => {
   )
 }
 
-const confirmarCompra = (nTorn, nTuer, nClav, nAran, pTorn, pTuer, pClav, pAran) => {
+const confirmarCompra = (productoNombre, productoQty, ivaComprador, precioFinal, nombresComprador, apellidosComprador, direccionComprador, emailComprador) => {
   /* Se encarga de retornar en forma de tabla todos los productos
   */
-  return (
-    "######## Stock ########" + "\n\n" +
-    "Items    Cantidad    Precio por unidad\n" +
-    "Tornillos    " + nTorn + "    " + pTorn + "\n" +
-    "Tuercas    " + nTuer + "    " + pTuer + "\n" +
-    "Clavos    " + nClav + "    " + pClav + "\n" +
-    "Arandelas    " + nAran + "    " + pAran + "\n\n" +
-    "Ingrese 1 para realizar un pedido. 'Cancelar' o ingresar cualquier otra caracter para volver al menú principal."
-  )
+  let condicionIva = " (IVA no exento)";
+  let condicion = -1;
+
+  if (ivaComprador == 2) {
+    condicionIva = " (IVA Exento)"
+  }
+  return parseInt(prompt((
+    "######## Confirmar compra ########" + "\n\n" +
+    "Compra:\n" +
+    productoQty + " uni de " + productoNombre + condicionIva + "  | Precio final: $" + precioFinal + "\n\n" +
+    "A nombre de: " + apellidosComprador + ", " + nombresComprador + "\n" +
+    "Dirección:" + emailComprador + ". E-mail: " + "\n\n" +
+    "Ingrese 1 para confirmar la compra. Cualquier otro valor o click en 'Cancelar' cancelará la compra."
+  )))
 }
 
 const chequearStock = (stock, cantSolicitada) => {
@@ -242,7 +247,7 @@ const menuPrincipalPedido = () => {
   emailComprador = prompt(preguntarEmail());
   ivaComprador = prompt(preguntarCondicionIva());
   precioFinal = calcularPrecioFinal(productoId, productoQty, ivaComprador);
-  confirmaCompra = parseInt(prompt(confirmarCompra(convierteIdNombre(productoId), productoQty, ivaComprador, precioFinal, nombresComprador, apellidosComprador, direccionComprador, emailComprador)));
+  confirmaCompra = confirmarCompra(convierteIdNombre(productoId), productoQty, ivaComprador, precioFinal, nombresComprador, apellidosComprador, direccionComprador, emailComprador);
   if (confirmaCompra == 1) {
     alert(graciasCompra());
   }
