@@ -20,7 +20,7 @@ const mostrarTablaStock = (nTorn, nTuer, nClav, nAran, pTorn, pTuer, pClav, pAra
   /* Se encarga de retornar en forma de tabla todos los productos
   */
 
-  return (
+  return parseInt(prompt((
     "######## Stock ########" + "\n" +
     "Items    Cantidad    Precio por unidad\n" +
     "Tornillos    " + nTorn + " uni    $" + pTorn + "\n" +
@@ -28,7 +28,7 @@ const mostrarTablaStock = (nTorn, nTuer, nClav, nAran, pTorn, pTuer, pClav, pAra
     "Clavos    " + nClav + " uni    $" + pClav + "\n" +
     "Arandelas    " + nAran + " uni    $" + pAran + "\n\n" +
     "Ingrese 1 para realizar un pedido. 'Cancelar' o ingresar cualquier otra caracter para volver al menú principal."
-  )
+  )));
 }
 
 const mostrarMenuPrincipal = () => {
@@ -88,21 +88,45 @@ const preguntarCantidad = (producto) => {
   }
 }
 
+const chequearNanEspacioVacio = (mensaje) => {
+  /* Se encarga de chequear que no sea NaN o 
+  un espacio en blanco, independientemente del
+  mensaje mostrado
+  */
+
+  let condicion = true;
+
+  while (condicion == true) {
+    valor = prompt(mensaje);
+    console.log(valor);
+    if (valor == "" || valor == null) {
+      condicion = true;
+      alert("Error: no se ha ingresado ningún valor o se ha clickeado sobre 'Cancelar'");
+    } else {
+      condicion = false;
+    }
+  }
+
+  return valor;
+}
+
 const preguntarNombres = () => {
   /* Se encarga de preguntar nombres
   */
 
-  return (
+  valor = 0
+
+  return chequearNanEspacioVacio(
     "######## Pedido - Nombres ########" + "\n" +
     "Ingrese su/s nombre/s:"
-  )
+  );
 }
 
 const preguntarApellidos = () => {
   /* Se encarga de preguntar apellidos
   */
 
-  return (
+  return chequearNanEspacioVacio(
     "######## Pedido - Apellidos ########" + "\n" +
     "Ingrese su/s apellido/s:"
   )
@@ -112,7 +136,7 @@ const preguntarDireccion = () => {
   /* Se encarga de preguntar la dirección
   */
 
-  return (
+  return chequearNanEspacioVacio(
     "######## Pedido - Dirección ########" + "\n" +
     "Ingrese su dirección:"
   )
@@ -122,7 +146,7 @@ const preguntarEmail = () => {
   /* Se encarga de preguntar el email
   */
 
-  return (
+  return chequearNanEspacioVacio(
     "######## Pedido - E-mail ########" + "\n" +
     "Ingrese la dirección de su correo:"
   )
@@ -317,10 +341,10 @@ const menuPrincipalPedido = () => {
     }
   }
 
-  nombresComprador = prompt(preguntarNombres());
-  apellidosComprador = prompt(preguntarApellidos());
-  direccionComprador = prompt(preguntarDireccion());
-  emailComprador = prompt(preguntarEmail());
+  nombresComprador = preguntarNombres();
+  apellidosComprador = preguntarApellidos();
+  direccionComprador = preguntarDireccion();
+  emailComprador = preguntarEmail();
   ivaComprador = preguntarCondicionIva();
   precioFinal = calcularPrecioFinal(productoId, productoQty, ivaComprador);
   confirmaCompra = confirmarCompra(productoId, productoQty, ivaComprador, precioFinal, nombresComprador, apellidosComprador, direccionComprador, emailComprador);
@@ -350,7 +374,7 @@ while (opcion != 0) {
       alert("Saliendo... Gracias por su visita.");
       break;
     case 1:
-      opcion = parseInt(prompt(mostrarTablaStock(cantTornillos, cantTuercas, cantClavos, cantArandelas, precTornillos, precTuercas, precClavos, precArandelas)));
+      opcion = mostrarTablaStock(cantTornillos, cantTuercas, cantClavos, cantArandelas, precTornillos, precTuercas, precClavos, precArandelas);
       if (opcion == 1) {
         menuPrincipalPedido();
       } else {
