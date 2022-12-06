@@ -218,21 +218,16 @@ const precioProducto = (productoId) => {
 
   switch (productoId) {
     case 1:
-      precioPorUnidad = precTornillos;
-      break;
+      return precTornillos;
     case 2:
-      precioPorUnidad = precTuercas;
-      break;
+      return precTuercas;
     case 3:
-      precioPorUnidad = precClavos;
-      break;
+      return precClavos;
     case 4:
-      precioPorUnidad = precArandelas;
-      break;
+      return precArandelas;
     default:
       alert("Error")
-      precioPorUnidad = 0;
-      break;
+      return 0;
   }
 }
 
