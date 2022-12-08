@@ -1,4 +1,4 @@
-# pereira_js_course
+# Pereira JS Course
 
 ## Datos del alumno
 * Nombre: Pereira, Mauro Alejandro
