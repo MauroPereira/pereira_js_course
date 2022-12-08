@@ -1,1 +1,1 @@
-# js_course
+# pereira_js_course
