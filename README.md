@@ -11,3 +11,4 @@ Algoritmo que se encarga a través de un menú interactivo de realizar una o má
 
 ## Versiones
 * v1.0 E-shop con cuatro items, el cual al hacer un pedido descuenta del stock existente. Todos los mensajes por alert y prompt. TODO: poder volver al estado anterior con el botón 'Cancelar'.
+
