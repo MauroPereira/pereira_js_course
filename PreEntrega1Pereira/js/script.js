@@ -15,6 +15,15 @@ let precArandelas = 4.52;
 
 let enConstruccion = "En construcción"
 
+class Producto {
+  constructor(id, nombre, precio, stock) {
+    this.id = id;
+    this.nombre = nombre;
+    this.precio = precio;
+    this.stocK = stock;
+  }
+}
+
 // Declaración de funciones
 const mostrarTablaStock = (nTorn, nTuer, nClav, nAran, pTorn, pTuer, pClav, pAran) => {
   /* Se encarga de retornar en forma de tabla todos los productos
