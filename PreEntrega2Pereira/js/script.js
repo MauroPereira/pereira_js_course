@@ -1,21 +1,48 @@
+// Declaración de constantes
+// Productos por defecto
+const cantTornillos = 10;
+const precTornillos = 1.5;
+const cantTuercas = 100;
+const precTuercas = 2.0;
+const cantClavos = 50;
+const precClavos = 3.5;
+const cantArandelas = 10;
+const precArandelas = 4.52;
+
+const enConstruccion = "En construcción"
+
 // Declaración de variables
 let opcion = -1
+let idProducto = -1;
+let idPersona = -1;
 
-let cantTornillos = 10;
-let precTornillos = 1.5;
+// Declaración de clases
+class Producto {
+  /* Clase Producto */
+  constructor(nombre, precio, stock) {
+    idProducto++;
+    this.id = idProducto;
+    this.nombre = nombre;
+    this.precio = precio;
+    this.stocK = stock;
+  }
+  /* Métodos */
+}
 
-let cantTuercas = 100;
-let precTuercas = 2.0;
-
-let cantClavos = 50;
-let precClavos = 3.5;
-
-let cantArandelas = 10;
-let precArandelas = 4.52;
-
-let enConstruccion = "En construcción"
-
-let id = -1;
+class Persona {
+  /* Clase Persona */
+  constructor(nombre, apellido, contrasena, direccion, email, condicionIva) {
+    idPersona++;
+    this.id = idPersona;
+    this.nombre = nombre;
+    this.apellido = apellido;
+    this.contrasena = contrasena;
+    this.direccion = direccion;
+    this.email = email;
+    this.condicionIva = condicionIva;
+  }
+  /* Métodos */
+}
 
 // Declaración de funciones
 const mostrarTablaStock = (nTorn, nTuer, nClav, nAran, pTorn, pTuer, pClav, pAran) => {
@@ -219,6 +246,7 @@ const chequearStock = (stock, cantSolicitada) => {
   return true;
 }
 
+
 const convierteIdNombre = (id) => {
   /* Devuelve el nombre que corresponde al ID del producro
   */
@@ -364,53 +392,33 @@ const mensajeOpcionNoValida = () => {
   alert("Error por opción no valida ingresada o por haber clickeado sobre el botón 'Cancelar'");
 }
 
-// Declaración de clases
-class Producto {
-  /* Clase Producto */
-  constructor(nombre, precio, stock) {
-    id++;
-    this.id = id;
-    this.nombre = nombre;
-    this.precio = precio;
-    this.stocK = stock;
-  }
-  /* Métodos */
-  retornarNombre() {
-    return this.nombre;
-  }
-  retornarNombre() {
-    return this.precio;
-  }
-  retornarNombre() {
-    return this.stock;
-  }
-}
 
 
+// Main
 console.log("Inicio");
 
-// let cantTornillos = 10;
-// let precTornillos = 1.5;
+const productoArray = [
+  new Producto("Tornillos", cantTornillos, precTornillos),
+  new Producto("Tuercas", cantTuercas, precTuercas),
+  new Producto("Clavos", cantClavos, precClavos),
+  new Producto("Arandelas", cantArandelas, precArandelas)
+];
 
-// let cantTuercas = 100;
-// let precTuercas = 2.0;
-
-// let cantClavos = 50;
-// let precClavos = 3.5;
-
-// let cantArandelas = 10;
-// let precArandelas = 4.52;
-
-const producto1 = new Producto("Tornillos", cantTornillos, precTornillos);
-const producto2 = new Producto("Tuercas", cantTuercas, precTuercas);
-const producto3 = new Producto("Clavos", cantClavos, precClavos);
-const producto4 = new Producto("Arandelas", cantArandelas, precArandelas);
+for (const producto of productoArray) {
+  console.log(producto)
+};
+// const producto1 = new Producto("Tornillos", cantTornillos, precTornillos);
+// const producto2 = new Producto("Tuercas", cantTuercas, precTuercas);
+// const producto3 = new Producto("Clavos", cantClavos, precClavos);
+// const producto4 = new Producto("Arandelas", cantArandelas, precArandelas);
 
 
-console.log(producto1);
-console.log(producto2);
-console.log(producto3);
-console.log(producto4);
+// console.log(producto1);
+// console.log(producto2);
+// console.log(producto3);
+// console.log(producto4);
+
+
 // // Main
 // console.log("Inicio");
 // // opcion = parseInt(prompt(mostrarTablaStock(cantTornillos, cantTuercas, cantClavos, cantArandelas, precTornillos, precTuercas, precClavos, precArandelas)));
