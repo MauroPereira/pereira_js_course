@@ -67,8 +67,9 @@ const mostrarMenuPrincipal = () => {
   return (
     "######## E-Shop de Ferretería ########" + "\n" +
     "Opciones:\n" +
-    "1 - Ver Stock" + "\n" +
-    "2 - Realizar pedido" + "\n" +
+    "1 - Ver stock general" + "\n" +
+    "2 - Ver un producto en específico" + "\n" +
+    "3 - Realizar pedido" + "\n" +
     "0 - Salir" + "\n\n" +
     "Ingrese alguna de las opciones."
   )
@@ -407,46 +408,36 @@ const productoArray = [
 for (const producto of productoArray) {
   console.log(producto)
 };
-// const producto1 = new Producto("Tornillos", cantTornillos, precTornillos);
-// const producto2 = new Producto("Tuercas", cantTuercas, precTuercas);
-// const producto3 = new Producto("Clavos", cantClavos, precClavos);
-// const producto4 = new Producto("Arandelas", cantArandelas, precArandelas);
 
+// opcion = parseInt(prompt(mostrarTablaStock(cantTornillos, cantTuercas, cantClavos, cantArandelas, precTornillos, precTuercas, precClavos, precArandelas)));
+// opcion = 0;
+while (opcion != 0) {
+  opcion = parseInt(prompt(mostrarMenuPrincipal()))
 
-// console.log(producto1);
-// console.log(producto2);
-// console.log(producto3);
-// console.log(producto4);
+  switch (opcion) {
+    case 0:
+      alert("Saliendo... Gracias por su visita.");
+      break;
+    case 1:
+      opcion = mostrarTablaStock(cantTornillos, cantTuercas, cantClavos, cantArandelas, precTornillos, precTuercas, precClavos, precArandelas);
+      if (opcion == 1) {
+        menuPrincipalPedido();
+      } else {
+        opcion = -1;
+      }
+      break;
+    case 2:
+      opcion = mostrarProductoEspecifico();
+      breaj;
+    case 3:
+      opcion = menuPrincipalPedido();
+      break;
+    default:
+      mensajeOpcionNoValida();
+      break;
+  }
+}
 
-
-// // Main
-// console.log("Inicio");
-// // opcion = parseInt(prompt(mostrarTablaStock(cantTornillos, cantTuercas, cantClavos, cantArandelas, precTornillos, precTuercas, precClavos, precArandelas)));
-// // opcion = 0;
-// while (opcion != 0) {
-//   opcion = parseInt(prompt(mostrarMenuPrincipal()))
-
-//   switch (opcion) {
-//     case 0:
-//       alert("Saliendo... Gracias por su visita.");
-//       break;
-//     case 1:
-//       opcion = mostrarTablaStock(cantTornillos, cantTuercas, cantClavos, cantArandelas, precTornillos, precTuercas, precClavos, precArandelas);
-//       if (opcion == 1) {
-//         menuPrincipalPedido();
-//       } else {
-//         opcion = -1;
-//       }
-//       break;
-//     case 2:
-//       opcion = menuPrincipalPedido();
-//       break;
-//     default:
-//       mensajeOpcionNoValida();
-//       break;
-//   }
-// }
-
-// console.log("Fin");
+console.log("Fin");
 
 
