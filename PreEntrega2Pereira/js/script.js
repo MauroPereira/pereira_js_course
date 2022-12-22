@@ -15,14 +15,7 @@ let precArandelas = 4.52;
 
 let enConstruccion = "En construcción"
 
-class Producto {
-  constructor(id, nombre, precio, stock) {
-    this.id = id;
-    this.nombre = nombre;
-    this.precio = precio;
-    this.stocK = stock;
-  }
-}
+let id = -1;
 
 // Declaración de funciones
 const mostrarTablaStock = (nTorn, nTuer, nClav, nAran, pTorn, pTuer, pClav, pAran) => {
@@ -371,34 +364,81 @@ const mensajeOpcionNoValida = () => {
   alert("Error por opción no valida ingresada o por haber clickeado sobre el botón 'Cancelar'");
 }
 
-// Main
-console.log("Inicio");
-// opcion = parseInt(prompt(mostrarTablaStock(cantTornillos, cantTuercas, cantClavos, cantArandelas, precTornillos, precTuercas, precClavos, precArandelas)));
-// opcion = 0;
-while (opcion != 0) {
-  opcion = parseInt(prompt(mostrarMenuPrincipal()))
-
-  switch (opcion) {
-    case 0:
-      alert("Saliendo... Gracias por su visita.");
-      break;
-    case 1:
-      opcion = mostrarTablaStock(cantTornillos, cantTuercas, cantClavos, cantArandelas, precTornillos, precTuercas, precClavos, precArandelas);
-      if (opcion == 1) {
-        menuPrincipalPedido();
-      } else {
-        opcion = -1;
-      }
-      break;
-    case 2:
-      opcion = menuPrincipalPedido();
-      break;
-    default:
-      mensajeOpcionNoValida();
-      break;
+// Declaración de clases
+class Producto {
+  /* Clase Producto */
+  constructor(nombre, precio, stock) {
+    id++;
+    this.id = id;
+    this.nombre = nombre;
+    this.precio = precio;
+    this.stocK = stock;
+  }
+  /* Métodos */
+  retornarNombre() {
+    return this.nombre;
+  }
+  retornarNombre() {
+    return this.precio;
+  }
+  retornarNombre() {
+    return this.stock;
   }
 }
 
-console.log("Fin");
+
+console.log("Inicio");
+
+// let cantTornillos = 10;
+// let precTornillos = 1.5;
+
+// let cantTuercas = 100;
+// let precTuercas = 2.0;
+
+// let cantClavos = 50;
+// let precClavos = 3.5;
+
+// let cantArandelas = 10;
+// let precArandelas = 4.52;
+
+const producto1 = new Producto("Tornillos", cantTornillos, precTornillos);
+const producto2 = new Producto("Tuercas", cantTuercas, precTuercas);
+const producto3 = new Producto("Clavos", cantClavos, precClavos);
+const producto4 = new Producto("Arandelas", cantArandelas, precArandelas);
+
+
+console.log(producto1);
+console.log(producto2);
+console.log(producto3);
+console.log(producto4);
+// // Main
+// console.log("Inicio");
+// // opcion = parseInt(prompt(mostrarTablaStock(cantTornillos, cantTuercas, cantClavos, cantArandelas, precTornillos, precTuercas, precClavos, precArandelas)));
+// // opcion = 0;
+// while (opcion != 0) {
+//   opcion = parseInt(prompt(mostrarMenuPrincipal()))
+
+//   switch (opcion) {
+//     case 0:
+//       alert("Saliendo... Gracias por su visita.");
+//       break;
+//     case 1:
+//       opcion = mostrarTablaStock(cantTornillos, cantTuercas, cantClavos, cantArandelas, precTornillos, precTuercas, precClavos, precArandelas);
+//       if (opcion == 1) {
+//         menuPrincipalPedido();
+//       } else {
+//         opcion = -1;
+//       }
+//       break;
+//     case 2:
+//       opcion = menuPrincipalPedido();
+//       break;
+//     default:
+//       mensajeOpcionNoValida();
+//       break;
+//   }
+// }
+
+// console.log("Fin");
 
 
