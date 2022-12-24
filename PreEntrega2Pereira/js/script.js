@@ -24,7 +24,7 @@ class Producto {
     this.id = idProducto;
     this.nombre = nombre;
     this.precio = precio;
-    this.stocK = stock;
+    this.stock = stock;
   }
   /* Métodos */
 }
@@ -45,9 +45,28 @@ class Persona {
 }
 
 // Declaración de funciones
-const mostrarTablaStock = (nTorn, nTuer, nClav, nAran, pTorn, pTuer, pClav, pAran) => {
+
+// ACLARACIÓN: ESTA FORMA DE PROGRAMAR ES PARA PRACTICAR FUNCIONES DE ORDEN SUPERIOR
+// SE PUEDE REALIZAR LO MISMO DE UNA FORMA MÁS SENCILLA Y MÁS CLARA
+const funcionMensajeAlert = (encabezado, funcion, pie) => {
+  /* Se encarga de armar un Alert con toda la informacion */
+
+  let stringBuffer = encabezado;
+
+
+
+}
+
+const mostrarTablaStock = () => {
   /* Se encarga de retornar en forma de tabla todos los productos
   */
+
+  let stringStock;  // string buffer
+
+  // Crea un string de todo el stock
+  for (const producto of productoArray) {
+    stringStock = stringStock + `{producto.nombre} \t {producto.precio} \t {producto.stock} \n`
+  };
 
   return parseInt(prompt((
     "######## Stock ########" + "\n" +
@@ -80,15 +99,17 @@ const menuMostrarProductos = () => {
   */
 
   let productoId;
+  let stringStock;  // string buffer
 
   while (repeat = true) {
+    // Crea un string de todo el stock
+    for (const producto of productoArray) {
+      stringStock = stringStock + `{producto.nombre} \t {producto.precio} \t {producto.stock} \n`
+    };
+
     productoId = parseInt(prompt((
       "######## Pedido - Producto ########" + "\n" +
-      "IDs:\n" +
-      "1 - Tornillos" + "\n" +
-      "2 - Tuercas" + "\n" +
-      "3 - Clavos" + "\n" +
-      "4 - Arandelas" + "\n\n" +
+      stringStock + "\n" +
       "Ingrese algún ID de producto."
     )))
     if (productoId > 0 && productoId <= 4) {
@@ -379,6 +400,7 @@ const menuPrincipalPedido = () => {
   ivaComprador = preguntarCondicionIva();
   precioFinal = calcularPrecioFinal(productoId, productoQty, ivaComprador);
   confirmaCompra = confirmarCompra(productoId, productoQty, ivaComprador, precioFinal, nombresComprador, apellidosComprador, direccionComprador, emailComprador);
+
   if (confirmaCompra == 1) {
     descontarStock(productoId, productoQty);
     graciasCompra();
@@ -394,23 +416,28 @@ const mensajeOpcionNoValida = () => {
 }
 
 
-
 // Main
 console.log("Inicio");
 
 const productoArray = [
-  new Producto("Tornillos", cantTornillos, precTornillos),
-  new Producto("Tuercas", cantTuercas, precTuercas),
-  new Producto("Clavos", cantClavos, precClavos),
-  new Producto("Arandelas", cantArandelas, precArandelas)
+  new Producto("Tornillos".toUpperCase(), cantTornillos, precTornillos),
+  new Producto("Tuercas".toUpperCase(), cantTuercas, precTuercas),
+  new Producto("Clavos".toUpperCase(), cantClavos, precClavos),
+  new Producto("Arandelas".toUpperCase(), cantArandelas, precArandelas)
 ];
 
-for (const producto of productoArray) {
-  console.log(producto)
+for (const item of productoArray) {
+  console.log(item)
 };
 
-// opcion = parseInt(prompt(mostrarTablaStock(cantTornillos, cantTuercas, cantClavos, cantArandelas, precTornillos, precTuercas, precClavos, precArandelas)));
-// opcion = 0;
+arrayBuffer = Object.values(productoArray[0]);
+console.log(arrayBuffer);
+
+
+for (let i = 0; i < arrayBuffer.length; i++) {
+  console.log(arrayBuffer[i]);
+}
+
 while (opcion != 0) {
   opcion = parseInt(prompt(mostrarMenuPrincipal()))
 
@@ -419,7 +446,7 @@ while (opcion != 0) {
       alert("Saliendo... Gracias por su visita.");
       break;
     case 1:
-      opcion = mostrarTablaStock(cantTornillos, cantTuercas, cantClavos, cantArandelas, precTornillos, precTuercas, precClavos, precArandelas);
+      opcion = mostrarTablaStock();
       if (opcion == 1) {
         menuPrincipalPedido();
       } else {
