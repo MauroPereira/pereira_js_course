@@ -85,18 +85,20 @@ const mostrarMenuPrincipal = () => {
   )
 }
 
-const menuMostrarProductos = () => {
-  /* Se encarga de retornar en forma de tabla el menú principal
+const menuTomarProducto = () => {
+  /* Se encarga de retornar el id de un producto
   */
 
-  let productoId;
-  let stringStock;  // string buffer
+  let repeat = true;
+  let productoId = -1;
+
+  const stringEncabezado = "######## Pedido - Producto ########\n";
+  const stringPie = "Ingrese el nombre del producto. Clickee 'Cancelar' para volver hacia atrás.";
 
   while (repeat == true) {
     // Crea un string de todo el stock
-    for (const producto of productoArray) {
-      stringStock = stringStock + `{producto.nombre} \t {producto.precio} \t {producto.stock} \n`
-    };
+    productoNombre = parse(´${ stringEncabezado }´ + ´${ stringPie }´);
+
 
     productoId = parseInt(prompt((
       "######## Pedido - Producto ########" + "\n" +
@@ -348,7 +350,7 @@ const descontarStock = (productoId, productoQty) => {
 }
 
 
-const menuPrincipalPedido = () => {
+const menuPrincipalPedido = (productoArray) => {
   /* Se encarga del proceso de tomar el pedido */
   let repeat = true;
   let productoId;
@@ -362,7 +364,9 @@ const menuPrincipalPedido = () => {
 
   while (repeat == true) {
 
-    productoId = menuMostrarProductos();
+
+
+    productoId = menuTomarProducto(productoArray);
     productoQty = preguntarCantidad(convierteIdNombre(productoId));
 
     switch (productoId) {
@@ -440,7 +444,7 @@ while (opcion != 0) {
       opcion = mostrarProductoEspecifico();
       breaj;
     case 3:
-      opcion = menuPrincipalPedido();
+      opcion = menuPrincipalPedido(productoArray);
       break;
     default:
       mensajeOpcionNoValida();
