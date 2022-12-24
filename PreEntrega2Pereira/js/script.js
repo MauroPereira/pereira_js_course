@@ -46,37 +46,28 @@ class Persona {
 
 // Declaración de funciones
 
-// ACLARACIÓN: ESTA FORMA DE PROGRAMAR ES PARA PRACTICAR FUNCIONES DE ORDEN SUPERIOR
-// SE PUEDE REALIZAR LO MISMO DE UNA FORMA MÁS SENCILLA Y MÁS CLARA
-const funcionMensajeAlert = (encabezado, funcion, pie) => {
+const funcionMensajeAlert = (stringEncabezado, arrayVar, stringPie) => {
   /* Se encarga de armar un Alert con toda la informacion */
 
-  let stringBuffer = encabezado;
-
-
-
-}
-
-const mostrarTablaStock = () => {
-  /* Se encarga de retornar en forma de tabla todos los productos
-  */
-
-  let stringStock;  // string buffer
+  let stringBuffer = stringEncabezado;
 
   // Crea un string de todo el stock
-  for (const producto of productoArray) {
-    stringStock = stringStock + `{producto.nombre} \t {producto.precio} \t {producto.stock} \n`
+  for (const index of arrayVar) {
+    stringBuffer = stringBuffer + `{index.nombre} \t {index.precio} \t {index.stock} \n`
   };
 
-  return parseInt(prompt((
-    "######## Stock ########" + "\n" +
-    "Items    Cantidad    Precio por unidad\n" +
-    "Tornillos    " + nTorn + " uni    $" + pTorn + "\n" +
-    "Tuercas    " + nTuer + " uni    $" + pTuer + "\n" +
-    "Clavos    " + nClav + " uni    $" + pClav + "\n" +
-    "Arandelas    " + nAran + " uni    $" + pAran + "\n\n" +
-    "Ingrese 1 para realizar un pedido. 'Cancelar' o ingresar cualquier otra caracter para volver al menú principal."
-  )));
+  stringBuffer = stringBuffer + stringPie;
+
+  return parseInt(prompt(arrayBuffer));
+}
+
+const mostrarTablaStock = (productoArray) => {
+  /* Se encarga de retornar en forma de tabla todos los productos
+  */
+  const stringEncabezado = "######## Stock ########\nItems\tCantidad\tPrecio por unidad\n";
+  const stringPie = "Ingrese 1 para realizar un pedido. 'Cancelar' o ingresar cualquier otra caracter para volver al menú principal.";
+
+  return funcionMensajeAlert(stringEncabezado, productoArray, stringPie);
 }
 
 const mostrarMenuPrincipal = () => {
@@ -416,7 +407,7 @@ const mensajeOpcionNoValida = () => {
 }
 
 
-// Main
+// Main /////////////////////////////////////////////////////////////////////////////////
 console.log("Inicio");
 
 const productoArray = [
@@ -430,14 +421,6 @@ for (const item of productoArray) {
   console.log(item)
 };
 
-arrayBuffer = Object.values(productoArray[0]);
-console.log(arrayBuffer);
-
-
-for (let i = 0; i < arrayBuffer.length; i++) {
-  console.log(arrayBuffer[i]);
-}
-
 while (opcion != 0) {
   opcion = parseInt(prompt(mostrarMenuPrincipal()))
 
@@ -446,7 +429,7 @@ while (opcion != 0) {
       alert("Saliendo... Gracias por su visita.");
       break;
     case 1:
-      opcion = mostrarTablaStock();
+      opcion = mostrarTablaStock(productoArray);
       if (opcion == 1) {
         menuPrincipalPedido();
       } else {
