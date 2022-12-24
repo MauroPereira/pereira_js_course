@@ -53,18 +53,18 @@ const funcionMensajeAlert = (stringEncabezado, arrayVar, stringPie) => {
 
   // Crea un string de todo el stock
   for (const index of arrayVar) {
-    stringBuffer = stringBuffer + `{index.nombre} \t {index.precio} \t {index.stock} \n`
+    stringBuffer = stringBuffer + `${index.nombre}   ${index.precio}   ${index.stock}\n`
   };
 
   stringBuffer = stringBuffer + stringPie;
 
-  return parseInt(prompt(arrayBuffer));
+  return parseInt(prompt(stringBuffer));
 }
 
 const mostrarTablaStock = (productoArray) => {
   /* Se encarga de retornar en forma de tabla todos los productos
   */
-  const stringEncabezado = "######## Stock ########\nItems\tCantidad\tPrecio por unidad\n";
+  const stringEncabezado = "######## Stock ########\nItems   Cantidad   Precio por unidad\n";
   const stringPie = "Ingrese 1 para realizar un pedido. 'Cancelar' o ingresar cualquier otra caracter para volver al menú principal.";
 
   return funcionMensajeAlert(stringEncabezado, productoArray, stringPie);
@@ -92,7 +92,7 @@ const menuMostrarProductos = () => {
   let productoId;
   let stringStock;  // string buffer
 
-  while (repeat = true) {
+  while (repeat == true) {
     // Crea un string de todo el stock
     for (const producto of productoArray) {
       stringStock = stringStock + `{producto.nombre} \t {producto.precio} \t {producto.stock} \n`
