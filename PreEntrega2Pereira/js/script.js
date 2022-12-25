@@ -93,17 +93,17 @@ const menuTomarProducto = (arrayProducto) => {
   let productoId = -1;
 
   const stringEncabezado = "######## Pedido - Producto ########\n";
-  const stringPie = "Ingrese el nombre del producto en el cuadro y luego clickee 'Aceptar'. \n Clickee 'Cancelar' para volver hacia atrás.";
+  const stringPie = "Opciones:\n* Ingrese el nombre del producto en el cuadro y luego clickee 'Aceptar'. \n * Clickee 'Cancelar' para volver hacia atrás.";
 
   while (repeat == true) {
     // Crea un string de todo el stock
     productoNombre = (prompt(`${stringEncabezado} ${stringPie}`).toUpperCase());
     console.log(productoNombre);
 
-    productoId = arrayProducto.find((el) => el.nombre === productoNombre);
+    productoId = arrayProducto.find(objeto => objeto.nombre === productoNombre);
     console.log(productoId);
 
-    if (productoId == "undefined") {
+    if (productoId != "undefined") {
       return productoId;
     }
     else {
