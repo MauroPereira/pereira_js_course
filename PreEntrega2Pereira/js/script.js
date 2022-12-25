@@ -45,7 +45,6 @@ class Persona {
 }
 
 // Declaración de funciones
-
 const funcionMensajeAlert = (stringEncabezado, arrayVar, stringPie) => {
   /* Se encarga de armar un Alert con toda la informacion */
 
@@ -412,9 +411,9 @@ const mensajeOpcionNoValida = (mensaje, genero = "o") => {
   }
 }
 
-
 // Main /////////////////////////////////////////////////////////////////////////////////
-console.log("Inicio");
+console.log("Inicio\nACLARACIÓN: la consola sólo es a modo de debug, los mensajes de usuario serán \
+  proporcionados por alert y prompt.");
 
 const arrayProducto = [
   new Producto("Tornillos".toUpperCase(), cantTornillos, precTornillos),
@@ -455,5 +454,4 @@ while (opcion != 0) {
 }
 
 console.log("Fin");
-
-
+///////////////////////////////////////////////////////////////////////////////////
