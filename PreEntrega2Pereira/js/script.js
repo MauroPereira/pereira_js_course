@@ -61,13 +61,13 @@ const funcionMensajeAlert = (stringEncabezado, arrayVar, stringPie) => {
   return parseInt(prompt(stringBuffer));
 }
 
-const mostrarTablaStock = (productoArray) => {
+const mostrarTablaStock = (arrayProducto) => {
   /* Se encarga de retornar en forma de tabla todos los productos
   */
   const stringEncabezado = "######## Stock ########\nItems   Cantidad   Precio por unidad\n";
   const stringPie = "Ingrese 1 para realizar un pedido. 'Cancelar' o ingresar cualquier otra caracter para volver al menú principal.";
 
-  return funcionMensajeAlert(stringEncabezado, productoArray, stringPie);
+  return funcionMensajeAlert(stringEncabezado, arrayProducto, stringPie);
 }
 
 const mostrarMenuPrincipal = () => {
@@ -85,7 +85,7 @@ const mostrarMenuPrincipal = () => {
   )
 }
 
-const menuTomarProducto = () => {
+const menuTomarProducto = (arrayProducto) => {
   /* Se encarga de retornar el id de un producto
   */
 
@@ -93,22 +93,21 @@ const menuTomarProducto = () => {
   let productoId = -1;
 
   const stringEncabezado = "######## Pedido - Producto ########\n";
-  const stringPie = "Ingrese el nombre del producto. Clickee 'Cancelar' para volver hacia atrás.";
+  const stringPie = "Ingrese el nombre del producto en el cuadro y luego clickee 'Aceptar'. \n Clickee 'Cancelar' para volver hacia atrás.";
 
   while (repeat == true) {
     // Crea un string de todo el stock
-    productoNombre = parse(´${ stringEncabezado }´ + ´${ stringPie }´);
+    productoNombre = (prompt(`${stringEncabezado} ${stringPie}`).toUpperCase());
+    console.log(productoNombre);
 
+    productoId = arrayProducto.find((el) => el.nombre === productoNombre);
+    console.log(productoId);
 
-    productoId = parseInt(prompt((
-      "######## Pedido - Producto ########" + "\n" +
-      stringStock + "\n" +
-      "Ingrese algún ID de producto."
-    )))
-    if (productoId > 0 && productoId <= 4) {
+    if (productoId == "undefined") {
       return productoId;
-    } else {
-      mensajeOpcionNoValida();
+    }
+    else {
+      mensajeOpcionNoValida("nombre de producto");
     }
   }
 }
@@ -350,7 +349,7 @@ const descontarStock = (productoId, productoQty) => {
 }
 
 
-const menuPrincipalPedido = (productoArray) => {
+const menuPrincipalPedido = (arrayProducto) => {
   /* Se encarga del proceso de tomar el pedido */
   let repeat = true;
   let productoId;
@@ -364,9 +363,7 @@ const menuPrincipalPedido = (productoArray) => {
 
   while (repeat == true) {
 
-
-
-    productoId = menuTomarProducto(productoArray);
+    productoId = menuTomarProducto(arrayProducto);
     productoQty = preguntarCantidad(convierteIdNombre(productoId));
 
     switch (productoId) {
@@ -406,22 +403,27 @@ const menuPrincipalPedido = (productoArray) => {
   return -1;
 }
 
-const mensajeOpcionNoValida = () => {
-  alert("Error por opción no valida ingresada o por haber clickeado sobre el botón 'Cancelar'");
+const mensajeOpcionNoValida = (mensaje, genero = "o") => {
+  if (genero == "o") {
+    alert(`Error por ingreso de ${mensaje} no válido. Clickee 'Aceptar' para continuar`);
+  }
+  else {
+    alert(`Error por ingreso de ${mensaje} no válida. Clickee 'Aceptar' para continuar`);
+  }
 }
 
 
 // Main /////////////////////////////////////////////////////////////////////////////////
 console.log("Inicio");
 
-const productoArray = [
+const arrayProducto = [
   new Producto("Tornillos".toUpperCase(), cantTornillos, precTornillos),
   new Producto("Tuercas".toUpperCase(), cantTuercas, precTuercas),
   new Producto("Clavos".toUpperCase(), cantClavos, precClavos),
   new Producto("Arandelas".toUpperCase(), cantArandelas, precArandelas)
 ];
 
-for (const item of productoArray) {
+for (const item of arrayProducto) {
   console.log(item)
 };
 
@@ -433,7 +435,7 @@ while (opcion != 0) {
       alert("Saliendo... Gracias por su visita.");
       break;
     case 1:
-      opcion = mostrarTablaStock(productoArray);
+      opcion = mostrarTablaStock(arrayProducto);
       if (opcion == 1) {
         menuPrincipalPedido();
       } else {
@@ -444,7 +446,7 @@ while (opcion != 0) {
       opcion = mostrarProductoEspecifico();
       breaj;
     case 3:
-      opcion = menuPrincipalPedido(productoArray);
+      opcion = menuPrincipalPedido(arrayProducto);
       break;
     default:
       mensajeOpcionNoValida();
