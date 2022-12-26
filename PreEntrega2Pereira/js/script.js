@@ -86,13 +86,12 @@ const menuTomarProducto = (arrayProducto) => {
   /* Se encarga de retornar el id de un producto
   */
 
-  let repeat = true;
   let matchProducto = -1;
 
   const stringEncabezado = "######## Pedido - Producto ########\n";
   const stringPie = "Opciones:\n* Ingrese el nombre del producto en el cuadro y luego clickee 'Aceptar'. \n * Clickee 'Cancelar' para volver hacia atrás.";
 
-  while (repeat == true) {
+  while (true) {
     // Crea un string de todo el stock
     productoNombre = prompt(`${stringEncabezado} ${stringPie}`);
     console.log(productoNombre);
@@ -112,21 +111,27 @@ const menuTomarProducto = (arrayProducto) => {
   }
 }
 
-const preguntarCantidad = (producto) => {
+const preguntarCantidad = (objectProducto) => {
   /* Obtiene la cantidad de producto
   */
 
-  let value;
+  let cantProducto;
 
   while (true) {
-    value = parseInt(prompt((
-      "######## Pedido - Cantidad ########" + "\n" +
-      "Ingrese la cantidad de " + producto + ":"
-    )));
-    if (value > 0) {
-      return value;
-    } else {
-      alert("Error: la cantidad tiene que mayor a 0")
+    const stringEncabezado = `######## Pedido - Cantidad ########\n`;
+    const stringPie = `Opciones:\n* Ingrese la cantidad de ${objectProducto.nombre} en el cuadro y luego clickee 'Aceptar'. \n * Clickee 'Cancelar' para volver hacia atrás.`;
+
+    cantProducto = prompt(`${stringEncabezado} ${stringPie}`);
+
+    if (cantProducto == null) {
+      return -1;
+    }
+
+    if (parseInt(cantProducto) > 0) {
+      return parseInt(cantProducto);
+    }
+    else {
+      alert(`Error por cantidad ingresada menor a 1. Clickee 'Aceptar' para continuar`);
     }
   }
 }
@@ -227,7 +232,7 @@ const preguntarCondicionIva = () => {
   return condicion;
 }
 
-const confirmarCompra = (productoId, productoQty, ivaComprador, precioFinal, nombresComprador, apellidosComprador, direccionComprador, emailComprador) => {
+const confirmarCompra = (matchProducto, productoQty, ivaComprador, precioFinal, nombresComprador, apellidosComprador, direccionComprador, emailComprador) => {
   /* Se encarga de retornar en forma de tabla todos los productos
   */
 
@@ -239,7 +244,7 @@ const confirmarCompra = (productoId, productoQty, ivaComprador, precioFinal, nom
 
   return parseInt(prompt((
     "######## Confirmar compra ########" + "\n" +
-    productoQty + " uni de " + convierteIdNombre(productoId) + " | Pre. uni: $" + precioProducto(productoId) + condicionIva + " | Precio final: $" + precioFinal + "\n" +
+    productoQty + " uni de " + convierteIdNombre(matchProducto) + " | Pre. uni: $" + precioProducto(matchProducto) + condicionIva + " | Precio final: $" + precioFinal + "\n" +
     "A nombre de: " + apellidosComprador + ", " + nombresComprador + ".\n" +
     "Dirección de entrega: " + direccionComprador + ". E-mail: " + emailComprador + ".\n\n" +
     "Ingrese 1 para confirmar la compra. Cualquier otro valor o click en 'Cancelar' cancelará la compra."
@@ -279,12 +284,12 @@ const convierteIdNombre = (id) => {
   }
 }
 
-const precioProducto = (productoId) => {
+const precioProducto = (matchProducto) => {
   /* Devuelve el precio por unidad del producto según
   su ID
   */
 
-  switch (productoId) {
+  switch (matchProducto) {
     case 1:
       return precTornillo;
     case 2:
@@ -299,12 +304,12 @@ const precioProducto = (productoId) => {
   }
 }
 
-const calcularPrecioFinal = (productoId, productoQty, ivaComprador) => {
+const calcularPrecioFinal = (matchProducto, productoQty, ivaComprador) => {
   /* Algoritmo que se encarga de calcular el precio final, que puede ser
   con o sin el IVA del 21%
   */
 
-  let precioFinal = productoQty * precioProducto(productoId);
+  let precioFinal = productoQty * precioProducto(matchProducto);
 
   if (ivaComprador == 2) {
     return precioFinal * 1.21;
@@ -327,8 +332,8 @@ const compraCancelada = () => {
   alert("Atención: Compra cancelada!");
 }
 
-const descontarStock = (productoId, productoQty) => {
-  switch (productoId) {
+const descontarStock = (matchProducto, productoQty) => {
+  switch (matchProducto) {
     case 1:
       cantTornillo = cantTornillo - productoQty;
       break;
@@ -352,7 +357,7 @@ const descontarStock = (productoId, productoQty) => {
 const menuPrincipalPedido = (arrayProducto) => {
   /* Se encarga del proceso de tomar el pedido */
   let repeat = true;
-  let productoId;
+  let matchProducto;
   let productoQty;
   let nombresComprador;
   let apellidosComprador;
@@ -363,15 +368,16 @@ const menuPrincipalPedido = (arrayProducto) => {
 
   while (repeat == true) {
 
-    productoId = menuTomarProducto(arrayProducto);
+    matchProducto = menuTomarProducto(arrayProducto);
+    console.log(`Producto elegido: ${matchProducto}`);
 
-    if (productoId == -1) {
+    if (matchProducto == -1) {
       return -1;
     }
 
-    productoQty = preguntarCantidad(convierteIdNombre(productoId));
+    productoQty = preguntarCantidad(matchProducto);
 
-    switch (productoId) {
+    switch (matchProducto) {
       case 1:
         repeat = chequearStock(cantTornillo, productoQty);
         break;
@@ -395,11 +401,11 @@ const menuPrincipalPedido = (arrayProducto) => {
   direccionComprador = preguntarDireccion();
   emailComprador = preguntarEmail();
   ivaComprador = preguntarCondicionIva();
-  precioFinal = calcularPrecioFinal(productoId, productoQty, ivaComprador);
-  confirmaCompra = confirmarCompra(productoId, productoQty, ivaComprador, precioFinal, nombresComprador, apellidosComprador, direccionComprador, emailComprador);
+  precioFinal = calcularPrecioFinal(matchProducto, productoQty, ivaComprador);
+  confirmaCompra = confirmarCompra(matchProducto, productoQty, ivaComprador, precioFinal, nombresComprador, apellidosComprador, direccionComprador, emailComprador);
 
   if (confirmaCompra == 1) {
-    descontarStock(productoId, productoQty);
+    descontarStock(matchProducto, productoQty);
     graciasCompra();
   } else {
     compraCancelada();
@@ -410,10 +416,10 @@ const menuPrincipalPedido = (arrayProducto) => {
 
 const mensajeOpcionNoValida = (mensaje, genero = "o") => {
   if (genero == "o") {
-    alert(`Error por ingreso de ${mensaje} no válido. Clickee 'Aceptar' para continuar`);
+    alert(`Error por ingreso de ${mensaje} no válido. Clickee 'Aceptar' para continuar.`);
   }
   else {
-    alert(`Error por ingreso de ${mensaje} no válida. Clickee 'Aceptar' para continuar`);
+    alert(`Error por ingreso de ${mensaje} no válida. Clickee 'Aceptar' para continuar.`);
   }
 }
 
