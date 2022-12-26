@@ -1,13 +1,13 @@
 // Declaración de constantes
 // Productos por defecto
-const cantTornillos = 10;
-const precTornillos = 1.5;
-const cantTuercas = 100;
-const precTuercas = 2.0;
-const cantClavos = 50;
-const precClavos = 3.5;
-const cantArandelas = 10;
-const precArandelas = 4.52;
+const cantTornillo = 10;
+const precTornillo = 1.5;
+const cantTuerca = 100;
+const precTuerca = 2.0;
+const cantClavo = 50;
+const precClavo = 3.5;
+const cantArandela = 10;
+const precArandela = 4.52;
 
 const enConstruccion = "En construcción"
 
@@ -75,12 +75,10 @@ const mostrarMenuPrincipal = () => {
 
   return (
     "######## E-Shop de Ferretería ########" + "\n" +
-    "Opciones:\n" +
-    "1 - Ver stock general" + "\n" +
-    "2 - Ver un producto en específico" + "\n" +
-    "3 - Realizar pedido" + "\n" +
-    "0 - Salir" + "\n\n" +
-    "Ingrese alguna de las opciones."
+    "Ingrese algunas de las opciones y luego clickee 'Aceptar':\n" +
+    "* 1 - Ver stock general" + "\n" +
+    "* 2 - Realizar pedido" + "\n\n" +
+    "* Clickee 'Cancelar' para salir."
   )
 }
 
@@ -96,16 +94,19 @@ const menuTomarProducto = (arrayProducto) => {
 
   while (repeat == true) {
     // Crea un string de todo el stock
-    productoNombre = (prompt(`${stringEncabezado} ${stringPie}`).toUpperCase());
+    productoNombre = prompt(`${stringEncabezado} ${stringPie}`);
     console.log(productoNombre);
 
-    productoId = arrayProducto.find(objeto => objeto.nombre === productoNombre);
+    if (productoNombre == null) {
+      return -1;
+    }
+
+    productoId = arrayProducto.find(objeto => objeto.nombre === productoNombre.toUpperCase());
     console.log(productoId);
 
     if (productoId != "undefined") {
       return productoId;
-    }
-    else {
+    } else {
       mensajeOpcionNoValida("nombre de producto");
     }
   }
@@ -266,13 +267,13 @@ const convierteIdNombre = (id) => {
 
   switch (id) {
     case 1:
-      return "Tornillos";
+      return "Tornillo";
     case 2:
-      return "Tuercas";
+      return "Tuerca";
     case 3:
-      return "Clavos"
+      return "Clavo"
     case 4:
-      return "Arandelas"
+      return "Arandela"
     default:
       return "Producto Desconocido"
   }
@@ -285,13 +286,13 @@ const precioProducto = (productoId) => {
 
   switch (productoId) {
     case 1:
-      return precTornillos;
+      return precTornillo;
     case 2:
-      return precTuercas;
+      return precTuerca;
     case 3:
-      return precClavos;
+      return precClavo;
     case 4:
-      return precArandelas;
+      return precArandela;
     default:
       alert("Error")
       return 0;
@@ -329,16 +330,16 @@ const compraCancelada = () => {
 const descontarStock = (productoId, productoQty) => {
   switch (productoId) {
     case 1:
-      cantTornillos = cantTornillos - productoQty;
+      cantTornillo = cantTornillo - productoQty;
       break;
     case 2:
-      cantTuercas = cantTuercas - productoQty;
+      cantTuerca = cantTuerca - productoQty;
       break;
     case 3:
-      cantClavos = cantClavos - productoQty;
+      cantClavo = cantClavo - productoQty;
       break;
     case 4:
-      cantArandelas = cantArandelas - productoQty;
+      cantArandela = cantArandela - productoQty;
       break;
     default:
       alert("Error");
@@ -363,20 +364,24 @@ const menuPrincipalPedido = (arrayProducto) => {
   while (repeat == true) {
 
     productoId = menuTomarProducto(arrayProducto);
+    if (productoId == -1) {
+      return -1;
+    }
+
     productoQty = preguntarCantidad(convierteIdNombre(productoId));
 
     switch (productoId) {
       case 1:
-        repeat = chequearStock(cantTornillos, productoQty);
+        repeat = chequearStock(cantTornillo, productoQty);
         break;
       case 2:
-        repeat = chequearStock(cantTuercas, productoQty);
+        repeat = chequearStock(cantTuerca, productoQty);
         break;
       case 3:
-        repeat = chequearStock(cantClavos, productoQty);
+        repeat = chequearStock(cantClavo, productoQty);
         break;
       case 4:
-        repeat = chequearStock(cantArandelas, productoQty);
+        repeat = chequearStock(cantArandela, productoQty);
         break;
       default:
         alert("Error: producto no encontrado o clickeado 'Cancelar'");
@@ -416,10 +421,10 @@ console.log("Inicio\nACLARACIÓN: la consola sólo es a modo de debug, los mensa
   proporcionados por alert y prompt.");
 
 const arrayProducto = [
-  new Producto("Tornillos".toUpperCase(), cantTornillos, precTornillos),
-  new Producto("Tuercas".toUpperCase(), cantTuercas, precTuercas),
-  new Producto("Clavos".toUpperCase(), cantClavos, precClavos),
-  new Producto("Arandelas".toUpperCase(), cantArandelas, precArandelas)
+  new Producto("Tornillo".toUpperCase(), cantTornillo, precTornillo),
+  new Producto("Tuerca".toUpperCase(), cantTuerca, precTuerca),
+  new Producto("Clavo".toUpperCase(), cantClavo, precClavo),
+  new Producto("Arandela".toUpperCase(), cantArandela, precArandela)
 ];
 
 for (const item of arrayProducto) {
@@ -427,7 +432,13 @@ for (const item of arrayProducto) {
 };
 
 while (opcion != 0) {
-  opcion = parseInt(prompt(mostrarMenuPrincipal()))
+  opcion = prompt(mostrarMenuPrincipal());
+  console.log(opcion)
+  if (opcion == null) {
+    opcion = 0;
+  } else {
+    opcion = parseInt(opcion);
+  }
 
   switch (opcion) {
     case 0:
@@ -442,13 +453,10 @@ while (opcion != 0) {
       }
       break;
     case 2:
-      opcion = mostrarProductoEspecifico();
-      breaj;
-    case 3:
       opcion = menuPrincipalPedido(arrayProducto);
       break;
     default:
-      mensajeOpcionNoValida();
+      mensajeOpcionNoValida("opción", "a");
       break;
   }
 }
