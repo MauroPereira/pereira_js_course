@@ -87,7 +87,7 @@ const menuTomarProducto = (arrayProducto) => {
   */
 
   let repeat = true;
-  let productoId = -1;
+  let matchProducto = -1;
 
   const stringEncabezado = "######## Pedido - Producto ########\n";
   const stringPie = "Opciones:\n* Ingrese el nombre del producto en el cuadro y luego clickee 'Aceptar'. \n * Clickee 'Cancelar' para volver hacia atrás.";
@@ -101,11 +101,11 @@ const menuTomarProducto = (arrayProducto) => {
       return -1;
     }
 
-    productoId = arrayProducto.find(objeto => objeto.nombre === productoNombre.toUpperCase());
-    console.log(productoId);
+    matchProducto = arrayProducto.find(objeto => objeto.nombre === productoNombre.toUpperCase());
+    console.log(matchProducto);
 
-    if (productoId != "undefined") {
-      return productoId;
+    if (matchProducto != undefined) {
+      return matchProducto;
     } else {
       mensajeOpcionNoValida("nombre de producto");
     }
@@ -364,6 +364,7 @@ const menuPrincipalPedido = (arrayProducto) => {
   while (repeat == true) {
 
     productoId = menuTomarProducto(arrayProducto);
+
     if (productoId == -1) {
       return -1;
     }
@@ -454,6 +455,7 @@ while (opcion != 0) {
       break;
     case 2:
       opcion = menuPrincipalPedido(arrayProducto);
+      console.log(`opcion ${opcion}`);
       break;
     default:
       mensajeOpcionNoValida("opción", "a");
