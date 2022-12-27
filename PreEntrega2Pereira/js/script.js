@@ -32,12 +32,11 @@ class Producto {
 
 class Persona {
   /* Clase Persona */
-  constructor(nombre, apellido, contrasena, direccion, email, condicionIva) {
+  constructor(nombre, apellido, direccion, email, condicionIva) {
     idPersona++;
     this.id = idPersona;
     this.nombre = nombre;
     this.apellido = apellido;
-    this.contrasena = contrasena;
     this.direccion = direccion;
     this.email = email;
     this.condicionIva = condicionIva;
@@ -251,23 +250,36 @@ const preguntarCondicionIva = () => {
   return condicion;
 }
 
-const confirmarCompra = (matchProducto, productoQty, ivaComprador, precioFinal, nombresComprador, apellidosComprador, direccionComprador, emailComprador) => {
+const confirmarCompra = (arrayCanasta, personaComprador) => {
   /* Se encarga de retornar en forma de tabla todos los productos
   */
 
-  let condicionIva = " | IVA exento";
+  const condicionIva = " | IVA exento";
+  const stringEncabezado = "######## Confirmar compra ########\n";
+  const stringPie = `Opciones:\n* Clickee 'Aceptar' para confirmar la compra. \n * Clickee 'Cancelar' para cancelar la compra.\nNo ingrese ningún valor en el cuadro de texto.`;
+  let stringBuffer = stringEncabezado;
+  let precioTotal = 0.0;
 
-  if (ivaComprador == 2) {
+  if (personaComprador.ivaComprador == 2) {
     condicionIva = " | incluye IVA";
   }
 
-  return parseInt(prompt((
-    "######## Confirmar compra ########" + "\n" +
-    productoQty + " uni de " + convierteIdNombre(matchProducto) + " | Pre. uni: $" + precioProducto(matchProducto) + condicionIva + " | Precio final: $" + precioFinal + "\n" +
-    "A nombre de: " + apellidosComprador + ", " + nombresComprador + ".\n" +
-    "Dirección de entrega: " + direccionComprador + ". E-mail: " + emailComprador + ".\n\n" +
-    "Ingrese 1 para confirmar la compra. Cualquier otro valor o click en 'Cancelar' cancelará la compra."
-  )));
+  // Crea un string de todo el stock
+  for (const index of arrayCanasta) {
+    stringBuffer = stringBuffer + `${index.pedidoQty} uni de ${index.nombre}  | Pre. uni: $ ${index.precio} | Subtotal: $ ${index.precio * index.pedidoQty}\n`
+    precioTotal = precioTotal + index.pedidoQty * index.precio;
+  };
+
+  if (personaComprador.ivaComprador == 2) {
+    stringBuffer = stringBuffer + `Subtotal s/iva: $ ${precioTotal} | TOTAL A PAGAR c/iva 21%: $ ${precioTotal * 1.21}`;
+  }
+  else {
+    stringBuffer = stringBuffer + `TOTAL A PAGAR: $ ${precioTotal}`;
+  }
+
+  stringBuffer = stringBuffer + stringPie;
+
+  opcion = prompt(stringBuffer);
 }
 
 const chequearStock = (stock, cantSolicitada) => {
@@ -289,7 +301,7 @@ const calcularPrecioFinal = (matchProducto, productoQty, ivaComprador) => {
   con o sin el IVA del 21%
   */
 
-  let precioFinal = productoQty * precioProducto(matchProducto);
+  let precioFinal = productoQty * matchProducto.precio;
 
   if (ivaComprador == 2) {
     return precioFinal * 1.21;
@@ -389,7 +401,7 @@ const menuPrincipalPedido = (arrayProducto) => {
         repeat = true;  // para que vuelva al estado anterior
         break;
       }
-      repeat2 = chequearStock(matchProducto.stock, productoQty);
+      repeat2 = chequearStock(matchProducto.stock - matchProducto., productoQty);
     }
 
     if (repeat != true) { // por si se quiere volver al estado anterior desde preguntarCantidad()
@@ -419,13 +431,18 @@ const menuPrincipalPedido = (arrayProducto) => {
     }
   }
 
+  // Bloque que se encarga de tomar los datos del comprador y crear un objeto Persona
   nombresComprador = preguntarNombres();
   apellidosComprador = preguntarApellidos();
   direccionComprador = preguntarDireccion();
   emailComprador = preguntarEmail();
   ivaComprador = preguntarCondicionIva();
-  precioFinal = calcularPrecioFinal(matchProducto, productoQty, ivaComprador);
-  confirmaCompra = confirmarCompra(matchProducto, productoQty, ivaComprador, precioFinal, nombresComprador, apellidosComprador, direccionComprador, emailComprador);
+
+  new personaComprador = { nombresComprador, apellidosComprador, direccionComprador, emailComprador, ivaComprador };
+  ///////////////////////////////////////////////////////////////////////////////////
+
+  //precioFinal = calcularPrecioFinal(matchProducto, productoQty, ivaComprador);
+  confirmaCompra = confirmarCompra(arrayCanasta, personaComprador);
 
   if (confirmaCompra == 1) {
     descontarStock(matchProducto, productoQty);
