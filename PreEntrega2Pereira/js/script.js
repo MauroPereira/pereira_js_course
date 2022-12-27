@@ -257,7 +257,6 @@ const confirmarCompra = (arrayCanasta, personaComprador) => {
   /* Se encarga de retornar en forma de tabla todos los productos
   */
 
-  const condicionIva = " | IVA exento";
   const stringEncabezado = "######## Confirmar compra ########\n";
 
   const stringPie = `A nombre de: ${personaComprador.apellido}, ${personaComprador.nombre}\nDirección de entrega: ${personaComprador.direccion}. E-mail: ${personaComprador.email}\n\nOpciones:\n* Clickee 'Aceptar' para confirmar la compra. \n* Clickee 'Cancelar' para cancelar la compra.\nNo ingrese ningún valor en el cuadro de texto.`;
@@ -265,9 +264,7 @@ const confirmarCompra = (arrayCanasta, personaComprador) => {
   let stringBuffer = stringEncabezado;
   let precioTotal = 0.0;
 
-  if (personaComprador.ivaComprador == 2) {
-    condicionIva = " | incluye IVA";
-  }
+  console.log(personaComprador.condicionIva);
 
   // Crea un string de todo el stock
   for (const index of arrayCanasta) {
@@ -275,7 +272,7 @@ const confirmarCompra = (arrayCanasta, personaComprador) => {
     precioTotal = precioTotal + index.pedidoQty * index.precio;
   };
 
-  if (personaComprador.ivaComprador == 2) {
+  if (personaComprador.condicionIva == 2) {
     stringBuffer = stringBuffer + `Subtotal s/iva: $ ${precioTotal} | TOTAL A PAGAR c/iva 21%: $ ${precioTotal * 1.21}\n`;
   }
   else {
@@ -433,11 +430,11 @@ const menuPrincipalPedido = (arrayProducto) => {
   direccionComprador = preguntarDireccion();
   emailComprador = preguntarEmail();
   ivaComprador = preguntarCondicionIva();
+  console.log(`ivaComprador: ${ivaComprador}`);
 
   const personaComprador = new Persona(nombresComprador, apellidosComprador, direccionComprador, emailComprador, ivaComprador);
   ///////////////////////////////////////////////////////////////////////////////////
 
-  //precioFinal = calcularPrecioFinal(matchProducto, productoQty, ivaComprador);
   confirmaCompra = confirmarCompra(arrayCanasta, personaComprador);
 
   if (confirmaCompra != null) { // El usuario apretó 'Aceptar' en la pantalla anterior
