@@ -25,5 +25,5 @@ Algoritmo que se encarga a través de un menú interactivo de realizar una o má
 ### Para tener en cuenta
 * La estructura hace referencia a el html y css, correspondientes al armado de la página general, pero que el JS que se evalúa, aún no está interactuando con ella.
 ### Versiones
-* v2.0 
+* v2.0 Con el botón 'Cancelar' se puede volver hacia atrás en varios alert y prompt, excepto cuando se carga los datos del comprador. Se crean cuatro objetos Producto en un array. Si el comprador quiere un Producto se agrega a un array arrayCanasta previamente vacío. Se utiliza find() y forEach(). Si se desea agregar a la canasta un Producto que ya existe, la canasta se actualiza. El stock sólo decrementa cuando el usuario (el comprador) acepta la compra. TODO: crear un usuario admin que permita agregar más Productos al array o modificar su stock inicial.
 
