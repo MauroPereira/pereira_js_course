@@ -339,27 +339,6 @@ const compraCancelada = () => {
   alert("Atención: Compra cancelada!");
 }
 
-const descontarStock = (matchProducto, productoQty) => {
-  switch (matchProducto) {
-    case 1:
-      cantTornillo = cantTornillo - productoQty;
-      break;
-    case 2:
-      cantTuerca = cantTuerca - productoQty;
-      break;
-    case 3:
-      cantClavo = cantClavo - productoQty;
-      break;
-    case 4:
-      cantArandela = cantArandela - productoQty;
-      break;
-    default:
-      alert("Error");
-      break;
-
-  }
-}
-
 const mostrarCanastaYconsultar = (arrayProducto) => {
   /* Se encarga de mostrar la Canasta actual y preguntar si
   se desea seguir comprando 
@@ -415,7 +394,12 @@ const menuPrincipalPedido = (arrayProducto) => {
         repeat = true;  // para que vuelva al estado anterior
         break;
       }
-      repeat2 = chequearStock(matchProducto.stock - matchProducto.productoQty);
+      // Tengase en cuenta que si el usuario vuelve a pedir el mismo producto, debe descontarse
+      // del stock de Producto la cantidad pedida anterior, debido a eso se realiza la resta.
+      // Hasta que el usuario no confirme la compra, no se va a descontar la cantidad pedida del
+      // stock. En caso de se trate de una base de datos y varios usuarios esten realizando pedidos
+      // al mismo tiempo, esto puede llegar a generar un error de stock.
+      repeat2 = chequearStock(matchProducto.stock - matchProducto.pedidoQty, productoQty);
     }
 
     if (repeat != true) { // por si se quiere volver al estado anterior desde preguntarCantidad()
@@ -452,7 +436,7 @@ const menuPrincipalPedido = (arrayProducto) => {
   emailComprador = preguntarEmail();
   ivaComprador = preguntarCondicionIva();
 
-  new personaComprador = { nombresComprador, apellidosComprador, direccionComprador, emailComprador, ivaComprador };
+  const personaComprador = new Persona(nombresComprador, apellidosComprador, direccionComprador, emailComprador, ivaComprador);
   ///////////////////////////////////////////////////////////////////////////////////
 
   //precioFinal = calcularPrecioFinal(matchProducto, productoQty, ivaComprador);
@@ -469,6 +453,9 @@ const menuPrincipalPedido = (arrayProducto) => {
     /////////////////////////////////////////////////////////////////////////////////////
     graciasCompra();
   } else {
+    arrayProducto.forEach(object => {
+      objecto.pedidoQty = 0;
+    })
     compraCancelada();
   }
   return -1;
@@ -517,7 +504,7 @@ while (opcion != 0) {
     case 1:
       opcion = mostrarTablaStock(arrayProducto);
       if (opcion == 1) {
-        menuPrincipalPedido();
+        opcion = menuPrincipalPedido(arrayProducto);
       } else {
         opcion = -1;
       }
