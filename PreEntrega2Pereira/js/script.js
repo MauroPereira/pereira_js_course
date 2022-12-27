@@ -28,6 +28,9 @@ class Producto {
     this.pedidoQty = 0;
   }
   /* Métodos */
+  actualizarStock() {
+    this.stock = this.stock - this.pedidoQty;
+  }
 }
 
 class Persona {
@@ -457,7 +460,9 @@ const menuPrincipalPedido = (arrayProducto) => {
 
   if (confirmaCompra != null) { // El usuario apretó 'Cancelar' en la pantalla anterior
     //// TODO: descontar en todo el carrito
+
     descontarStock(matchProducto, productoQty);
+    ///actualizarStock()
     graciasCompra();
   } else {
     compraCancelada();
