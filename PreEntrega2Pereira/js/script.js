@@ -64,7 +64,9 @@ const mostrarTablaStock = (arrayProducto) => {
   /* Se encarga de retornar en forma de tabla todos los productos
   */
   const stringEncabezado = "######## Stock ########\nItems   Cantidad   Precio por unidad\n";
-  const stringPie = "Ingrese 1 para realizar un pedido. 'Cancelar' o ingresar cualquier otra caracter para volver al menú principal.";
+  const stringPie = "Opciones: \n" +
+    "* Para realizar un pedido ingrese 1 en el cuadro y luego clickee 'Aceptar':\n" +
+    "* Clickee 'Cancelar' para volver atrás.";
 
   return funcionMensajeAlert(stringEncabezado, arrayProducto, stringPie);
 }
@@ -265,45 +267,6 @@ const chequearStock = (stock, cantSolicitada) => {
   return true;
 }
 
-
-const convierteIdNombre = (id) => {
-  /* Devuelve el nombre que corresponde al ID del producro
-  */
-
-  switch (id) {
-    case 1:
-      return "Tornillo";
-    case 2:
-      return "Tuerca";
-    case 3:
-      return "Clavo"
-    case 4:
-      return "Arandela"
-    default:
-      return "Producto Desconocido"
-  }
-}
-
-const precioProducto = (matchProducto) => {
-  /* Devuelve el precio por unidad del producto según
-  su ID
-  */
-
-  switch (matchProducto) {
-    case 1:
-      return precTornillo;
-    case 2:
-      return precTuerca;
-    case 3:
-      return precClavo;
-    case 4:
-      return precArandela;
-    default:
-      alert("Error")
-      return 0;
-  }
-}
-
 const calcularPrecioFinal = (matchProducto, productoQty, ivaComprador) => {
   /* Algoritmo que se encarga de calcular el precio final, que puede ser
   con o sin el IVA del 21%
@@ -357,6 +320,7 @@ const descontarStock = (matchProducto, productoQty) => {
 const menuPrincipalPedido = (arrayProducto) => {
   /* Se encarga del proceso de tomar el pedido */
   let repeat = true;
+  let repeat2 = true;
   let matchProducto;
   let productoQty;
   let nombresComprador;
@@ -375,24 +339,13 @@ const menuPrincipalPedido = (arrayProducto) => {
       return -1;
     }
 
-    productoQty = preguntarCantidad(matchProducto);
-
-    switch (matchProducto) {
-      case 1:
-        repeat = chequearStock(cantTornillo, productoQty);
+    while (repeat2 == true) {
+      productoQty = preguntarCantidad(matchProducto);
+      if (productoQty == -1) {
+        repeat = true;
         break;
-      case 2:
-        repeat = chequearStock(cantTuerca, productoQty);
-        break;
-      case 3:
-        repeat = chequearStock(cantClavo, productoQty);
-        break;
-      case 4:
-        repeat = chequearStock(cantArandela, productoQty);
-        break;
-      default:
-        alert("Error: producto no encontrado o clickeado 'Cancelar'");
-        break;
+      }
+      repeat2 = chequearStock(matchProducto.stock, productoQty);
     }
   }
 
@@ -428,10 +381,10 @@ console.log("Inicio\nACLARACIÓN: la consola sólo es a modo de debug, los mensa
   proporcionados por alert y prompt.");
 
 const arrayProducto = [
-  new Producto("Tornillo".toUpperCase(), cantTornillo, precTornillo),
-  new Producto("Tuerca".toUpperCase(), cantTuerca, precTuerca),
-  new Producto("Clavo".toUpperCase(), cantClavo, precClavo),
-  new Producto("Arandela".toUpperCase(), cantArandela, precArandela)
+  new Producto("Tornillo".toUpperCase(), precTornillo, cantTornillo),
+  new Producto("Tuerca".toUpperCase(), precTuerca, cantTuerca),
+  new Producto("Clavo".toUpperCase(), precClavo, cantClavo),
+  new Producto("Arandela".toUpperCase(), precArandela, cantArandela)
 ];
 
 for (const item of arrayProducto) {
