@@ -415,7 +415,7 @@ const menuPrincipalPedido = (arrayProducto) => {
         repeat = true;  // para que vuelva al estado anterior
         break;
       }
-      repeat2 = chequearStock(matchProducto.stock - matchProducto., productoQty);
+      repeat2 = chequearStock(matchProducto.stock - matchProducto.productoQty);
     }
 
     if (repeat != true) { // por si se quiere volver al estado anterior desde preguntarCantidad()
