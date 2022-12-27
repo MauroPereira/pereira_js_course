@@ -458,11 +458,15 @@ const menuPrincipalPedido = (arrayProducto) => {
   //precioFinal = calcularPrecioFinal(matchProducto, productoQty, ivaComprador);
   confirmaCompra = confirmarCompra(arrayCanasta, personaComprador);
 
-  if (confirmaCompra != null) { // El usuario apretó 'Cancelar' en la pantalla anterior
-    //// TODO: descontar en todo el carrito
-
-    descontarStock(matchProducto, productoQty);
-    ///actualizarStock()
+  if (confirmaCompra != null) { // El usuario apretó 'Aceptar' en la pantalla anterior
+    // Bloque que al efectuarse la compra, se encarga de extraer del stock las cantidades
+    // pedidas por el usuario. Luego setea a 0 las cantidades pedidas dentro de cada objeto
+    // Producto
+    arrayProducto.forEach(object => {
+      object.actualizarStock();
+      objecto.pedidoQty = 0;
+    })
+    /////////////////////////////////////////////////////////////////////////////////////
     graciasCompra();
   } else {
     compraCancelada();
