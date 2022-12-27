@@ -256,7 +256,11 @@ const confirmarCompra = (arrayCanasta, personaComprador) => {
 
   const condicionIva = " | IVA exento";
   const stringEncabezado = "######## Confirmar compra ########\n";
-  const stringPie = `Opciones:\n* Clickee 'Aceptar' para confirmar la compra. \n * Clickee 'Cancelar' para cancelar la compra.\nNo ingrese ningún valor en el cuadro de texto.`;
+
+  const stringPie = `A nombre de: ${personaComprador.apellido}, ${personaComprador.nombre}\n \
+  Dirección de entrega: ${personaComprador.direccion}. E-mail: ${personaComprador.email}\n\n \
+  Opciones:\n* Clickee 'Aceptar' para confirmar la compra. \n * Clickee 'Cancelar' para cancelar la compra.\nNo ingrese ningún valor en el cuadro de texto.`;
+
   let stringBuffer = stringEncabezado;
   let precioTotal = 0.0;
 
@@ -279,7 +283,15 @@ const confirmarCompra = (arrayCanasta, personaComprador) => {
 
   stringBuffer = stringBuffer + stringPie;
 
-  opcion = prompt(stringBuffer);
+  while (true) {
+    opcion = prompt(stringBuffer);
+    if (opcion != null && opcion != "") {
+      alert(`Error por escritura en cuadro. Clickee 'Aceptar' para continuar.`);
+    }
+    else {
+      return opcion;
+    }
+  }
 }
 
 const chequearStock = (stock, cantSolicitada) => {
@@ -380,7 +392,6 @@ const menuPrincipalPedido = (arrayProducto) => {
   let apellidosComprador;
   let emailComprador;
   let ivaComprador;
-  let precioFinal;
   let confirmaCompra;
 
   const arrayCanasta = [];  // array donde se colocan los objetos que el usuario desea comprar
@@ -444,13 +455,13 @@ const menuPrincipalPedido = (arrayProducto) => {
   //precioFinal = calcularPrecioFinal(matchProducto, productoQty, ivaComprador);
   confirmaCompra = confirmarCompra(arrayCanasta, personaComprador);
 
-  if (confirmaCompra == 1) {
+  if (confirmaCompra != null) { // El usuario apretó 'Cancelar' en la pantalla anterior
+    //// TODO: descontar en todo el carrito
     descontarStock(matchProducto, productoQty);
     graciasCompra();
   } else {
     compraCancelada();
   }
-
   return -1;
 }
 
