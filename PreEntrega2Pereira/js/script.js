@@ -25,6 +25,7 @@ class Producto {
     this.nombre = nombre;
     this.precio = precio;
     this.stock = stock;
+    this.pedidoQty = 0;
   }
   /* Métodos */
 }
@@ -60,9 +61,25 @@ const funcionMensajeAlert = (stringEncabezado, arrayVar, stringPie) => {
   return parseInt(prompt(stringBuffer));
 }
 
+const funcionMensajeAlertCanasta = (stringEncabezado, arrayVar, stringPie) => {
+  /* Se encarga de armar un Alert con toda la informacion pero en formato Canasta */
+
+  let stringBuffer = stringEncabezado;
+
+  // Crea un string de todo el stock
+  for (const index of arrayVar) {
+    stringBuffer = stringBuffer + `${index.nombre}   ${index.pedidoQty}   ${index.pedidoQty * index.precio}\n`
+  };
+
+  stringBuffer = stringBuffer + stringPie;
+
+  return prompt(stringBuffer);
+}
+
 const mostrarTablaStock = (arrayProducto) => {
   /* Se encarga de retornar en forma de tabla todos los productos
   */
+
   const stringEncabezado = "######## Stock ########\nItems   Cantidad   Precio por unidad\n";
   const stringPie = "Opciones: \n" +
     "* Para realizar un pedido ingrese 1 en el cuadro y luego clickee 'Aceptar':\n" +
@@ -316,6 +333,30 @@ const descontarStock = (matchProducto, productoQty) => {
   }
 }
 
+const mostrarCanastaYconsultar = (arrayProducto) => {
+  /* Se encarga de mostrar la Canasta actual y preguntar si
+  se desea seguir comprando 
+  */
+
+  const stringEncabezado = "######## Canasta de productos ########\nItems   Cantidad   Subtotal\n";
+  const stringPie = "\nOpciones: \n" +
+    "* Clickee 'Aceptar' sin escribir en el cuadro para proceder con la compra de la canasta.\n" +
+    "* Clickee 'Cancelar' para agregar más productos a la canasta.";
+
+  let opcion;
+
+  while (true) {
+    opcion = funcionMensajeAlertCanasta(stringEncabezado, arrayProducto, stringPie);
+    console.log(opcion);
+
+    if (opcion != null && opcion != "") {
+      alert(`Error por escritura en cuadro. Clickee 'Aceptar' para continuar.`);
+    }
+    else {
+      return opcion;
+    }
+  }
+}
 
 const menuPrincipalPedido = (arrayProducto) => {
   /* Se encarga del proceso de tomar el pedido */
@@ -330,7 +371,10 @@ const menuPrincipalPedido = (arrayProducto) => {
   let precioFinal;
   let confirmaCompra;
 
+  const arrayCanasta = [];  // array donde se colocan los objetos que el usuario desea comprar
+
   while (repeat == true) {
+    repeat = false;
 
     matchProducto = menuTomarProducto(arrayProducto);
     console.log(`Producto elegido: ${matchProducto}`);
@@ -342,10 +386,36 @@ const menuPrincipalPedido = (arrayProducto) => {
     while (repeat2 == true) {
       productoQty = preguntarCantidad(matchProducto);
       if (productoQty == -1) {
-        repeat = true;
+        repeat = true;  // para que vuelva al estado anterior
         break;
       }
       repeat2 = chequearStock(matchProducto.stock, productoQty);
+    }
+
+    if (repeat != true) { // por si se quiere volver al estado anterior desde preguntarCantidad()
+
+      // Bloque que se encarga de chequear que si existen Productos repetidos, de actualizarlos
+      let matchProducto2 = arrayCanasta.find(objeto => objeto.nombre === matchProducto.nombre);
+      if (matchProducto2 == undefined) {
+        matchProducto.pedidoQty = productoQty;  // carga la cantidad pedida en el objeto Producto
+        arrayCanasta.push(matchProducto); // se agrega un objeto Producto al arrayCanasta
+      }
+      else {
+        /* En este caso al existir ya el Producto y estar "referenciado" a una posición en el arrayCanasta
+        sólo con actualizar la cantidad pedida de producto se logra modificar el valor en el arrayCanasta
+        */
+        matchProducto.pedidoQty = matchProducto.pedidoQty + productoQty;
+      }
+      //////////////////////////////////////////////////////////////////////////////////////////
+
+      let opcionSeguirComprando = mostrarCanastaYconsultar(arrayCanasta);
+      if (opcionSeguirComprando == null) {
+        repeat = true;  // el usuario desea seguir cargando Productos al arrayCanasta
+        repeat2 = true;  // sino no entra en preguntarCantidad 
+      }
+      else {
+        repeat = false;  // el usuario desea terminar la compra con Productos actuales en el arrayCanasta    
+      }
     }
   }
 
@@ -368,6 +438,9 @@ const menuPrincipalPedido = (arrayProducto) => {
 }
 
 const mensajeOpcionNoValida = (mensaje, genero = "o") => {
+  /* Mensaje de opcion no valida con opciones de visualización
+  */
+
   if (genero == "o") {
     alert(`Error por ingreso de ${mensaje} no válido. Clickee 'Aceptar' para continuar.`);
   }
