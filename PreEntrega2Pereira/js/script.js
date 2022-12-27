@@ -55,7 +55,7 @@ const funcionMensajeAlert = (stringEncabezado, arrayVar, stringPie) => {
 
   // Crea un string de todo el stock
   for (const index of arrayVar) {
-    stringBuffer = stringBuffer + `${index.nombre}   ${index.precio}   ${index.stock}\n`
+    stringBuffer = stringBuffer + `${index.nombre}   $ ${index.precio}   ${index.stock} uni\n`
   };
 
   stringBuffer = stringBuffer + stringPie;
@@ -70,7 +70,7 @@ const funcionMensajeAlertCanasta = (stringEncabezado, arrayVar, stringPie) => {
 
   // Crea un string de todo el stock
   for (const index of arrayVar) {
-    stringBuffer = stringBuffer + `${index.nombre}   ${index.pedidoQty}   ${index.pedidoQty * index.precio}\n`
+    stringBuffer = stringBuffer + `${index.nombre}   ${index.pedidoQty} uni  $ ${index.pedidoQty * index.precio}\n`
   };
 
   stringBuffer = stringBuffer + stringPie;
@@ -82,7 +82,7 @@ const mostrarTablaStock = (arrayProducto) => {
   /* Se encarga de retornar en forma de tabla todos los productos
   */
 
-  const stringEncabezado = "######## Stock ########\nItems   Cantidad   Precio por unidad\n";
+  const stringEncabezado = "######## Stock ########\nItems      Precio por unidad   Cantidad\n";
   const stringPie = "Opciones: \n" +
     "* Para realizar un pedido ingrese 1 en el cuadro y luego clickee 'Aceptar':\n" +
     "* Clickee 'Cancelar' para volver atrás.";
