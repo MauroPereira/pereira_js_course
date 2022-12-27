@@ -444,15 +444,15 @@ const menuPrincipalPedido = (arrayProducto) => {
     // Bloque que al efectuarse la compra, se encarga de extraer del stock las cantidades
     // pedidas por el usuario. Luego setea a 0 las cantidades pedidas dentro de cada objeto
     // Producto
-    arrayProducto.forEach(object => {
+    arrayCanasta.forEach(object => {
       object.actualizarStock();
-      objecto.pedidoQty = 0;
+      object.pedidoQty = 0;
     })
     /////////////////////////////////////////////////////////////////////////////////////
     graciasCompra();
   } else {
-    arrayProducto.forEach(object => {
-      objecto.pedidoQty = 0;
+    arrayCanasta.forEach(object => {
+      object.pedidoQty = 0;
     })
     compraCancelada();
   }
