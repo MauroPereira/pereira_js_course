@@ -55,7 +55,7 @@ const funcionMensajeAlert = (stringEncabezado, arrayVar, stringPie) => {
 
   // Crea un string de todo el stock
   for (const index of arrayVar) {
-    stringBuffer = stringBuffer + `${index.nombre}   $ ${index.precio}   ${index.stock} uni\n`
+    stringBuffer = stringBuffer + `${index.nombre}      $ ${index.precio}      ${index.stock} uni\n`
   };
 
   stringBuffer = stringBuffer + stringPie;
@@ -82,7 +82,7 @@ const mostrarTablaStock = (arrayProducto) => {
   /* Se encarga de retornar en forma de tabla todos los productos
   */
 
-  const stringEncabezado = "######## Stock ########\nItems      Precio por unidad   Cantidad\n";
+  const stringEncabezado = "######## Stock ########\nItems      Precio por unidad   Cantidad en stock\n";
   const stringPie = "Opciones: \n" +
     "* Para realizar un pedido ingrese 1 en el cuadro y luego clickee 'Aceptar':\n" +
     "* Clickee 'Cancelar' para volver atrás.";
@@ -260,9 +260,7 @@ const confirmarCompra = (arrayCanasta, personaComprador) => {
   const condicionIva = " | IVA exento";
   const stringEncabezado = "######## Confirmar compra ########\n";
 
-  const stringPie = `A nombre de: ${personaComprador.apellido}, ${personaComprador.nombre}\n \
-  Dirección de entrega: ${personaComprador.direccion}. E-mail: ${personaComprador.email}\n\n \
-  Opciones:\n* Clickee 'Aceptar' para confirmar la compra. \n * Clickee 'Cancelar' para cancelar la compra.\nNo ingrese ningún valor en el cuadro de texto.`;
+  const stringPie = `A nombre de: ${personaComprador.apellido}, ${personaComprador.nombre}\nDirección de entrega: ${personaComprador.direccion}. E-mail: ${personaComprador.email}\n\nOpciones:\n* Clickee 'Aceptar' para confirmar la compra. \n* Clickee 'Cancelar' para cancelar la compra.\nNo ingrese ningún valor en el cuadro de texto.`;
 
   let stringBuffer = stringEncabezado;
   let precioTotal = 0.0;
@@ -278,10 +276,10 @@ const confirmarCompra = (arrayCanasta, personaComprador) => {
   };
 
   if (personaComprador.ivaComprador == 2) {
-    stringBuffer = stringBuffer + `Subtotal s/iva: $ ${precioTotal} | TOTAL A PAGAR c/iva 21%: $ ${precioTotal * 1.21}`;
+    stringBuffer = stringBuffer + `Subtotal s/iva: $ ${precioTotal} | TOTAL A PAGAR c/iva 21%: $ ${precioTotal * 1.21}\n`;
   }
   else {
-    stringBuffer = stringBuffer + `TOTAL A PAGAR: $ ${precioTotal}`;
+    stringBuffer = stringBuffer + `TOTAL A PAGAR: $ ${precioTotal}\n`;
   }
 
   stringBuffer = stringBuffer + stringPie;
