@@ -98,7 +98,8 @@ const mostrarMenuPrincipal = () => {
     "######## E-Shop de Ferretería ########" + "\n" +
     "Ingrese algunas de las opciones y luego clickee 'Aceptar':\n" +
     "* 1 - Ver stock general" + "\n" +
-    "* 2 - Realizar pedido" + "\n\n" +
+    "* 2 - Realizar pedido" + "\n" +
+    "* 3 - Loguearse" + "\n\n" +
     "* Clickee 'Cancelar' para salir."
   )
 }
@@ -468,6 +469,10 @@ const mensajeOpcionNoValida = (mensaje, genero = "o") => {
   }
 }
 
+const menuPrincipalLog = (objectPersona) => {
+  /* Pantalla de logueo */
+
+}
 // Main /////////////////////////////////////////////////////////////////////////////////
 console.log("Inicio\nACLARACIÓN: la consola sólo es a modo de debug, los mensajes de usuario serán \
   proporcionados por alert y prompt.");
@@ -506,6 +511,10 @@ while (opcion != 0) {
       break;
     case 2:
       opcion = menuPrincipalPedido(arrayProducto);
+      console.log(`opcion ${opcion}`);
+      break;
+    case 3:
+      opcion = menuPrincipalLog(arrayProducto);
       console.log(`opcion ${opcion}`);
       break;
     default:
