@@ -25,11 +25,11 @@ class Producto {
     this.nombre = nombre;
     this.precio = precio;
     this.stock = stock;
-    this.pedidoQty = 0;
+    this.pedidoCantidad = 0;
   }
   /* Métodos */
   actualizarStock() {
-    this.stock = this.stock - this.pedidoQty;
+    this.stock = this.stock - this.pedidoCantidad;
   }
 }
 
@@ -70,7 +70,7 @@ const funcionMensajeAlertCanasta = (stringEncabezado, arrayVar, stringPie) => {
 
   // Crea un string de todo el stock
   for (const index of arrayVar) {
-    stringBuffer = stringBuffer + `${index.nombre}   ${index.pedidoQty} uni  $ ${index.pedidoQty * index.precio}\n`
+    stringBuffer = stringBuffer + `${index.nombre}   ${index.pedidoCantidad} uni  $ ${index.pedidoCantidad * index.precio}\n`
   };
 
   stringBuffer = stringBuffer + stringPie;
@@ -180,6 +180,28 @@ const chequearNanEspacioVacio = (mensaje) => {
   return valor;
 }
 
+const chequearEspacioVacio = (mensaje) => {
+  /* Se encarga de chequear que no se ingrese 
+  un espacio en blanco, independientemente del
+  mensaje mostrado
+  */
+
+  let condicion = true;
+
+  while (condicion == true) {
+    valor = prompt(mensaje);
+    console.log(valor);
+    if (valor == "") {
+      condicion = true;
+      alert("Error: no se ha ingresado ningún valor. Clickee en 'Aceptar' para continuar.");
+    } else {
+      condicion = false;
+    }
+  }
+
+  return valor;
+}
+
 const preguntarNombres = () => {
   /* Se encarga de preguntar nombres
   */
@@ -269,8 +291,8 @@ const confirmarCompra = (arrayCanasta, personaComprador) => {
 
   // Crea un string de todo el stock
   for (const index of arrayCanasta) {
-    stringBuffer = stringBuffer + `${index.pedidoQty} uni de ${index.nombre}  | Pre. uni: $ ${index.precio} | Subtotal: $ ${index.precio * index.pedidoQty}\n`
-    precioTotal = precioTotal + index.pedidoQty * index.precio;
+    stringBuffer = stringBuffer + `${index.pedidoCantidad} uni de ${index.nombre}  | Pre. uni: $ ${index.precio} | Subtotal: $ ${index.precio * index.pedidoCantidad}\n`
+    precioTotal = precioTotal + index.pedidoCantidad * index.precio;
   };
 
   if (personaComprador.condicionIva == 2) {
@@ -307,12 +329,12 @@ const chequearStock = (stock, cantSolicitada) => {
   return true;
 }
 
-const calcularPrecioFinal = (matchProducto, productoQty, ivaComprador) => {
+const calcularPrecioFinal = (matchProducto, productoCantidad, ivaComprador) => {
   /* Algoritmo que se encarga de calcular el precio final, que puede ser
   con o sin el IVA del 21%
   */
 
-  let precioFinal = productoQty * matchProducto.precio;
+  let precioFinal = productoCantidad * matchProducto.precio;
 
   if (ivaComprador == 2) {
     return precioFinal * 1.21;
@@ -365,7 +387,7 @@ const menuPrincipalPedido = (arrayProducto) => {
   let repeat = true;
   let repeat2 = true;
   let matchProducto;
-  let productoQty;
+  let productoCantidad;
   let nombresComprador;
   let apellidosComprador;
   let emailComprador;
@@ -385,8 +407,8 @@ const menuPrincipalPedido = (arrayProducto) => {
     }
 
     while (repeat2 == true) {
-      productoQty = preguntarCantidad(matchProducto);
-      if (productoQty == -1) {
+      productoCantidad = preguntarCantidad(matchProducto);
+      if (productoCantidad == -1) {
         repeat = true;  // para que vuelva al estado anterior
         break;
       }
@@ -395,7 +417,7 @@ const menuPrincipalPedido = (arrayProducto) => {
       // Hasta que el usuario no confirme la compra, no se va a descontar la cantidad pedida del
       // stock. En caso de se trate de una base de datos y varios usuarios esten realizando pedidos
       // al mismo tiempo, esto puede llegar a generar un error de stock.
-      repeat2 = chequearStock(matchProducto.stock - matchProducto.pedidoQty, productoQty);
+      repeat2 = chequearStock(matchProducto.stock - matchProducto.pedidoCantidad, productoCantidad);
     }
 
     if (repeat != true) { // por si se quiere volver al estado anterior desde preguntarCantidad()
@@ -403,14 +425,14 @@ const menuPrincipalPedido = (arrayProducto) => {
       // Bloque que se encarga de chequear que si existen Productos repetidos, de actualizarlos
       let matchProducto2 = arrayCanasta.find(objeto => objeto.nombre === matchProducto.nombre);
       if (matchProducto2 == undefined) {
-        matchProducto.pedidoQty = productoQty;  // carga la cantidad pedida en el objeto Producto
+        matchProducto.pedidoCantidad = productoCantidad;  // carga la cantidad pedida en el objeto Producto
         arrayCanasta.push(matchProducto); // se agrega un objeto Producto al arrayCanasta
       }
       else {
         /* En este caso al existir ya el Producto y estar "referenciado" a una posición en el arrayCanasta
         sólo con actualizar la cantidad pedida de producto se logra modificar el valor en el arrayCanasta
         */
-        matchProducto.pedidoQty = matchProducto.pedidoQty + productoQty;
+        matchProducto.pedidoCantidad = matchProducto.pedidoCantidad + productoCantidad;
       }
       //////////////////////////////////////////////////////////////////////////////////////////
 
@@ -444,13 +466,13 @@ const menuPrincipalPedido = (arrayProducto) => {
     // Producto
     arrayCanasta.forEach(object => {
       object.actualizarStock();
-      object.pedidoQty = 0;
+      object.pedidoCantidad = 0;
     })
     /////////////////////////////////////////////////////////////////////////////////////
     graciasCompra();
   } else {
     arrayCanasta.forEach(object => {
-      object.pedidoQty = 0;
+      object.pedidoCantidad = 0;
     })
     compraCancelada();
   }
@@ -507,11 +529,55 @@ const menuPrincipalLog = (arrayAdmin, arrayProducto) => {
     }
   }
   console.log(`Password ${matchAdmin.password} encontrado.`);
-  alert(`Hasta acá llegue XD`);
+
+  return menuPrincipalAgregarProducto(arrayProducto);
+}
+
+const pantallaAgregarProducto = (arrayProducto) => {
+  /* Pantalla donde se agregan productos
+  */
+
+  const stringEncabezado = `######## Agregar producto ########\n`;
+  const stringPie = `Ingrese el nombre del producto y clickee en 'Aceptar'. Cancelar para volver al menú principal.\n\n`;
+  const stringPie2 = `Ingrese el precio del producto y clickee en 'Aceptar'. Cancelar para volver al menú principal.\n\n`;
+  const stringPie3 = `Ingrese el stock del producto y clickee en 'Aceptar'. Cancelar para volver al menú principal.\n\n`;
+  let stringBuffer = stringEncabezado + stringPie;
+  let nombreProductoNuevo;
+  let precioProductoNuevo;
+  let stockProductoNuevo;
+
+  nombreProductoNuevo = chequearEspacioVacio(stringBuffer);
+  if (nombreProductoNuevo == undefined || nombreProductoNuevo == null) {
+    return -1;
+  }
+
+  stringBuffer = stringEncabezado + stringPie2;
+  precioProductoNuevo = chequearEspacioVacio(stringBuffer);
+  if (precioProductoNuevo == undefined || precioProductoNuevo == null) {
+    return -1;
+  }
+
+  stringBuffer = stringEncabezado + stringPie3;
+  stockProductoNuevo = chequearEspacioVacio(stringBuffer);
+  if (stockProductoNuevo == undefined || stockProductoNuevo == null) {
+    return -1;
+  }
+
+  ///////////////////
+  const stringEncabezado = "######## Stock ########\nItems      Precio por unidad   Cantidad en stock\n";
+  const stringPie = "Opciones: \n" +
+    "* Para realizar un pedido ingrese 1 en el cuadro y luego clickee 'Aceptar':\n" +
+    "* Clickee 'Cancelar' para volver atrás.";
+
+  return funcionMensajeAlert(stringEncabezado, arrayProducto, stringPie);
+  /////////////
+
+
+  return -1;
 }
 // Main /////////////////////////////////////////////////////////////////////////////////
 console.log("Inicio\nACLARACIÓN: la consola sólo es a modo de debug, los mensajes de usuario serán \
-  proporcionados por alert y prompt.");
+proporcionados por alert y prompt.");
 
 const arrayAdmin = [{ id: 0, nick: "admin", password: "1234" }];
 
