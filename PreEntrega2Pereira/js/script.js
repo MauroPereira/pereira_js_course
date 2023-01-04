@@ -469,47 +469,51 @@ const mensajeOpcionNoValida = (mensaje, genero = "o") => {
   }
 }
 
-const menuPrincipalLog = (arrayAdmins, arrayProducto) => {
+const menuPrincipalLog = (arrayAdmin, arrayProducto) => {
   /* Pantalla de logueo */
-  const stringEncabezado = `######## Login ########\n`
-  const stringPie = `Ingrese su nick y clickee en 'Aceptar'. Cancelar para volver al menú principal.\n\n`
-  const stringPie2 = `Ingrese su contraseña y clickee en 'Aceptar'. Cancelar para volver al menú principal.\n\n`
+  const stringEncabezado = `######## Login ########\n`;
+  const stringPie = `Ingrese su nick y clickee en 'Aceptar'. Cancelar para volver al menú principal.\n\n`;
+  const stringPie2 = `Ingrese su contraseña y clickee en 'Aceptar'. Cancelar para volver al menú principal.\n\n`;
+  let matchAdmin;
 
+  let stringBuffer = stringEncabezado + stringPie;
   while (true) {
-    let stringBuffer = stringEncabezado + stringPie;
-    let nick = prompt(stringBuffer).toLowerCase();
-
+    let nick = prompt(stringBuffer);
     if (nick == undefined) {
       return -1;
     }
+    nick = nick.toLowerCase();
     matchAdmin = arrayAdmin.find(objeto => objeto.nick === nick.toLowerCase());
     if (matchAdmin == undefined) {
       alert(`Nick no encontrado. Clickee 'Aceptar' para continuar`);
     } else {
-      continue;
+      break;
     }
   }
+  console.log(`Nick ${matchAdmin.nick} encontrado.`);
 
+  stringBuffer = stringEncabezado + stringPie2;
   while (true) {
-    stringBuffer = stringEncabezado + stringPie2;
     let password = prompt(stringBuffer);
+    console.log(password);
 
     if (password == undefined) {
       return -1;
     }
     if (matchAdmin.password != password) {
-      alert(`Nick no encontrado. Clickee 'Aceptar' para continuar`);
+      alert(`Password inválido. Clickee 'Aceptar' para continuar`);
     } else {
-      continue;
+      break;
     }
   }
+  console.log(`Password ${matchAdmin.password} encontrado.`);
   alert(`Hasta acá llegue XD`);
 }
 // Main /////////////////////////////////////////////////////////////////////////////////
 console.log("Inicio\nACLARACIÓN: la consola sólo es a modo de debug, los mensajes de usuario serán \
   proporcionados por alert y prompt.");
 
-const arrayAdmins = [{ id: 0, nick: admin, password: admin }];
+const arrayAdmin = [{ id: 0, nick: "admin", password: "1234" }];
 
 const arrayProducto = [
   new Producto("Tornillo".toUpperCase(), precTornillo, cantTornillo),
@@ -548,7 +552,7 @@ while (opcion != 0) {
       console.log(`opcion ${opcion}`);
       break;
     case 3:
-      opcion = menuPrincipalLog(arrayAdmins, arrayProducto);
+      opcion = menuPrincipalLog(arrayAdmin, arrayProducto);
       console.log(`opcion ${opcion}`);
       break;
     default:
