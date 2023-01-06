@@ -564,7 +564,7 @@ const pantallaAgregarProducto = (arrayProducto) => {
   }
 
   ///////////////////
-  const stringEncabezado = "######## Stock ########\nItems      Precio por unidad   Cantidad en stock\n";
+  stringEncabezado = "######## Nuevo Stock ########\nItems      Precio por unidad   Cantidad en stock\n";
   const stringPie = "Opciones: \n" +
     "* Para realizar un pedido ingrese 1 en el cuadro y luego clickee 'Aceptar':\n" +
     "* Clickee 'Cancelar' para volver atrás.";
