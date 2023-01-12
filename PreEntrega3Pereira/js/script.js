@@ -584,12 +584,16 @@ function crearHtml(array) {
   let html;
   array.forEach((el) => {
     const { nombre, precio, stock } = el;
-    html = `<div class="card">
-				<hr>
-				<h3>${nombre}<h3>
-				<p>$${precio}</p>
-        <p>$${stock}</p>
-				</div>`;
+    html =
+      `<div class="card" style="width: 18rem;">
+      <img src="./imagenes/icono_ferreteria.png" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">${nombre}</h5>
+        <p class="card-text">$${precio}</p>
+        <p class="card-text">${stock} unidades disponibles</p>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+      </div>
+    </div>`;
     console.log(html);
     contenedor.innerHTML += html;
   });
