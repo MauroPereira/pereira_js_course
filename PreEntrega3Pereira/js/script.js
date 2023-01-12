@@ -17,8 +17,7 @@ let idProducto = -1;
 let idPersona = -1;
 
 // Declaraciones DOM
-let contenedor = document.getElementsByClassName("contenedor");
-contenedor.innerHTML = `<h2>Hola mundo!</h2><p>Lorem ipsum</p>`;
+let contenedor = document.querySelector(".container");
 
 // Declaración de clases
 class Producto {
@@ -613,7 +612,7 @@ for (const item of arrayProducto) {
   console.log(item)
 };
 
-//crearHtml(arrayProducto);
+crearHtml(arrayProducto);
 
 // while (opcion != 0) {
 //   opcion = prompt(mostrarMenuPrincipal());
