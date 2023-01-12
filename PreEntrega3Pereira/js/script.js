@@ -585,8 +585,7 @@ function crearHtml(array) {
   array.forEach((el) => {
     const { nombre, precio, stock } = el;
     html =
-      `<div class="col col-lg-2">
-        <div class="card" style="width: 15rem;">
+      `<div class="card" style="width: 15rem;">
           <img src="./imagenes/icono_ferreteria.png" class="card-img-top" alt="...">
           <div class="card-body">
             <h5 class="card-title">${nombre}</h5>
@@ -594,8 +593,7 @@ function crearHtml(array) {
             <p class="card-text">${stock} unidades disponibles</p>
             <a href="#" class="btn btn-primary">Agregar al carrito</a>
           </div>
-        </div>
-      </div>`;
+        </div>`;
     console.log(html);
     contenedor.innerHTML += html;
   });
@@ -657,3 +655,6 @@ crearHtml(arrayProducto);
 
 console.log("Fin");
 ///////////////////////////////////////////////////////////////////////////////////
+
+
+// analizar esto: https://www.w3schools.com/bootstrap4/tryit.asp?filename=trybs_card_columns&stacked=h
