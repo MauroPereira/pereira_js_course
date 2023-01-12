@@ -16,6 +16,10 @@ let opcion = -1
 let idProducto = -1;
 let idPersona = -1;
 
+// Declaraciones DOM
+let contenedor = document.getElementsByClassName("contenedor");
+contenedor.innerHTML = `<h2>Hola mundo!</h2><p>Lorem ipsum</p>`;
+
 // Declaración de clases
 class Producto {
   /* Clase Producto */
@@ -563,18 +567,35 @@ const pantallaAgregarProducto = (arrayProducto) => {
     return -1;
   }
 
-  ///////////////////
-  stringEncabezado = "######## Nuevo Stock ########\nItems      Precio por unidad   Cantidad en stock\n";
-  const stringPie = "Opciones: \n" +
-    "* Para realizar un pedido ingrese 1 en el cuadro y luego clickee 'Aceptar':\n" +
-    "* Clickee 'Cancelar' para volver atrás.";
+  // ///////////////////
+  // stringEncabezado = "######## Nuevo Stock ########\nItems      Precio por unidad   Cantidad en stock\n";
+  // const stringPie = "Opciones: \n" +
+  //   "* Para realizar un pedido ingrese 1 en el cuadro y luego clickee 'Aceptar':\n" +
+  //   "* Clickee 'Cancelar' para volver atrás.";
 
-  return funcionMensajeAlert(stringEncabezado, arrayProducto, stringPie);
-  /////////////
+  // return funcionMensajeAlert(stringEncabezado, arrayProducto, stringPie);
+  // /////////////
 
 
   return -1;
 }
+
+function crearHtml(array) {
+  /* Se encarga de crear las card de los diferentes Productos */
+  let html;
+  array.forEach((el) => {
+    const { nombre, precio, stock } = el;
+    html = `<div class="card">
+				<hr>
+				<h3>${nombre}<h3>
+				<p>$${precio}</p>
+        <p>$${stock}</p>
+				</div>`;
+    console.log(html);
+    contenedor.innerHTML += html;
+  });
+}
+
 // Main /////////////////////////////////////////////////////////////////////////////////
 console.log("Inicio\nACLARACIÓN: la consola sólo es a modo de debug, los mensajes de usuario serán \
 proporcionados por alert y prompt.");
@@ -592,40 +613,42 @@ for (const item of arrayProducto) {
   console.log(item)
 };
 
-while (opcion != 0) {
-  opcion = prompt(mostrarMenuPrincipal());
-  console.log(opcion)
-  if (opcion == null) {
-    opcion = 0;
-  } else {
-    opcion = parseInt(opcion);
-  }
+//crearHtml(arrayProducto);
 
-  switch (opcion) {
-    case 0:
-      alert("Saliendo... Gracias por su visita.");
-      break;
-    case 1:
-      opcion = mostrarTablaStock(arrayProducto);
-      if (opcion == 1) {
-        opcion = menuPrincipalPedido(arrayProducto);
-      } else {
-        opcion = -1;
-      }
-      break;
-    case 2:
-      opcion = menuPrincipalPedido(arrayProducto);
-      console.log(`opcion ${opcion}`);
-      break;
-    case 3:
-      opcion = menuPrincipalLog(arrayAdmin, arrayProducto);
-      console.log(`opcion ${opcion}`);
-      break;
-    default:
-      mensajeOpcionNoValida("opción", "a");
-      break;
-  }
-}
+// while (opcion != 0) {
+//   opcion = prompt(mostrarMenuPrincipal());
+//   console.log(opcion)
+//   if (opcion == null) {
+//     opcion = 0;
+//   } else {
+//     opcion = parseInt(opcion);
+//   }
+
+//   switch (opcion) {
+//     case 0:
+//       alert("Saliendo... Gracias por su visita.");
+//       break;
+//     case 1:
+//       opcion = mostrarTablaStock(arrayProducto);
+//       if (opcion == 1) {
+//         opcion = menuPrincipalPedido(arrayProducto);
+//       } else {
+//         opcion = -1;
+//       }
+//       break;
+//     case 2:
+//       opcion = menuPrincipalPedido(arrayProducto);
+//       console.log(`opcion ${opcion}`);
+//       break;
+//     case 3:
+//       opcion = menuPrincipalLog(arrayAdmin, arrayProducto);
+//       console.log(`opcion ${opcion}`);
+//       break;
+//     default:
+//       mensajeOpcionNoValida("opción", "a");
+//       break;
+//   }
+// }
 
 console.log("Fin");
 ///////////////////////////////////////////////////////////////////////////////////
