@@ -589,7 +589,7 @@ function crearHtml(array) {
     html = `
       <div class="col p-2">
         <div class="card" style="width: 13rem;">
-            <img src="${imagen}" class="card-img-top" alt="...">
+            <img class="card-img" src="${imagen}" class="card-img-top" alt="${nombre}">
             <div class="card-body">
               <h6 class="card-title">${nombre}</h6>
               <p class="card-text card-precio">$${precio}</p>

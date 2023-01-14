@@ -43,3 +43,8 @@ section {
 .card-unidad {
   font-size: 0.8rem;
 }
+
+.card-img {
+  max-height: 200px;
+  aspect-ratio: square;
+}
