@@ -586,12 +586,12 @@ function crearHtml(array) {
   array.forEach((el) => {
     const { nombre, precio, stock } = el; // destructuring 
     html =
-      `<div class="card" style="width: 10rem;">
+      `<div class="card" style="width: 13rem;">
           <img src="./imagenes/icono_ferreteria.png" class="card-img-top" alt="...">
           <div class="card-body">
-            <h5 class="card-title">${nombre}</h5>
-            <p class="card-text">$${precio}</p>
-            <p class="card-text">${stock} unidades disponibles</p>
+            <h6 class="card-title">${nombre}</h6>
+            <p class="card-text card-precio">$${precio}</p>
+            <p class="card-text card-unidad">${stock} unidades disponibles</p>
             <a href="#" class="btn btn-primary">Agregar al carrito</a>
           </div>
         </div>`;
