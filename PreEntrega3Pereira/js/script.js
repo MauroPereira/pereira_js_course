@@ -17,7 +17,7 @@ let idProducto = -1;
 let idPersona = -1;
 
 // Declaraciones DOM
-let columnasCartas = document.querySelector(".card-columns");
+let columnasCartas = document.querySelector(".stock-row");
 
 // Declaración de clases
 class Producto {
@@ -587,7 +587,6 @@ function crearHtml(array) {
     const { nombre, precio, stock } = el; // destructuring 
     html =
       `<div class="card" style="width: 10rem;">
-        
           <img src="./imagenes/icono_ferreteria.png" class="card-img-top" alt="...">
           <div class="card-body">
             <h5 class="card-title">${nombre}</h5>
