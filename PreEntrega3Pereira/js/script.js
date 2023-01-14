@@ -22,12 +22,13 @@ let columnasCartas = document.querySelector(".stock-row");
 // Declaración de clases
 class Producto {
   /* Clase Producto */
-  constructor(nombre, precio, stock) {
+  constructor(nombre, precio, stock, imagen) {
     idProducto++;
     this.id = idProducto;
     this.nombre = nombre;
     this.precio = precio;
     this.stock = stock;
+    this.imagen = imagen;
     this.pedidoCantidad = 0;
   }
   /* Métodos */
@@ -584,11 +585,11 @@ function crearHtml(array) {
   let html;
 
   array.forEach((el) => {
-    const { nombre, precio, stock } = el; // destructuring 
+    const { nombre, precio, stock, imagen } = el; // destructuring 
     html = `
       <div class="col p-2">
         <div class="card" style="width: 13rem;">
-            <img src="./imagenes/icono_ferreteria.png" class="card-img-top" alt="...">
+            <img src="${imagen}" class="card-img-top" alt="...">
             <div class="card-body">
               <h6 class="card-title">${nombre}</h6>
               <p class="card-text card-precio">$${precio}</p>
@@ -611,10 +612,10 @@ proporcionados por alert y prompt.");
 const arrayAdmin = [{ id: 0, nick: "admin", password: "1234" }];
 
 const arrayProducto = [
-  new Producto("Tornillo".toUpperCase(), precTornillo, cantTornillo),
-  new Producto("Tuerca".toUpperCase(), precTuerca, cantTuerca),
-  new Producto("Clavo".toUpperCase(), precClavo, cantClavo),
-  new Producto("Arandela".toUpperCase(), precArandela, cantArandela)
+  new Producto("Tornillo".toUpperCase(), precTornillo, cantTornillo, "./imagenes/tornillo.webp"),
+  new Producto("Tuerca".toUpperCase(), precTuerca, cantTuerca, "./imagenes/tuerca.jpeg"),
+  new Producto("Clavo".toUpperCase(), precClavo, cantClavo, "./imagenes/clavo.webp"),
+  new Producto("Arandela".toUpperCase(), precArandela, cantArandela, "./imagenes/arandela.jpeg")
 ];
 
 for (const item of arrayProducto) {
@@ -660,6 +661,3 @@ crearHtml(arrayProducto);
 
 console.log("Fin");
 ///////////////////////////////////////////////////////////////////////////////////
-
-
-// analizar esto: https://www.w3schools.com/bootstrap4/tryit.asp?filename=trybs_card_columns&stacked=h
