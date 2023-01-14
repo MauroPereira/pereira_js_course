@@ -16,6 +16,9 @@ let opcion = -1
 let idProducto = -1;
 let idPersona = -1;
 
+// Declaraciones DOM
+let columnasCartas = document.querySelector(".card-columns");
+
 // Declaración de clases
 class Producto {
   /* Clase Producto */
@@ -25,11 +28,11 @@ class Producto {
     this.nombre = nombre;
     this.precio = precio;
     this.stock = stock;
-    this.pedidoQty = 0;
+    this.pedidoCantidad = 0;
   }
   /* Métodos */
   actualizarStock() {
-    this.stock = this.stock - this.pedidoQty;
+    this.stock = this.stock - this.pedidoCantidad;
   }
 }
 
@@ -70,7 +73,7 @@ const funcionMensajeAlertCanasta = (stringEncabezado, arrayVar, stringPie) => {
 
   // Crea un string de todo el stock
   for (const index of arrayVar) {
-    stringBuffer = stringBuffer + `${index.nombre}   ${index.pedidoQty} uni  $ ${index.pedidoQty * index.precio}\n`
+    stringBuffer = stringBuffer + `${index.nombre}   ${index.pedidoCantidad} uni  $ ${index.pedidoCantidad * index.precio}\n`
   };
 
   stringBuffer = stringBuffer + stringPie;
@@ -98,7 +101,8 @@ const mostrarMenuPrincipal = () => {
     "######## E-Shop de Ferretería ########" + "\n" +
     "Ingrese algunas de las opciones y luego clickee 'Aceptar':\n" +
     "* 1 - Ver stock general" + "\n" +
-    "* 2 - Realizar pedido" + "\n\n" +
+    "* 2 - Realizar pedido" + "\n" +
+    "* 3 - Loguearse" + "\n\n" +
     "* Clickee 'Cancelar' para salir."
   )
 }
@@ -171,6 +175,28 @@ const chequearNanEspacioVacio = (mensaje) => {
     if (valor == "" || valor == null) {
       condicion = true;
       alert("Error: no se ha ingresado ningún valor o se ha clickeado sobre 'Cancelar'");
+    } else {
+      condicion = false;
+    }
+  }
+
+  return valor;
+}
+
+const chequearEspacioVacio = (mensaje) => {
+  /* Se encarga de chequear que no se ingrese 
+  un espacio en blanco, independientemente del
+  mensaje mostrado
+  */
+
+  let condicion = true;
+
+  while (condicion == true) {
+    valor = prompt(mensaje);
+    console.log(valor);
+    if (valor == "") {
+      condicion = true;
+      alert("Error: no se ha ingresado ningún valor. Clickee en 'Aceptar' para continuar.");
     } else {
       condicion = false;
     }
@@ -268,8 +294,8 @@ const confirmarCompra = (arrayCanasta, personaComprador) => {
 
   // Crea un string de todo el stock
   for (const index of arrayCanasta) {
-    stringBuffer = stringBuffer + `${index.pedidoQty} uni de ${index.nombre}  | Pre. uni: $ ${index.precio} | Subtotal: $ ${index.precio * index.pedidoQty}\n`
-    precioTotal = precioTotal + index.pedidoQty * index.precio;
+    stringBuffer = stringBuffer + `${index.pedidoCantidad} uni de ${index.nombre}  | Pre. uni: $ ${index.precio} | Subtotal: $ ${index.precio * index.pedidoCantidad}\n`
+    precioTotal = precioTotal + index.pedidoCantidad * index.precio;
   };
 
   if (personaComprador.condicionIva == 2) {
@@ -306,12 +332,12 @@ const chequearStock = (stock, cantSolicitada) => {
   return true;
 }
 
-const calcularPrecioFinal = (matchProducto, productoQty, ivaComprador) => {
+const calcularPrecioFinal = (matchProducto, productoCantidad, ivaComprador) => {
   /* Algoritmo que se encarga de calcular el precio final, que puede ser
   con o sin el IVA del 21%
   */
 
-  let precioFinal = productoQty * matchProducto.precio;
+  let precioFinal = productoCantidad * matchProducto.precio;
 
   if (ivaComprador == 2) {
     return precioFinal * 1.21;
@@ -364,7 +390,7 @@ const menuPrincipalPedido = (arrayProducto) => {
   let repeat = true;
   let repeat2 = true;
   let matchProducto;
-  let productoQty;
+  let productoCantidad;
   let nombresComprador;
   let apellidosComprador;
   let emailComprador;
@@ -384,8 +410,8 @@ const menuPrincipalPedido = (arrayProducto) => {
     }
 
     while (repeat2 == true) {
-      productoQty = preguntarCantidad(matchProducto);
-      if (productoQty == -1) {
+      productoCantidad = preguntarCantidad(matchProducto);
+      if (productoCantidad == -1) {
         repeat = true;  // para que vuelva al estado anterior
         break;
       }
@@ -394,7 +420,7 @@ const menuPrincipalPedido = (arrayProducto) => {
       // Hasta que el usuario no confirme la compra, no se va a descontar la cantidad pedida del
       // stock. En caso de se trate de una base de datos y varios usuarios esten realizando pedidos
       // al mismo tiempo, esto puede llegar a generar un error de stock.
-      repeat2 = chequearStock(matchProducto.stock - matchProducto.pedidoQty, productoQty);
+      repeat2 = chequearStock(matchProducto.stock - matchProducto.pedidoCantidad, productoCantidad);
     }
 
     if (repeat != true) { // por si se quiere volver al estado anterior desde preguntarCantidad()
@@ -402,14 +428,14 @@ const menuPrincipalPedido = (arrayProducto) => {
       // Bloque que se encarga de chequear que si existen Productos repetidos, de actualizarlos
       let matchProducto2 = arrayCanasta.find(objeto => objeto.nombre === matchProducto.nombre);
       if (matchProducto2 == undefined) {
-        matchProducto.pedidoQty = productoQty;  // carga la cantidad pedida en el objeto Producto
+        matchProducto.pedidoCantidad = productoCantidad;  // carga la cantidad pedida en el objeto Producto
         arrayCanasta.push(matchProducto); // se agrega un objeto Producto al arrayCanasta
       }
       else {
         /* En este caso al existir ya el Producto y estar "referenciado" a una posición en el arrayCanasta
         sólo con actualizar la cantidad pedida de producto se logra modificar el valor en el arrayCanasta
         */
-        matchProducto.pedidoQty = matchProducto.pedidoQty + productoQty;
+        matchProducto.pedidoCantidad = matchProducto.pedidoCantidad + productoCantidad;
       }
       //////////////////////////////////////////////////////////////////////////////////////////
 
@@ -443,13 +469,13 @@ const menuPrincipalPedido = (arrayProducto) => {
     // Producto
     arrayCanasta.forEach(object => {
       object.actualizarStock();
-      object.pedidoQty = 0;
+      object.pedidoCantidad = 0;
     })
     /////////////////////////////////////////////////////////////////////////////////////
     graciasCompra();
   } else {
     arrayCanasta.forEach(object => {
-      object.pedidoQty = 0;
+      object.pedidoCantidad = 0;
     })
     compraCancelada();
   }
@@ -468,9 +494,119 @@ const mensajeOpcionNoValida = (mensaje, genero = "o") => {
   }
 }
 
+const menuPrincipalLog = (arrayAdmin, arrayProducto) => {
+  /* Pantalla de logueo */
+  const stringEncabezado = `######## Login ########\n`;
+  const stringPie = `Ingrese su nick y clickee en 'Aceptar'. Cancelar para volver al menú principal.\n\n`;
+  const stringPie2 = `Ingrese su contraseña y clickee en 'Aceptar'. Cancelar para volver al menú principal.\n\n`;
+  let matchAdmin;
+
+  let stringBuffer = stringEncabezado + stringPie;
+  while (true) {
+    let nick = prompt(stringBuffer);
+    if (nick == undefined) {
+      return -1;
+    }
+    nick = nick.toLowerCase();
+    matchAdmin = arrayAdmin.find(objeto => objeto.nick === nick.toLowerCase());
+    if (matchAdmin == undefined) {
+      alert(`Nick no encontrado. Clickee 'Aceptar' para continuar`);
+    } else {
+      break;
+    }
+  }
+  console.log(`Nick ${matchAdmin.nick} encontrado.`);
+
+  stringBuffer = stringEncabezado + stringPie2;
+  while (true) {
+    let password = prompt(stringBuffer);
+    console.log(password);
+
+    if (password == undefined) {
+      return -1;
+    }
+    if (matchAdmin.password != password) {
+      alert(`Password inválido. Clickee 'Aceptar' para continuar`);
+    } else {
+      break;
+    }
+  }
+  console.log(`Password ${matchAdmin.password} encontrado.`);
+
+  return menuPrincipalAgregarProducto(arrayProducto);
+}
+
+const pantallaAgregarProducto = (arrayProducto) => {
+  /* Pantalla donde se agregan productos
+  */
+
+  const stringEncabezado = `######## Agregar producto ########\n`;
+  const stringPie = `Ingrese el nombre del producto y clickee en 'Aceptar'. Cancelar para volver al menú principal.\n\n`;
+  const stringPie2 = `Ingrese el precio del producto y clickee en 'Aceptar'. Cancelar para volver al menú principal.\n\n`;
+  const stringPie3 = `Ingrese el stock del producto y clickee en 'Aceptar'. Cancelar para volver al menú principal.\n\n`;
+  let stringBuffer = stringEncabezado + stringPie;
+  let nombreProductoNuevo;
+  let precioProductoNuevo;
+  let stockProductoNuevo;
+
+  nombreProductoNuevo = chequearEspacioVacio(stringBuffer);
+  if (nombreProductoNuevo == undefined || nombreProductoNuevo == null) {
+    return -1;
+  }
+
+  stringBuffer = stringEncabezado + stringPie2;
+  precioProductoNuevo = chequearEspacioVacio(stringBuffer);
+  if (precioProductoNuevo == undefined || precioProductoNuevo == null) {
+    return -1;
+  }
+
+  stringBuffer = stringEncabezado + stringPie3;
+  stockProductoNuevo = chequearEspacioVacio(stringBuffer);
+  if (stockProductoNuevo == undefined || stockProductoNuevo == null) {
+    return -1;
+  }
+
+  // ///////////////////
+  // stringEncabezado = "######## Nuevo Stock ########\nItems      Precio por unidad   Cantidad en stock\n";
+  // const stringPie = "Opciones: \n" +
+  //   "* Para realizar un pedido ingrese 1 en el cuadro y luego clickee 'Aceptar':\n" +
+  //   "* Clickee 'Cancelar' para volver atrás.";
+
+  // return funcionMensajeAlert(stringEncabezado, arrayProducto, stringPie);
+  // /////////////
+
+
+  return -1;
+}
+
+function crearHtml(array) {
+  /* Se encarga de crear las card de los diferentes Productos */
+  let html;
+
+  array.forEach((el) => {
+    const { nombre, precio, stock } = el; // destructuring 
+    html =
+      `<div class="card" style="width: 10rem;">
+        
+          <img src="./imagenes/icono_ferreteria.png" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">${nombre}</h5>
+            <p class="card-text">$${precio}</p>
+            <p class="card-text">${stock} unidades disponibles</p>
+            <a href="#" class="btn btn-primary">Agregar al carrito</a>
+          </div>
+        </div>`;
+
+    columnasCartas.innerHTML += html;
+  });
+  console.log(html);
+}
+
 // Main /////////////////////////////////////////////////////////////////////////////////
 console.log("Inicio\nACLARACIÓN: la consola sólo es a modo de debug, los mensajes de usuario serán \
-  proporcionados por alert y prompt.");
+proporcionados por alert y prompt.");
+
+const arrayAdmin = [{ id: 0, nick: "admin", password: "1234" }];
 
 const arrayProducto = [
   new Producto("Tornillo".toUpperCase(), precTornillo, cantTornillo),
@@ -483,36 +619,45 @@ for (const item of arrayProducto) {
   console.log(item)
 };
 
-while (opcion != 0) {
-  opcion = prompt(mostrarMenuPrincipal());
-  console.log(opcion)
-  if (opcion == null) {
-    opcion = 0;
-  } else {
-    opcion = parseInt(opcion);
-  }
+crearHtml(arrayProducto);
 
-  switch (opcion) {
-    case 0:
-      alert("Saliendo... Gracias por su visita.");
-      break;
-    case 1:
-      opcion = mostrarTablaStock(arrayProducto);
-      if (opcion == 1) {
-        opcion = menuPrincipalPedido(arrayProducto);
-      } else {
-        opcion = -1;
-      }
-      break;
-    case 2:
-      opcion = menuPrincipalPedido(arrayProducto);
-      console.log(`opcion ${opcion}`);
-      break;
-    default:
-      mensajeOpcionNoValida("opción", "a");
-      break;
-  }
-}
+// while (opcion != 0) {
+//   opcion = prompt(mostrarMenuPrincipal());
+//   console.log(opcion)
+//   if (opcion == null) {
+//     opcion = 0;
+//   } else {
+//     opcion = parseInt(opcion);
+//   }
+
+//   switch (opcion) {
+//     case 0:
+//       alert("Saliendo... Gracias por su visita.");
+//       break;
+//     case 1:
+//       opcion = mostrarTablaStock(arrayProducto);
+//       if (opcion == 1) {
+//         opcion = menuPrincipalPedido(arrayProducto);
+//       } else {
+//         opcion = -1;
+//       }
+//       break;
+//     case 2:
+//       opcion = menuPrincipalPedido(arrayProducto);
+//       console.log(`opcion ${opcion}`);
+//       break;
+//     case 3:
+//       opcion = menuPrincipalLog(arrayAdmin, arrayProducto);
+//       console.log(`opcion ${opcion}`);
+//       break;
+//     default:
+//       mensajeOpcionNoValida("opción", "a");
+//       break;
+//   }
+// }
 
 console.log("Fin");
 ///////////////////////////////////////////////////////////////////////////////////
+
+
+// analizar esto: https://www.w3schools.com/bootstrap4/tryit.asp?filename=trybs_card_columns&stacked=h

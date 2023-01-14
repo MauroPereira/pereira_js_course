@@ -2,7 +2,7 @@
 
 .navbar {
   padding: 2rem;
-  background-color: white;
+  background-color: lightblue;
 }
 
 .navbar-collapse {
@@ -18,10 +18,20 @@ section {
   justify-content: center;
 }
 
-h1 {
+.hero-principal h1 {
   font-size: 2.5rem;
+  color: white;
+  padding-top: 15px;
+  margin-bottom: 0px;
+  font-family: 'Rubik Dirt', cursive;
 }
 
-h1 {
-  font-size: 1.5rem;
+.hero-principal h2 {
+  font-size: 2rem;
+  color: lightgreen;
+  font-family: 'Bakbak One', cursive;
+}
+
+#boton-cuenta {
+  margin-right: 5px;
 }
