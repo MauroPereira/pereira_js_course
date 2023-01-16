@@ -592,7 +592,7 @@ function crearHtml(array) {
             <img src="${imagen}" class="card-img-top card-img" alt="Imagen de ${nombre}">
             <div class="card-body">
               <h6 class="card-title">${nombre}</h6>
-              <p class="card-text card-precio">$ ${precio}</p>
+              <p class="card-text card-precio">$${precio} por unidad</p>
               <p class="card-text card-unidad">${stock} unidades disponibles</p>
               <a href="#" class="btn btn-primary">Agregar al carrito</a>
             </div>
