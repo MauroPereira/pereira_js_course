@@ -19,8 +19,6 @@ let arrayProducto;
 
 // Declaraciones DOM
 let columnasCartas = document.querySelector(".stock-row");
-const formCarritoDeCompras = document.querySelector("#form-carrito-de-compras");
-const elBtnAgregarCarrito = document.querySelector("#btn-agregar-carrito");
 
 // Declaración de clases
 class Producto {
@@ -636,17 +634,18 @@ for (const item of arrayProducto) {
 // Carga de DOM
 crearHtml(arrayProducto);
 console.log("INFO: Cargado el DOM");
+let elBtnAgregarCarrito = document.querySelectorAll("#btn-agregar-carrito");  // IMPORTANTE: la toma de nodos se debe hacer después de crear los elementos
 
 console.log("INFO:");
 console.log(elBtnAgregarCarrito);
 
-// // Listeners
-// elBtnAgregarCarrito.addEventListener("click", myFunction);
+// Listeners
+//elBtnAgregarCarrito.addEventListener("click", myFunction);
 
-// function myFunction() {
-//   //document.getElementById("demo").innerHTML = "Hello World";
-//   console.log(elBtnAgregarCarrito);
-// }
+function myFunction() {
+  //document.getElementById("demo").innerHTML = "Hello World";
+  console.log(`Click`);
+}
 
 
 // while (opcion != 0) {
