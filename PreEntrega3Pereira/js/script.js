@@ -640,7 +640,10 @@ console.log("INFO:");
 console.log(elBtnAgregarCarrito);
 
 // Listeners
-elBtnAgregarCarrito[0].addEventListener("click", myFunction);
+for (const item of elBtnAgregarCarrito) {
+  elBtnAgregarCarrito[item].addEventListener("click", myFunction);
+};
+
 
 function myFunction() {
   //document.getElementById("demo").innerHTML = "Hello World";
