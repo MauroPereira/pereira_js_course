@@ -20,7 +20,7 @@ let arrayProducto;
 // Declaraciones DOM
 let columnasCartas = document.querySelector(".stock-row");
 const formCarritoDeCompras = document.querySelector("#form-carrito-de-compras");
-const elementBtnAgregarCarrito = document.getElementById("#btn-agregar-carrito");
+const elBtnAgregarCarrito = document.querySelector("#btn-agregar-carrito");
 
 // Declaración de clases
 class Producto {
@@ -637,7 +637,17 @@ for (const item of arrayProducto) {
 crearHtml(arrayProducto);
 console.log("INFO: Cargado el DOM");
 
-console.log("elementBtnAgregarCarrito");
+console.log("INFO:");
+console.log(elBtnAgregarCarrito);
+
+// // Listeners
+// elBtnAgregarCarrito.addEventListener("click", myFunction);
+
+// function myFunction() {
+//   //document.getElementById("demo").innerHTML = "Hello World";
+//   console.log(elBtnAgregarCarrito);
+// }
+
 
 // while (opcion != 0) {
 //   opcion = prompt(mostrarMenuPrincipal());
