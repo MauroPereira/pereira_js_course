@@ -15,9 +15,11 @@ const enConstruccion = "En construcción"
 let opcion = -1
 let idProducto = -1;
 let idPersona = -1;
+let arrayProducto;
 
 // Declaraciones DOM
 let columnasCartas = document.querySelector(".stock-row");
+const formCarritoDeCompras = document.querySelector("#form-carrito-de-compras");
 
 // Declaración de clases
 class Producto {
@@ -602,62 +604,72 @@ function crearHtml(array) {
 
     columnasCartas.innerHTML += html;
   });
-  console.log(html);
 }
 
 // Main /////////////////////////////////////////////////////////////////////////////////
 console.log("Inicio\nACLARACIÓN: la consola sólo es a modo de debug, los mensajes de usuario serán \
 proporcionados por alert y prompt.");
 
-const arrayAdmin = [{ id: 0, nick: "admin", password: "1234" }];
+// Chequeo de LocalStorage
+if (localStorage.getItem("arrayProducto")) {
+  arrayProducto = JSON.parse(localStorage.getItem("arrayProducto"));
+  console.log("INFO: Recuperado de localStorage");
+} else {
+  arrayProducto = [
+    new Producto("Tornillo".toUpperCase(), precTornillo, cantTornillo, "./imagenes/tornillo.webp"),
+    new Producto("Tuerca".toUpperCase(), precTuerca, cantTuerca, "./imagenes/tuerca.jpeg"),
+    new Producto("Clavo".toUpperCase(), precClavo, cantClavo, "./imagenes/clavo.webp"),
+    new Producto("Arandela".toUpperCase(), precArandela, cantArandela, "./imagenes/arandela.jpeg")
+  ];
 
-const arrayProducto = [
-  new Producto("Tornillo".toUpperCase(), precTornillo, cantTornillo, "./imagenes/tornillo.webp"),
-  new Producto("Tuerca".toUpperCase(), precTuerca, cantTuerca, "./imagenes/tuerca.jpeg"),
-  new Producto("Clavo".toUpperCase(), precClavo, cantClavo, "./imagenes/clavo.webp"),
-  new Producto("Arandela".toUpperCase(), precArandela, cantArandela, "./imagenes/arandela.jpeg")
-];
+  // Se guarda en localStorage
+  localStorage.setItem("arrayProducto", JSON.stringify(arrayProducto));
+  console.log("INFO: Guardado en localStorage");
+}
 
+console.log("INFO:")
 for (const item of arrayProducto) {
   console.log(item)
 };
 
+// Carga de DOM
 crearHtml(arrayProducto);
+console.log("INFO: Cargado el DOM");
 
-while (opcion != 0) {
-  opcion = prompt(mostrarMenuPrincipal());
-  console.log(opcion)
-  if (opcion == null) {
-    opcion = 0;
-  } else {
-    opcion = parseInt(opcion);
-  }
+// while (opcion != 0) {
+//   opcion = prompt(mostrarMenuPrincipal());
+//   console.log(opcion)
+//   if (opcion == null) {
+//     opcion = 0;
+//   } else {
+//     opcion = parseInt(opcion);
+//   }
 
-  switch (opcion) {
-    case 0:
-      alert("Saliendo... Gracias por su visita.");
-      break;
-    case 1:
-      opcion = mostrarTablaStock(arrayProducto);
-      if (opcion == 1) {
-        opcion = menuPrincipalPedido(arrayProducto);
-      } else {
-        opcion = -1;
-      }
-      break;
-    case 2:
-      opcion = menuPrincipalPedido(arrayProducto);
-      console.log(`opcion ${opcion}`);
-      break;
-    case 3:
-      opcion = menuPrincipalLog(arrayAdmin, arrayProducto);
-      console.log(`opcion ${opcion}`);
-      break;
-    default:
-      mensajeOpcionNoValida("opción", "a");
-      break;
-  }
-}
+//   switch (opcion) {
+//     case 0:
+//       alert("Saliendo... Gracias por su visita.");
+//       break;
+//     case 1:
+//       opcion = mostrarTablaStock(arrayProducto);
+//       if (opcion == 1) {
+//         opcion = menuPrincipalPedido(arrayProducto);
+//       } else {
+//         opcion = -1;
+//       }
+//       break;
+//     case 2:
+//       opcion = menuPrincipalPedido(arrayProducto);
+//       console.log(`opcion ${opcion}`);
+//       break;
+//     case 3:
+//       opcion = menuPrincipalLog(arrayAdmin, arrayProducto);
+//       console.log(`opcion ${opcion}`);
+//       break;
+//     default:
+//       mensajeOpcionNoValida("opción", "a");
+//       break;
+//   }
+// }
 
-console.log("Fin");
+// console.log("Fin");
 ///////////////////////////////////////////////////////////////////////////////////
