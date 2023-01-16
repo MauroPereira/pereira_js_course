@@ -45,6 +45,7 @@ section {
 }
 
 .card-img {
-  max-height: 200px;
-  aspect-ratio: square;
+  max-width: 90px;
+  display: block;
+  margin: auto;
 }
