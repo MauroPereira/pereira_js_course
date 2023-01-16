@@ -1,5 +1,4 @@
 /* Barra de navegacion */
-
 .navbar {
   padding: 2rem;
   background-color: lightblue;
@@ -36,6 +35,7 @@ section {
   margin-right: 5px;
 }
 
+/* Sección Stock */
 .card-precio {
   font-size: 0.9rem;
 }
@@ -48,4 +48,17 @@ section {
   max-width: 90px;
   display: block;
   margin: auto;
+}
+
+/* Sección Carrito de compras */
+.section-carrito-de-compras {
+  margin-top: 2rem;
+  background-color: #3282b8;
+}
+
+.carrito-de-compras h2 {
+  padding: 1rem;
+  font-size: 2rem;
+  color: lightcyan;
+  font-family: 'Bakbak One', cursive;
 }

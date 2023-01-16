@@ -624,40 +624,40 @@ for (const item of arrayProducto) {
 
 crearHtml(arrayProducto);
 
-// while (opcion != 0) {
-//   opcion = prompt(mostrarMenuPrincipal());
-//   console.log(opcion)
-//   if (opcion == null) {
-//     opcion = 0;
-//   } else {
-//     opcion = parseInt(opcion);
-//   }
+while (opcion != 0) {
+  opcion = prompt(mostrarMenuPrincipal());
+  console.log(opcion)
+  if (opcion == null) {
+    opcion = 0;
+  } else {
+    opcion = parseInt(opcion);
+  }
 
-//   switch (opcion) {
-//     case 0:
-//       alert("Saliendo... Gracias por su visita.");
-//       break;
-//     case 1:
-//       opcion = mostrarTablaStock(arrayProducto);
-//       if (opcion == 1) {
-//         opcion = menuPrincipalPedido(arrayProducto);
-//       } else {
-//         opcion = -1;
-//       }
-//       break;
-//     case 2:
-//       opcion = menuPrincipalPedido(arrayProducto);
-//       console.log(`opcion ${opcion}`);
-//       break;
-//     case 3:
-//       opcion = menuPrincipalLog(arrayAdmin, arrayProducto);
-//       console.log(`opcion ${opcion}`);
-//       break;
-//     default:
-//       mensajeOpcionNoValida("opción", "a");
-//       break;
-//   }
-// }
+  switch (opcion) {
+    case 0:
+      alert("Saliendo... Gracias por su visita.");
+      break;
+    case 1:
+      opcion = mostrarTablaStock(arrayProducto);
+      if (opcion == 1) {
+        opcion = menuPrincipalPedido(arrayProducto);
+      } else {
+        opcion = -1;
+      }
+      break;
+    case 2:
+      opcion = menuPrincipalPedido(arrayProducto);
+      console.log(`opcion ${opcion}`);
+      break;
+    case 3:
+      opcion = menuPrincipalLog(arrayAdmin, arrayProducto);
+      console.log(`opcion ${opcion}`);
+      break;
+    default:
+      mensajeOpcionNoValida("opción", "a");
+      break;
+  }
+}
 
 console.log("Fin");
 ///////////////////////////////////////////////////////////////////////////////////
