@@ -20,6 +20,7 @@ let arrayProducto;
 // Declaraciones DOM
 let columnasCartas = document.querySelector(".stock-row");
 const formCarritoDeCompras = document.querySelector("#form-carrito-de-compras");
+const elementBtnAgregarCarrito = document.getElementById("#btn-agregar-carrito");
 
 // Declaración de clases
 class Producto {
@@ -596,7 +597,7 @@ function crearHtml(array) {
               <h6 class="card-title">${nombre}</h6>
               <p class="card-text card-precio">$${precio} por unidad</p>
               <p class="card-text card-unidad">${stock} unidades disponibles</p>
-              <a href="#" class="btn btn-primary">Agregar al carrito</a>
+              <a href="#" id="btn-agregar-carrito" class="btn btn-primary">Agregar al carrito</a>
             </div>
         </div>
       </div>
@@ -635,6 +636,8 @@ for (const item of arrayProducto) {
 // Carga de DOM
 crearHtml(arrayProducto);
 console.log("INFO: Cargado el DOM");
+
+console.log("elementBtnAgregarCarrito");
 
 // while (opcion != 0) {
 //   opcion = prompt(mostrarMenuPrincipal());
