@@ -387,7 +387,7 @@ const mostrarCanastaYconsultar = (arrayProducto) => {
   }
 }
 
-const menuPrincipalPedido = (arrayProducto) => {
+const menuPrincipalPedido = (arrayProducto, id) => {
   /* Se encarga del proceso de tomar el pedido */
   let repeat = true;
   let repeat2 = true;
@@ -642,7 +642,10 @@ console.log(elBtnAgregarCarrito);
 // Listeners
 elBtnAgregarCarrito.forEach(object => {
   console.log(object);
-  object.addEventListener("click", e => { console.log(e.target.id) });
+  object.addEventListener("click", e => {
+    console.log(e.target.id);
+    opcion = menuPrincipalPedido(arrayProducto, parseInt(e.target.id));
+  });
 });
 
 
