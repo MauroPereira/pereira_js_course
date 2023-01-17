@@ -28,6 +28,7 @@ let inpApellidos = document.querySelector("#input-apellidos");
 let inpDireccion = document.querySelector("#input-direccion");
 let inpEmail = document.querySelector("#input-email");
 let chkbtnExentoIva = document.querySelector("#checkbox-exento-iva");
+let lblPrecioTotal = document.querySelector("#lbl-precio-total");
 
 // Declaración de clases
 class Producto {
@@ -705,6 +706,14 @@ elBtnAgregarCarrito.forEach(object => {
     opcion = menuPrincipalPedido(arrayProducto, parseInt(e.target.id));
     console.log("INFO: arrayCanasta");
     console.log(arrayCanasta);
+    let precioTotal = 0;
+    arrayCanasta.forEach(object => {
+      console.log(object);
+      object.actualizarStock();
+      precioTotal += object.pedidoCantidad * object.precio;
+    })
+    console.log(`INFO: Precio total: $ ${precioTotal}`);
+    lblPrecioTotal.innerHTML = `Total: $ ${precioTotal}`;
 
     crearHtmlCanasta(arrayCanasta);
   });

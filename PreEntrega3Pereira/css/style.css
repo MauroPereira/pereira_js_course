@@ -70,12 +70,22 @@ section {
   font-family: 'Bakbak One', cursive;
 }
 
+#lbl-precio-total {
+  font-size: 1.5rem;
+  color: lightcyan;
+  font-family: 'Bakbak One', cursive;
+}
+
 /* Formulario Datos de compra */
 #titulo-formulario-compra {
   padding: 1rem;
   font-size: 1.5rem;
   color: lightcyan;
   font-family: 'Bakbak One', cursive;
+}
+
+#btn-comprar-carrito {
+  margin-top: 10px;
 }
 
 .letra-pequena {
