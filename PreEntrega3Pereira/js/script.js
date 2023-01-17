@@ -640,9 +640,10 @@ console.log("INFO:");
 console.log(elBtnAgregarCarrito);
 
 // Listeners
-for (const item of elBtnAgregarCarrito) {
-  elBtnAgregarCarrito[item].addEventListener("click", myFunction);
-};
+elBtnAgregarCarrito.forEach(object => {
+  console.log(object);
+  object.addEventListener("click", myFunction);
+});
 
 
 function myFunction() {
