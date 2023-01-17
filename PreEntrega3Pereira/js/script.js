@@ -621,7 +621,8 @@ function crearHtmlCanasta(array) {
                 <h5 class="card-title">${nombre}</h5>
                 <p class="card-text">Cantidad pedida: ${pedidoCantidad}</p>
                 <p class="card-text">Precio por unidad: $${precio}</p>
-                <a href="#" id="${id}" class="btn btn-primary btn-eliminar-del-carrito">Eliminar producto</a>
+                <!-- Todavía no implementado -->
+                <!-- <a href="#" id="${id}" class="btn btn-primary btn-eliminar-del-carrito">Eliminar producto</a>  -->
               </div>
             </div>
           </div>

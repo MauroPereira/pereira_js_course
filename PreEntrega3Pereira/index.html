@@ -78,7 +78,8 @@
   <!-- Seccion Carrito -->
   <section id="section-carrito-de-compras" class="section-carrito-de-compras">
     <div class="carrito-de-compras">
-      <h2 class="titulo-secundario justify-content-center">Carrito de compras</h2>
+      <h2 class="titulo-secundario text-center">Carrito de compras</h2>
+      <h3 id="titulo-productos-carrito" class="titulo-productos-carrito text-center">Productos</h3>
       <form class="col" id="form-carrito-de-compras">
         <div class="container-carrito-de-compras bcontent">
         </div>
@@ -86,28 +87,31 @@
     </div>
 
     <!-- Formulario Datos de compra -->
+    <h3 id="titulo-formulario-compra" class="titulo-formulario-compra text-center">Datos de compra</h3>
     <form>
       <div class="form-group">
-        <label for="nombres">Nombres</label>
+        <label class="letra-pequena" for="nombres">Nombres</label>
         <input type="text" class="form-control" id="input-nombres" placeholder="Nombres">
       </div>
       <div class="form-group">
-        <label for="apellidos">Apellidos</label>
+        <label class="letra-pequena" for="apellidos">Apellidos</label>
         <input type="text" class="form-control" id="input-apellidos" placeholder="Apellidos">
       </div>
       <div class="form-group">
-        <label for="direccion">Dirección</label>
+        <label class="letra-pequena" for="direccion">Dirección</label>
         <input type="text" class="form-control" id="input-direccion" placeholder="Dirección">
       </div>
       <div class="form-group">
-        <label for="email">E-mail</label>
+        <label class="letra-pequena" for="email">E-mail</label>
         <input type="text" class="form-control" id="input-email" placeholder="e-mail">
       </div>
       <div class="form-check">
         <input type="checkbox" class="form-check-input" id="checkbox-exento-iva">
-        <label class="form-check-label" for="exento-iva">Exento IVA</label>
+        <label class="form-check-label letra-pequena" for="exento-iva">Exento IVA</label>
       </div>
-      <button type="submit" class="btn btn-primary">Comprar carrito</button>
+      <div class="col text-center">
+        <button type="submit" class="btn btn-primary">Comprar carrito</button>
+      </div>
     </form>
 
   </section>
