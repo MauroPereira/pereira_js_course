@@ -404,15 +404,17 @@ const menuPrincipalPedido = (arrayProducto, id) => {
   while (repeat == true) {
     repeat = false;
 
-    matchProducto = menuTomarProducto(arrayProducto);
-    console.log(`Producto elegido: ${matchProducto}`);
+    //matchProducto = menuTomarProducto(arrayProducto); // BORRAR FUNCIÓN
+    matchProducto = arrayProducto.find(objeto => objeto.id === id);
+    console.log(`Producto elegido: ${matchProducto.nombre}`);
 
     if (matchProducto == -1) {
       return -1;
     }
 
     while (repeat2 == true) {
-      productoCantidad = preguntarCantidad(matchProducto);
+      // productoCantidad = preguntarCantidad(matchProducto); // BORRAR FUNCIÓN
+      productoCantidad = 1;
       if (productoCantidad == -1) {
         repeat = true;  // para que vuelva al estado anterior
         break;
@@ -643,7 +645,7 @@ console.log(elBtnAgregarCarrito);
 elBtnAgregarCarrito.forEach(object => {
   console.log(object);
   object.addEventListener("click", e => {
-    console.log(e.target.id);
+    console.log(`ID del Producto ckickeado: ${e.target.id}`);
     opcion = menuPrincipalPedido(arrayProducto, parseInt(e.target.id));
   });
 });
