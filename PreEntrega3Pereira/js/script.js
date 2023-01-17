@@ -387,7 +387,7 @@ const menuPrincipalPedido = (arrayProducto, id) => {
   while (repeat == true) {
     repeat = false;
 
-    matchProducto = menuTomarProducto(arrayProducto, id); // BORRAR FUNCIÓN
+    // matchProducto = menuTomarProducto(arrayProducto, id); // BORRAR FUNCIÓN
     matchProducto = arrayProducto.find(objeto => objeto.id === id);
     console.log("matchProducto:");
     console.log(matchProducto);
