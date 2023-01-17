@@ -665,6 +665,7 @@ elBtnAgregarCarrito.forEach(object => {
   object.addEventListener("click", e => {
     console.log(`ID del Producto ckickeado: ${e.target.id}`);
     opcion = menuPrincipalPedido(arrayProducto, parseInt(e.target.id));
+    console.log("INFO: arrayCanasta");
     console.log(arrayCanasta);
   });
 });
