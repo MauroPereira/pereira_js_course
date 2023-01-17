@@ -410,6 +410,9 @@ const menuPrincipalPedido = (arrayProducto, id) => {
       // stock. En caso de se trate de una base de datos y varios usuarios esten realizando pedidos
       // al mismo tiempo, esto puede llegar a generar un error de stock.
       repeat2 = chequearStock(matchProducto.stock - matchProducto.pedidoCantidad, productoCantidad);
+      if (repeat2 == true) {
+        return -1;
+      }
     }
 
     if (repeat != true) { // por si se quiere volver al estado anterior desde preguntarCantidad()
@@ -428,7 +431,8 @@ const menuPrincipalPedido = (arrayProducto, id) => {
       }
       //////////////////////////////////////////////////////////////////////////////////////////
 
-      let opcionSeguirComprando = mostrarCanastaYconsultar(arrayCanasta);
+      //let opcionSeguirComprando = mostrarCanastaYconsultar(arrayCanasta);
+      opcionSeguirComprando = 1;
       if (opcionSeguirComprando == null) {
         repeat = true;  // el usuario desea seguir cargando Productos al arrayCanasta
         repeat2 = true;  // sino no entra en preguntarCantidad 
