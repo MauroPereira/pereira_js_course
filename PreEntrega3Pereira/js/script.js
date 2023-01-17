@@ -21,6 +21,13 @@ let arrayProducto;
 // Declaraciones DOM
 let columnasCartas = document.querySelector(".stock-row");
 let columnaCarritoDeCompras = document.querySelector(".container-carrito-de-compras");
+let botonComprarCarrito = document.querySelector("#btn-comprar-carrito");
+//let botonBorrarCarrito = document.querySelector("#btn-borrar-carrito");
+let inpNombres = document.querySelector("#input-nombres");
+let inpApellidos = document.querySelector("#input-apellidos");
+let inpDireccion = document.querySelector("#input-direccion");
+let inpEmail = document.querySelector("#input-email");
+let chkbtnExentoIva = document.querySelector("#checkbox-exento-iva");
 
 // Declaración de clases
 class Producto {
@@ -637,6 +644,18 @@ function crearHtmlCanasta(array) {
   });
 }
 
+const fncRealizarCompra = () => {
+  /* Se encarga de leer los Datos de Compra
+  */
+
+  let nombres = inpNombres.value;
+  let apellidos = inpApellidos.value;
+  let direccion = inpDireccion.value;
+  let email = inpEmail.value;
+
+  console.log(`${nombres}, ${apellidos}, ${direccion}, ${email}`);
+}
+
 // Main /////////////////////////////////////////////////////////////////////////////////
 console.log("Inicio\nACLARACIÓN: la consola sólo es a modo de debug, los mensajes de usuario serán \
 proporcionados por alert y prompt.");
@@ -690,6 +709,9 @@ elBtnAgregarCarrito.forEach(object => {
     crearHtmlCanasta(arrayCanasta);
   });
 });
+
+botonComprarCarrito.addEventListener("click", fncRealizarCompra);
+
 
 
 
