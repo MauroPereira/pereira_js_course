@@ -16,6 +16,7 @@ let opcion = -1
 let idProducto = -1;
 let idPersona = -1;
 let arrayProducto;
+//const arrayCanasta = [];  // array donde se colocan los objetos que el usuario desea comprar
 
 // Declaraciones DOM
 let columnasCartas = document.querySelector(".stock-row");
@@ -23,13 +24,13 @@ let columnasCartas = document.querySelector(".stock-row");
 // Declaración de clases
 class Producto {
   /* Clase Producto */
-  constructor(nombre, precio, stock, imagen) {
+  constructor(obj) {
     idProducto++;
     this.id = idProducto;
-    this.nombre = nombre;
-    this.precio = precio;
-    this.stock = stock;
-    this.imagen = imagen;
+    this.nombre = obj.nombre;
+    this.precio = obj.precio;
+    this.stock = obj.stock;
+    this.imagen = obj.imagen;
     this.pedidoCantidad = 0;
   }
   /* Métodos */
@@ -109,33 +110,17 @@ const mostrarMenuPrincipal = () => {
   )
 }
 
-const menuTomarProducto = (arrayProducto) => {
+const menuTomarProducto = (arrayProducto, id) => {
   /* Se encarga de retornar el id de un producto
   */
 
   let matchProducto = -1;
 
-  const stringEncabezado = "######## Pedido - Producto ########\n";
-  const stringPie = "Opciones:\n* Ingrese el nombre del producto en el cuadro y luego clickee 'Aceptar'. \n * Clickee 'Cancelar' para volver hacia atrás.";
+  matchProducto = arrayProducto.find(objeto => objeto.id === id);
+  console.log(matchProducto);
 
-  while (true) {
-    // Crea un string de todo el stock
-    productoNombre = prompt(`${stringEncabezado} ${stringPie}`);
-    console.log(productoNombre);
+  return matchProducto;
 
-    if (productoNombre == null) {
-      return -1;
-    }
-
-    matchProducto = arrayProducto.find(objeto => objeto.nombre === productoNombre.toUpperCase());
-    console.log(matchProducto);
-
-    if (matchProducto != undefined) {
-      return matchProducto;
-    } else {
-      mensajeOpcionNoValida("nombre de producto");
-    }
-  }
 }
 
 const preguntarCantidad = (objectProducto) => {
@@ -391,7 +376,7 @@ const menuPrincipalPedido = (arrayProducto, id) => {
   /* Se encarga del proceso de tomar el pedido */
   let repeat = true;
   let repeat2 = true;
-  let matchProducto;
+  let matchProducto = -1;
   let productoCantidad;
   let nombresComprador;
   let apellidosComprador;
@@ -399,26 +384,25 @@ const menuPrincipalPedido = (arrayProducto, id) => {
   let ivaComprador;
   let confirmaCompra;
 
-  const arrayCanasta = [];  // array donde se colocan los objetos que el usuario desea comprar
-
   while (repeat == true) {
     repeat = false;
 
-    //matchProducto = menuTomarProducto(arrayProducto); // BORRAR FUNCIÓN
+    matchProducto = menuTomarProducto(arrayProducto, id); // BORRAR FUNCIÓN
     matchProducto = arrayProducto.find(objeto => objeto.id === id);
-    console.log(`Producto elegido: ${matchProducto.nombre}`);
+    console.log("matchProducto:");
+    console.log(matchProducto);
 
     if (matchProducto == -1) {
       return -1;
     }
 
     while (repeat2 == true) {
-      // productoCantidad = preguntarCantidad(matchProducto); // BORRAR FUNCIÓN
+      //productoCantidad = preguntarCantidad(matchProducto); // BORRAR FUNCIÓN
       productoCantidad = 1;
-      if (productoCantidad == -1) {
-        repeat = true;  // para que vuelva al estado anterior
-        break;
-      }
+      // if (productoCantidad == -1) {
+      //   repeat = true;  // para que vuelva al estado anterior
+      //   break;
+      // }
       // Tengase en cuenta que si el usuario vuelve a pedir el mismo producto, debe descontarse
       // del stock de Producto la cantidad pedida anterior, debido a eso se realiza la resta.
       // Hasta que el usuario no confirme la compra, no se va a descontar la cantidad pedida del
@@ -455,23 +439,26 @@ const menuPrincipalPedido = (arrayProducto, id) => {
   }
 
   // Bloque que se encarga de tomar los datos del comprador y crear un objeto Persona
-  nombresComprador = preguntarNombres();
-  apellidosComprador = preguntarApellidos();
-  direccionComprador = preguntarDireccion();
-  emailComprador = preguntarEmail();
-  ivaComprador = preguntarCondicionIva();
+  nombresComprador = "Comprador";
+  apellidosComprador = "Comprador";
+  direccionComprador = "Comprador";
+  emailComprador = "Comprador";
+  ivaComprador = 2;
   console.log(`ivaComprador: ${ivaComprador}`);
 
   const personaComprador = new Persona(nombresComprador, apellidosComprador, direccionComprador, emailComprador, ivaComprador);
   ///////////////////////////////////////////////////////////////////////////////////
 
   confirmaCompra = confirmarCompra(arrayCanasta, personaComprador);
+  console.log("post confirmaCompra:");
+  console.log(arrayCanasta);
 
   if (confirmaCompra != null) { // El usuario apretó 'Aceptar' en la pantalla anterior
     // Bloque que al efectuarse la compra, se encarga de extraer del stock las cantidades
     // pedidas por el usuario. Luego setea a 0 las cantidades pedidas dentro de cada objeto
     // Producto
     arrayCanasta.forEach(object => {
+      console.log(object);
       object.actualizarStock();
       object.pedidoCantidad = 0;
     })
@@ -607,31 +594,62 @@ function crearHtml(array) {
   });
 }
 
+function crearHtmlCanasta(array) {
+  /* Se encarga de crear las card de los diferentes Productos */
+  let html;
+
+  array.forEach((el) => {
+    const { id, nombre, precio, pedidoCantidad, imagen } = el; // destructuring 
+    html = `
+      <div class="col p-2">
+        <div class="card" style="width: 13rem;">
+            <img src="${imagen}" class="card-img-top card-img" alt="Imagen de ${nombre}">
+            <div class="card-body">
+              <h6 class="card-title">${nombre}</h6>
+              <p class="card-text card-precio">$${precio} por unidad</p>
+              <p class="card-text card-unidad">${stock} unidades disponibles</p>
+              <a href="#" id="${id}" class="btn btn-primary btn-agregar-carrito">Agregar al carrito</a>
+            </div>
+        </div>
+      </div>
+    `;
+
+    columnasCartas.innerHTML += html;
+  });
+}
+
 // Main /////////////////////////////////////////////////////////////////////////////////
 console.log("Inicio\nACLARACIÓN: la consola sólo es a modo de debug, los mensajes de usuario serán \
 proporcionados por alert y prompt.");
 
-// Chequeo de LocalStorage
+// LocalStorage Productos
+// IMPORTANTE: no se guardan los métodos de un objeto
 if (localStorage.getItem("arrayProducto")) {
-  arrayProducto = JSON.parse(localStorage.getItem("arrayProducto"));
+  arrayProductoAlmacenado = JSON.parse(localStorage.getItem("arrayProductoAlmacenado"));
+
+  for (const obj of arrayProductoAlmacenado)
+    arrayProducto.push(new Producto(obj));
+
   console.log("INFO: Recuperado de localStorage");
 } else {
   arrayProducto = [
-    new Producto("Tornillo".toUpperCase(), precTornillo, cantTornillo, "./imagenes/tornillo.webp"),
-    new Producto("Tuerca".toUpperCase(), precTuerca, cantTuerca, "./imagenes/tuerca.jpeg"),
-    new Producto("Clavo".toUpperCase(), precClavo, cantClavo, "./imagenes/clavo.webp"),
-    new Producto("Arandela".toUpperCase(), precArandela, cantArandela, "./imagenes/arandela.jpeg")
+    new Producto({ nombre: "Tornillo".toUpperCase(), precio: precTornillo, stock: cantTornillo, imagen: "./imagenes/tornillo.webp" }),
+    new Producto({ nombre: "Tuerca".toUpperCase(), precio: precTuerca, stock: cantTuerca, imagen: "./imagenes/tuerca.jpeg" }),
+    new Producto({ nombre: "Clavo".toUpperCase(), precio: precClavo, stock: cantClavo, imagen: "./imagenes/clavo.webp" }),
+    new Producto({ nombre: "Arandela".toUpperCase(), precio: precArandela, stock: cantArandela, imagen: "./imagenes/arandela.jpeg" })
   ];
 
   // Se guarda en localStorage
-  localStorage.setItem("arrayProducto", JSON.stringify(arrayProducto));
+  // NOTA: no importa que guarde un arreglo de objetos, no guarda los métodos de dichos objetos
+  localStorage.setItem("arrayProductoAlmacenado", JSON.stringify(arrayProducto));
   console.log("INFO: Guardado en localStorage");
 }
+console.log("INFO de arrayProducto:")
+console.log(arrayProducto);
 
-console.log("INFO:")
-for (const item of arrayProducto) {
-  console.log(item)
-};
+// SesionStorage Canasta
+const arrayCanasta = [];  // array donde se colocan los objetos que el usuario desea comprar
+
 
 // Carga de DOM
 crearHtml(arrayProducto);
@@ -647,8 +665,11 @@ elBtnAgregarCarrito.forEach(object => {
   object.addEventListener("click", e => {
     console.log(`ID del Producto ckickeado: ${e.target.id}`);
     opcion = menuPrincipalPedido(arrayProducto, parseInt(e.target.id));
+    console.log(arrayCanasta);
   });
 });
+
+
 
 
 // while (opcion != 0) {
