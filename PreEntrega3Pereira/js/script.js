@@ -599,10 +599,17 @@ function crearHtmlCanasta(array) {
   /* Se encarga de crear las card de los diferentes Productos */
   let html;
 
+  cartasCarritoDeCompras = document.querySelectorAll(".card-carrito");
+  console.log(cartasCarritoDeCompras);
+  if (cartasCarritoDeCompras.length != 0) {
+    for (const obj of cartasCarritoDeCompras)
+      obj.remove();
+  }
+
   array.forEach((el) => {
     const { id, nombre, precio, pedidoCantidad, imagen } = el; // destructuring 
     html = `
-        <div class="card" style="width: 500px;">
+        <div class="card card-carrito" style="width: 500px;">
           <div class="row no-gutters">
             <div class="col-sm-5">
               <img class="card-img" src="${imagen}" alt="Imagen de ${nombre}">
@@ -617,7 +624,6 @@ function crearHtmlCanasta(array) {
             </div>
           </div>
         </div>
-      <hr />
     `;
 
     columnaCarritoDeCompras.innerHTML += html;
@@ -673,6 +679,7 @@ elBtnAgregarCarrito.forEach(object => {
     opcion = menuPrincipalPedido(arrayProducto, parseInt(e.target.id));
     console.log("INFO: arrayCanasta");
     console.log(arrayCanasta);
+
     crearHtmlCanasta(arrayCanasta);
   });
 });
