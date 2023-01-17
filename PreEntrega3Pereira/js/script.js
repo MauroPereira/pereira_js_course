@@ -586,7 +586,7 @@ function crearHtml(array) {
   let html;
 
   array.forEach((el) => {
-    const { nombre, precio, stock, imagen } = el; // destructuring 
+    const { id, nombre, precio, stock, imagen } = el; // destructuring 
     html = `
       <div class="col p-2">
         <div class="card" style="width: 13rem;">
@@ -595,7 +595,7 @@ function crearHtml(array) {
               <h6 class="card-title">${nombre}</h6>
               <p class="card-text card-precio">$${precio} por unidad</p>
               <p class="card-text card-unidad">${stock} unidades disponibles</p>
-              <a href="#" id="btn-agregar-carrito" class="btn btn-primary">Agregar al carrito</a>
+              <a href="#" id="${id}" class="btn btn-primary btn-agregar-carrito">Agregar al carrito</a>
             </div>
         </div>
       </div>
@@ -634,7 +634,7 @@ for (const item of arrayProducto) {
 // Carga de DOM
 crearHtml(arrayProducto);
 console.log("INFO: Cargado el DOM");
-let elBtnAgregarCarrito = document.querySelectorAll("#btn-agregar-carrito");  // IMPORTANTE: la toma de nodos se debe hacer después de crear los elementos
+let elBtnAgregarCarrito = document.querySelectorAll(".btn-agregar-carrito");  // IMPORTANTE: la toma de nodos se debe hacer después de crear los elementos
 
 console.log("INFO:");
 console.log(elBtnAgregarCarrito);
@@ -642,14 +642,8 @@ console.log(elBtnAgregarCarrito);
 // Listeners
 elBtnAgregarCarrito.forEach(object => {
   console.log(object);
-  object.addEventListener("click", myFunction);
+  object.addEventListener("click", e => { console.log(e.target.id) });
 });
-
-
-function myFunction() {
-  //document.getElementById("demo").innerHTML = "Hello World";
-  console.log(`Click`);
-}
 
 
 // while (opcion != 0) {
