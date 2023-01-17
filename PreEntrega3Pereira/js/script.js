@@ -20,6 +20,7 @@ let arrayProducto;
 
 // Declaraciones DOM
 let columnasCartas = document.querySelector(".stock-row");
+let columnaCarritoDeCompras = document.querySelector(".container-carrito-de-compras");
 
 // Declaración de clases
 class Producto {
@@ -601,20 +602,25 @@ function crearHtmlCanasta(array) {
   array.forEach((el) => {
     const { id, nombre, precio, pedidoCantidad, imagen } = el; // destructuring 
     html = `
-      <div class="col p-2">
-        <div class="card" style="width: 13rem;">
-            <img src="${imagen}" class="card-img-top card-img" alt="Imagen de ${nombre}">
-            <div class="card-body">
-              <h6 class="card-title">${nombre}</h6>
-              <p class="card-text card-precio">$${precio} por unidad</p>
-              <p class="card-text card-unidad">${stock} unidades disponibles</p>
-              <a href="#" id="${id}" class="btn btn-primary btn-agregar-carrito">Agregar al carrito</a>
+        <div class="card" style="width: 500px;">
+          <div class="row no-gutters">
+            <div class="col-sm-5">
+              <img class="card-img" src="${imagen}" alt="Imagen de ${nombre}">
             </div>
+            <div class="col-sm-7">
+              <div class="card-body">
+                <h5 class="card-title">${nombre}</h5>
+                <p class="card-text">Cantidad pedida: ${pedidoCantidad}</p>
+                <p class="card-text">Precio por unidad: $${precio}</p>
+                <a href="#" id="${id}" class="btn btn-primary btn-eliminar-del-carrito">Eliminar producto</a>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+      <hr />
     `;
 
-    columnasCartas.innerHTML += html;
+    columnaCarritoDeCompras.innerHTML += html;
   });
 }
 
@@ -667,6 +673,7 @@ elBtnAgregarCarrito.forEach(object => {
     opcion = menuPrincipalPedido(arrayProducto, parseInt(e.target.id));
     console.log("INFO: arrayCanasta");
     console.log(arrayCanasta);
+    crearHtmlCanasta(arrayCanasta);
   });
 });
 
