@@ -439,6 +439,8 @@ const menuPrincipalPedido = (arrayProducto, id) => {
     }
   }
 
+  return -1;
+
   // Bloque que se encarga de tomar los datos del comprador y crear un objeto Persona
   nombresComprador = "Comprador";
   apellidosComprador = "Comprador";
