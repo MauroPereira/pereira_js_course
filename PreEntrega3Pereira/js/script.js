@@ -715,7 +715,8 @@ const fncActualizarPagina = () => {
   console.log(arrayProducto);
 
   // Se borra el arrayCanasta
-  arrayCanasta = [];  // array donde se colocan los objetos que el usuario desea comprar
+  // for (const obj of arrayCanasta)
+  //   arrayCanasta.shift();
 
   // Se carga nuevamente la sección de Productos
   crearHtml(arrayProducto);
@@ -754,6 +755,7 @@ console.log(arrayProducto);
 const arrayCanasta = [];  // array donde se colocan los objetos que el usuario desea comprar
 
 
+
 // Carga de DOM
 crearHtml(arrayProducto);
 console.log("INFO: Cargado el DOM");
@@ -773,7 +775,7 @@ elBtnAgregarCarrito.forEach(object => {
     let precioTotal = 0;
     arrayCanasta.forEach(object => {
       console.log(object);
-      object.actualizarStock();
+      //bject.actualizarStock();
       precioTotal += object.pedidoCantidad * object.precio;
     })
     console.log(`INFO: Precio total: $ ${precioTotal} `);
