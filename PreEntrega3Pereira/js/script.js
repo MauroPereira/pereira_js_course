@@ -29,6 +29,7 @@ let inpDireccion = document.querySelector("#input-direccion");
 let inpEmail = document.querySelector("#input-email");
 let chkbtnExentoIva = document.querySelector("#checkbox-exento-iva");
 let lblPrecioTotal = document.querySelector("#lbl-precio-total");
+let divGraciasPorSuCompra = document.querySelector("#div-gracias-por-su-compra");
 
 // Declaración de clases
 class Producto {
@@ -589,10 +590,17 @@ function crearHtml(array) {
   /* Se encarga de crear las card de los diferentes Productos */
   let html;
 
+  let cartasProductos = document.querySelectorAll(".card-productos");
+  console.log(cartasProductos);
+  if (cartasProductos.length != 0) {
+    for (const obj of cartasProductos)
+      obj.remove();
+  }
+
   array.forEach((el) => {
     const { id, nombre, precio, stock, imagen } = el; // destructuring 
     html = `
-      <div class="col p-2">
+      <div class="col p-2 card-productos">
         <div class="card" style="width: 13rem;">
             <img src="${imagen}" class="card-img-top card-img" alt="Imagen de ${nombre}">
             <div class="card-body">
@@ -654,9 +662,65 @@ const fncRealizarCompra = () => {
   let direccion = inpDireccion.value;
   let email = inpEmail.value;
 
-  console.log(`${nombres}, ${apellidos}, ${direccion}, ${email}`);
+  let html;
+
+  console.log(`INFO: ${nombres}, ${apellidos}, ${direccion}, ${email}`);
+
+  html = `
+        <div class="card card-gracias-por-su-compra" id="card-gracias-por-su-compra" style="width: 500px;">
+          <div class="row no-gutters">
+            <div class="col-sm-5">
+              <img class="card-img" src="./imagenes/changuito.png" alt="Imagen de changuito">
+            </div>
+            <div class="col-sm-7">
+              <div class="card-body">
+                <h5 class="card-title">Gracias por su compra ${nombres} ${apellidos}!</h5>
+                <p class="card-text">Destino del envio: ${direccion}</p>
+                <p class="card-text">Se le enviará un email a ${email} con toda la información de compra</p>
+                <a href="#" id="btn-aceptar-del-carrito" class="btn btn-primary btn-aceptar-del-carrito">Aceptar</a>
+              </div>
+            </div>
+          </div>
+        </div>
+    `;
+
+  divGraciasPorSuCompra.innerHTML = html;
+
+  let botonAceptarDelCarrito = document.querySelector("#btn-aceptar-del-carrito");
+
+  botonAceptarDelCarrito.addEventListener("click", fncActualizarPagina);
 }
 
+const fncActualizarPagina = () => {
+  /* Se encarga de actualizar toda la pagina y borrar el cartel de compra exitosa
+  */
+  let cardGraciasPorSuCompra = document.querySelectorAll("#card-gracias-por-su-compra");
+  console.log(cardGraciasPorSuCompra);
+
+  // Borra el cartel de Gracias por su compra
+  for (const obj of cardGraciasPorSuCompra)
+    obj.remove();
+
+  // Actualiza los Productos del carrito de compras
+  arrayCanasta.forEach(object => {
+    console.log(object);
+    object.actualizarStock();
+    object.pedidoCantidad = 0;
+  });
+
+  // Se actualiza el local storage
+  localStorage.setItem("arrayProductoAlmacenado", JSON.stringify(arrayProducto));
+  console.log("INFO: Actualizado el localStorage");
+  console.log("INFO de arrayProducto:")
+  console.log(arrayProducto);
+
+  // Se borra el arrayCanasta
+  arrayCanasta = [];  // array donde se colocan los objetos que el usuario desea comprar
+
+  // Se carga nuevamente la sección de Productos
+  crearHtml(arrayProducto);
+  console.log("INFO: Cargado el DOM");
+}
 // Main /////////////////////////////////////////////////////////////////////////////////
 console.log("Inicio\nACLARACIÓN: la consola sólo es a modo de debug, los mensajes de usuario serán \
 proporcionados por alert y prompt.");
@@ -702,7 +766,7 @@ console.log(elBtnAgregarCarrito);
 elBtnAgregarCarrito.forEach(object => {
   console.log(object);
   object.addEventListener("click", e => {
-    console.log(`ID del Producto ckickeado: ${e.target.id}`);
+    console.log(`ID del Producto ckickeado: ${e.target.id} `);
     opcion = menuPrincipalPedido(arrayProducto, parseInt(e.target.id));
     console.log("INFO: arrayCanasta");
     console.log(arrayCanasta);
@@ -712,8 +776,8 @@ elBtnAgregarCarrito.forEach(object => {
       object.actualizarStock();
       precioTotal += object.pedidoCantidad * object.precio;
     })
-    console.log(`INFO: Precio total: $ ${precioTotal}`);
-    lblPrecioTotal.innerHTML = `Total: $ ${precioTotal}`;
+    console.log(`INFO: Precio total: $ ${precioTotal} `);
+    lblPrecioTotal.innerHTML = `Total: $ ${precioTotal} `;
 
     crearHtmlCanasta(arrayCanasta);
   });
@@ -721,44 +785,4 @@ elBtnAgregarCarrito.forEach(object => {
 
 botonComprarCarrito.addEventListener("click", fncRealizarCompra);
 
-
-
-
-
-// while (opcion != 0) {
-//   opcion = prompt(mostrarMenuPrincipal());
-//   console.log(opcion)
-//   if (opcion == null) {
-//     opcion = 0;
-//   } else {
-//     opcion = parseInt(opcion);
-//   }
-
-//   switch (opcion) {
-//     case 0:
-//       alert("Saliendo... Gracias por su visita.");
-//       break;
-//     case 1:
-//       opcion = mostrarTablaStock(arrayProducto);
-//       if (opcion == 1) {
-//         opcion = menuPrincipalPedido(arrayProducto);
-//       } else {
-//         opcion = -1;
-//       }
-//       break;
-//     case 2:
-//       opcion = menuPrincipalPedido(arrayProducto);
-//       console.log(`opcion ${opcion}`);
-//       break;
-//     case 3:
-//       opcion = menuPrincipalLog(arrayAdmin, arrayProducto);
-//       console.log(`opcion ${opcion}`);
-//       break;
-//     default:
-//       mensajeOpcionNoValida("opción", "a");
-//       break;
-//   }
-// }
-
-// console.log("Fin");
 ///////////////////////////////////////////////////////////////////////////////////
