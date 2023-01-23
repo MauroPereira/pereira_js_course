@@ -15,7 +15,7 @@ const enConstruccion = "En construcción"
 let opcion = -1
 let idProducto = -1;
 let idPersona = -1;
-let arrayProducto;
+let arrayProducto = [];
 const arrayCarritoCompras = [];  // Array donde se guardan los Productos a comprar
 
 // Declaraciones DOM
@@ -46,6 +46,11 @@ class Producto {
   /* Métodos */
   actualizarStock() {
     this.stock = this.stock - this.pedidoCantidad;
+  }
+
+  sobreescribirId(id) {
+    this.id = id;
+    idProducto = id;
   }
 }
 
@@ -756,8 +761,9 @@ proporcionados por alert y prompt.");
 
 // LocalStorage Productos
 // IMPORTANTE: no se guardan los métodos de un objeto
-if (localStorage.getItem("arrayProducto")) {
-  arrayProductoAlmacenado = JSON.parse(localStorage.getItem("arrayProductoAlmacenado"));
+if (localStorage.getItem("arrayProductoLS")) {
+  arrayProductoAlmacenado = JSON.parse(localStorage.getItem("arrayProductoLS"));
+  console.log(arrayProductoAlmacenado);
 
   for (const obj of arrayProductoAlmacenado)
     arrayProducto.push(new Producto(obj));
@@ -773,7 +779,7 @@ if (localStorage.getItem("arrayProducto")) {
 
   // Se guarda en localStorage
   // NOTA: no importa que guarde un arreglo de objetos, no guarda los métodos de dichos objetos
-  localStorage.setItem("arrayProductoAlmacenado", JSON.stringify(arrayProducto));
+  localStorage.setItem("arrayProductoLS", JSON.stringify(arrayProducto));
   console.log("INFO: Guardado en localStorage");
 }
 console.log("INFO de arrayProducto:")
