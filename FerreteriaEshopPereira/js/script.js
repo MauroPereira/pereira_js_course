@@ -737,10 +737,13 @@ const fncRealizarCompra = () => {
     console.log("INFO de arrayProducto:")
     console.log(arrayProducto);
 
-
+    // Vacía el arrayCarritoCompras
     for (var i = 0; i < arrayCarritoCompras.length; i++) {
       arrayCarritoCompras.shift();
     }
+    cartasCarritoCompras.innerHTML = "";  // Borra el DOM CarritoCompras
+    lblPrecioTotal.innerHTML = `Total: $ 0 `; // Se pone a 0 el DOM PrecioTotal
+
 
     // Se carga nuevamente la sección de Productos
     crearHtmlStockProductos(arrayProducto);
