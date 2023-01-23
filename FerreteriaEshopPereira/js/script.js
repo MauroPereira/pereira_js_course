@@ -755,9 +755,12 @@ const fncRealizarCompra = () => {
     console.log("INFO: Cargado el DOM");
   });
 };
+
 // Main /////////////////////////////////////////////////////////////////////////////////
 console.log("Inicio\nACLARACIÓN: la consola sólo es a modo de debug, los mensajes de usuario serán \
 proporcionados por alert y prompt.");
+
+swal("Good job!", "You clicked the button!", "success");
 
 // LocalStorage Productos
 // IMPORTANTE: no se guardan los métodos de un objeto
