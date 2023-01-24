@@ -328,7 +328,12 @@ const chequearStock = (stock, cantSolicitada) => {
   if (stock - cantSolicitada >= 0) {
     return false;
   } else {
-    alert("Error: cantidad pedida supera el stock de " + stock + " unidades");
+    Swal.fire({
+      title: `Error!`,
+      icon: 'error',
+      text: `La cantidad pedida supera las unidades disponibles.`,
+      confirmButtonText: 'OK',
+    });
   }
 
   return true;
