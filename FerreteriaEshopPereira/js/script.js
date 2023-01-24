@@ -684,8 +684,6 @@ const fncRealizarCompra = () => {
   /* Se encarga de leer los Datos de Compra
   */
 
-  let html = "";
-
   let nombres = inpNombres.value;
   let apellidos = inpApellidos.value;
   let direccion = inpDireccion.value;
@@ -693,74 +691,43 @@ const fncRealizarCompra = () => {
 
   console.log(`INFO: ${nombres}, ${apellidos}, ${direccion}, ${email}`);
 
-  divGraciasPorSuCompra.innerHTML = html;  // Se borra el DOM
-
-  html = `
-        <div class="card card-gracias-por-su-compra" id="card-gracias-por-su-compra" style="width: 500px;">
-          <div class="row no-gutters">
-            <div class="col-sm-5">
-              <img class="card-img" src="./imagenes/changuito.png" alt="Imagen de changuito">
-            </div>
-            <div class="col-sm-7">
-              <div class="card-body">
-                <h5 class="card-title">Gracias por su compra ${nombres} ${apellidos}!</h5>
-                <p class="card-text">Destino del envio: ${direccion}</p>
-                <p class="card-text">Se le enviará un email a ${email} con toda la información de compra</p>
-                <a href="#" id="btn-aceptar-del-carrito" class="btn btn-primary btn-aceptar-del-carrito">Aceptar</a>
-              </div>
-            </div>
-          </div>
-        </div>
-    `;
-
-  divGraciasPorSuCompra.innerHTML = html;
-
-  let botonAceptarDelCarrito = document.querySelector("#btn-aceptar-del-carrito");
-
-  botonAceptarDelCarrito.addEventListener("click", e => {
-    /* Se encarga de actualizar toda la pagina y borrar el cartel de compra exitosa
-    */
-
-    console.log("click en botón 'Comprar carrito'");
-
-    let cardGraciasPorSuCompra = document.querySelectorAll("#card-gracias-por-su-compra");
-    console.log(cardGraciasPorSuCompra);
-
-    // Borra el cartel de Gracias por su compra
-    divGraciasPorSuCompra.innerHTML = "";
-
-    // Actualiza los Productos del carrito de compras
-    arrayCarritoCompras.forEach(object => {
-      console.log(object);
-      object.actualizarStock();
-      object.pedidoCantidad = 0;
-    });
-
-    // Se actualiza el local storage
-    localStorage.setItem("arrayProductoAlmacenado", JSON.stringify(arrayProducto));
-    console.log("INFO: Actualizado el localStorage");
-    console.log("INFO de arrayProducto:")
-    console.log(arrayProducto);
-
-    // Vacía el arrayCarritoCompras
-    for (var i = 0; i < arrayCarritoCompras.length; i++) {
-      arrayCarritoCompras.shift();
-    }
-    cartasCarritoCompras.innerHTML = "";  // Borra el DOM CarritoCompras
-    lblPrecioTotal.innerHTML = `Total: $ 0 `; // Se pone a 0 el DOM PrecioTotal
-
-
-    // Se carga nuevamente la sección de Productos
-    crearHtmlStockProductos(arrayProducto);
-    console.log("INFO: Cargado el DOM");
+  Swal.fire({
+    title: `Gracias por su compra ${nombres} ${apellidos}!`,
+    icon: 'success',
+    text: `Destino del envio: ${direccion}.\nSe le enviará un email a ${email} con toda la información de compra.`,
+    confirmButtonText: 'OK',
+    timer: 5000
   });
+
+  // Actualiza los Productos del carrito de compras
+  arrayCarritoCompras.forEach(object => {
+    console.log(object);
+    object.actualizarStock();
+    object.pedidoCantidad = 0;
+  });
+
+  // Se actualiza el local storage
+  localStorage.setItem("arrayProductoAlmacenado", JSON.stringify(arrayProducto));
+  console.log("INFO: Actualizado el localStorage");
+  console.log("INFO de arrayProducto:")
+  console.log(arrayProducto);
+
+  // Vacía el arrayCarritoCompras
+  for (var i = 0; i < arrayCarritoCompras.length; i++) {
+    arrayCarritoCompras.shift();
+  }
+  cartasCarritoCompras.innerHTML = "";  // Borra el DOM CarritoCompras
+  lblPrecioTotal.innerHTML = `Total: $ 0 `; // Se pone a 0 el DOM PrecioTotal
+
+  // Se carga nuevamente la sección de Productos
+  crearHtmlStockProductos(arrayProducto);
+  console.log("INFO: Cargado el DOM");
+
 };
 
 // Main /////////////////////////////////////////////////////////////////////////////////
 console.log("Inicio\nACLARACIÓN: la consola sólo es a modo de debug, los mensajes de usuario serán \
 proporcionados por alert y prompt.");
-
-swal("Good job!", "You clicked the button!", "success");
 
 // LocalStorage Productos
 // IMPORTANTE: no se guardan los métodos de un objeto
