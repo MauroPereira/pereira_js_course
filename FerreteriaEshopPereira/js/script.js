@@ -17,7 +17,6 @@ let idProducto = -1;
 let idPersona = -1;
 let arrayProducto = [];
 const arrayCarritoCompras = [];  // Array donde se guardan los Productos a comprar
-const arrayPersona = [];
 
 // Declaraciones DOM
 let cartasStock = document.querySelector(".stock-row");
@@ -658,8 +657,9 @@ function crearHtmlCarritoCompras(array) {
   cartasCarritoCompras.innerHTML = "";
 
   array.forEach((el) => {
-    const { id, nombre, precio, pedidoCantidad, imagen } = el; // destructuring 
-    html = `
+    const { id, nombre, precio, pedidoCantidad, imagen } = el; // destructuring
+    if (pedidoCantidad != 0) {
+      html = `
         <div class="card card-carrito" style="width: 500px;">
           <div class="row no-gutters">
             <div class="col-sm-5">
@@ -677,6 +677,7 @@ function crearHtmlCarritoCompras(array) {
           </div>
         </div>
     `;
+    }
 
     cartasCarritoCompras.innerHTML += html;
   });
@@ -693,20 +694,6 @@ const fncRealizarCompra = (e) => {
   let valDireccion = document.querySelector("#input-direccion").value;
   let valEmail = document.querySelector("#input-email").value;
 
-  for (var i = 0; i < arrayPersona.length; i++) {
-    arrayPersona.shift();
-  }
-
-  arrayPersona.push(valNombres);
-  arrayPersona.push(valApellidos);
-  arrayPersona.push(valDireccion);
-  arrayPersona.push(valEmail);
-
-  console.log(arrayPersona);
-
-  NO_CONSOLE_LOG ? null : console.log(`Persona:\n${arrayPersona}`);
-
-
   if (arrayCarritoCompras.length === 0) {
     Swal.fire({
       title: `Atención!`,
@@ -717,15 +704,12 @@ const fncRealizarCompra = (e) => {
     return;
   }
 
-  NO_CONSOLE_LOG ? null : console.log("Persona:\n${arrayPersona}");
-  const [nombres, apellidos, direccion, email] = arrayPersona;  // desestructuración de array
-
   Swal.fire({
-    title: `Gracias por su compra ${nombres} ${apellidos}!`,
+    title: `Gracias por su compra ${valNombres} ${valApellidos}!`,
     icon: 'success',
-    text: `Destino del envio: ${direccion}.\nSe le enviará un email a ${email} con toda la información de compra.`,
+    text: `Destino del envio: ${valDireccion}.\nSe le enviará un email a ${valEmail} con toda la información de compra.`,
     confirmButtonText: 'OK',
-    timer: 5000
+    timer: 10000
   });
 
   // Actualiza los Productos del carrito de compras

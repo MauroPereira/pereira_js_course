@@ -50,3 +50,5 @@ Algoritmo que se encarga a través de un menú interactivo de realizar una o má
 * v3.1 Se cambiaron los carteles de 'Error de cantidad pedida no disponible' y de 'Gracias por su compra' por Sweet Alert 2. Se mejoró el flujo de trabajo.
 * v3.2 Mejoras:
     * Agregada NO_CONSOLE_LOG para deshabilitar todos los console.log().
+    * Validación del formulario.
+    * No carga el carrito si la unidades disponibles son 0.
