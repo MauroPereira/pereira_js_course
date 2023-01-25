@@ -1,4 +1,6 @@
 // Declaración de constantes
+const NO_CONSOLE_LOG = true;
+
 // Productos por defecto
 const cantTornillo = 10;
 const precTornillo = 1.5;
@@ -8,8 +10,6 @@ const cantClavo = 50;
 const precClavo = 3.5;
 const cantArandela = 10;
 const precArandela = 4.52;
-
-const enConstruccion = "En construcción"
 
 // Declaración de variables
 let opcion = -1
@@ -132,7 +132,7 @@ const menuTomarProducto = (arrayProducto, id) => {
   let matchProducto = -1;
 
   matchProducto = arrayProducto.find(objeto => objeto.id === id);
-  console.log(matchProducto);
+  NO_CONSOLE_LOG ? null : console.log(matchProducto);
 
   return matchProducto;
 
@@ -173,7 +173,7 @@ const chequearNanEspacioVacio = (mensaje) => {
 
   while (condicion == true) {
     valor = prompt(mensaje);
-    console.log(valor);
+    NO_CONSOLE_LOG ? null : console.log(valor);
     if (valor == "" || valor == null) {
       condicion = true;
       alert("Error: no se ha ingresado ningún valor o se ha clickeado sobre 'Cancelar'");
@@ -195,7 +195,7 @@ const chequearEspacioVacio = (mensaje) => {
 
   while (condicion == true) {
     valor = prompt(mensaje);
-    console.log(valor);
+    NO_CONSOLE_LOG ? null : console.log(valor);
     if (valor == "") {
       condicion = true;
       alert("Error: no se ha ingresado ningún valor. Clickee en 'Aceptar' para continuar.");
@@ -292,7 +292,7 @@ const confirmarCompra = (arrayCarritoCompras, personaComprador) => {
   let stringBuffer = stringEncabezado;
   let precioTotal = 0.0;
 
-  console.log(personaComprador.condicionIva);
+  NO_CONSOLE_LOG ? null : console.log(personaComprador.condicionIva);
 
   // Crea un string de todo el stock
   for (const index of arrayCarritoCompras) {
@@ -381,7 +381,7 @@ const mostrarCanastaYconsultar = (arrayProducto) => {
 
   while (true) {
     opcion = funcionMensajeAlertCanasta(stringEncabezado, arrayProducto, stringPie);
-    console.log(opcion);
+    NO_CONSOLE_LOG ? null : console.log(opcion);
 
     if (opcion != null && opcion != "") {
       alert(`Error por escritura en cuadro. Clickee 'Aceptar' para continuar.`);
@@ -409,8 +409,8 @@ const menuPrincipalPedido = (arrayProducto, id, arrayCarritoCompras) => {
 
     // matchProducto = menuTomarProducto(arrayProducto, id); // BORRAR FUNCIÓN
     matchProducto = arrayProducto.find(objeto => objeto.id === id);
-    console.log("matchProducto:");
-    console.log(matchProducto);
+    NO_CONSOLE_LOG ? null : console.log("matchProducto:");
+    NO_CONSOLE_LOG ? null : console.log(matchProducto);
 
     if (matchProducto == -1) {
       return -1;
@@ -470,21 +470,21 @@ const menuPrincipalPedido = (arrayProducto, id, arrayCarritoCompras) => {
   direccionComprador = "Comprador";
   emailComprador = "Comprador";
   ivaComprador = 2;
-  console.log(`ivaComprador: ${ivaComprador}`);
+  NO_CONSOLE_LOG ? null : console.log(`ivaComprador: ${ivaComprador}`);
 
   const personaComprador = new Persona(nombresComprador, apellidosComprador, direccionComprador, emailComprador, ivaComprador);
   ///////////////////////////////////////////////////////////////////////////////////
 
   confirmaCompra = confirmarCompra(arrayCarritoCompras, personaComprador);
-  console.log("post confirmaCompra:");
-  console.log(arrayCarritoCompras);
+  NO_CONSOLE_LOG ? null : console.log("post confirmaCompra:");
+  NO_CONSOLE_LOG ? null : console.log(arrayCarritoCompras);
 
   if (confirmaCompra != null) { // El usuario apretó 'Aceptar' en la pantalla anterior
     // Bloque que al efectuarse la compra, se encarga de extraer del stock las cantidades
     // pedidas por el usuario. Luego setea a 0 las cantidades pedidas dentro de cada objeto
     // Producto
     arrayCarritoCompras.forEach(object => {
-      console.log(object);
+      NO_CONSOLE_LOG ? null : console.log(object);
       object.actualizarStock();
       object.pedidoCantidad = 0;
     })
@@ -532,12 +532,12 @@ const menuPrincipalLog = (arrayAdmin, arrayProducto) => {
       break;
     }
   }
-  console.log(`Nick ${matchAdmin.nick} encontrado.`);
+  NO_CONSOLE_LOG ? null : console.log(`Nick ${matchAdmin.nick} encontrado.`);
 
   stringBuffer = stringEncabezado + stringPie2;
   while (true) {
     let password = prompt(stringBuffer);
-    console.log(password);
+    NO_CONSOLE_LOG ? null : console.log(password);
 
     if (password == undefined) {
       return -1;
@@ -548,7 +548,7 @@ const menuPrincipalLog = (arrayAdmin, arrayProducto) => {
       break;
     }
   }
-  console.log(`Password ${matchAdmin.password} encontrado.`);
+  NO_CONSOLE_LOG ? null : console.log(`Password ${matchAdmin.password} encontrado.`);
 
   return menuPrincipalAgregarProducto(arrayProducto);
 }
@@ -623,27 +623,27 @@ function crearHtmlStockProductos(array) {
     cartasStock.innerHTML += html;
   });
 
-  console.log("INFO: Cargado el DOM");
+  NO_CONSOLE_LOG ? null : console.log("INFO: Cargado el DOM");
   let elBtnAgregarCarrito = document.querySelectorAll(".btn-agregar-carrito");  // IMPORTANTE: la toma de nodos se debe hacer después de crear los elementos
 
-  console.log("INFO:");
-  console.log(elBtnAgregarCarrito);
+  NO_CONSOLE_LOG ? null : console.log("INFO:");
+  NO_CONSOLE_LOG ? null : console.log(elBtnAgregarCarrito);
 
   // Listeners
   elBtnAgregarCarrito.forEach(object => {
-    console.log(object);
+    NO_CONSOLE_LOG ? null : console.log(object);
     object.addEventListener("click", e => {
-      console.log(`ID del Producto ckickeado: ${e.target.id} `);
+      NO_CONSOLE_LOG ? null : console.log(`ID del Producto ckickeado: ${e.target.id} `);
       opcion = menuPrincipalPedido(arrayProducto, parseInt(e.target.id), arrayCarritoCompras);
-      console.log("INFO: arrayCarritoCompras");
-      console.log(arrayCarritoCompras);
+      NO_CONSOLE_LOG ? null : console.log("INFO: arrayCarritoCompras");
+      NO_CONSOLE_LOG ? null : console.log(arrayCarritoCompras);
       let precioTotal = 0;
       arrayCarritoCompras.forEach(object => {
-        console.log(object);
+        NO_CONSOLE_LOG ? null : console.log(object);
         precioTotal += object.pedidoCantidad * object.precio;
 
       })
-      console.log(`INFO: Precio total: $ ${precioTotal} `);
+      NO_CONSOLE_LOG ? null : console.log(`INFO: Precio total: $ ${precioTotal} `);
       lblPrecioTotal.innerHTML = `Total: $ ${precioTotal} `;
 
       crearHtmlCarritoCompras(arrayCarritoCompras);
@@ -694,7 +694,7 @@ const fncRealizarCompra = () => {
   let direccion = inpDireccion.value;
   let email = inpEmail.value;
 
-  console.log(`INFO: ${nombres}, ${apellidos}, ${direccion}, ${email}`);
+  NO_CONSOLE_LOG ? null : console.log(`INFO: ${nombres}, ${apellidos}, ${direccion}, ${email}`);
 
   Swal.fire({
     title: `Gracias por su compra ${nombres} ${apellidos}!`,
@@ -706,16 +706,16 @@ const fncRealizarCompra = () => {
 
   // Actualiza los Productos del carrito de compras
   arrayCarritoCompras.forEach(object => {
-    console.log(object);
+    NO_CONSOLE_LOG ? null : console.log(object);
     object.actualizarStock();
     object.pedidoCantidad = 0;
   });
 
   // Se actualiza el local storage
   localStorage.setItem("arrayProductoAlmacenado", JSON.stringify(arrayProducto));
-  console.log("INFO: Actualizado el localStorage");
-  console.log("INFO de arrayProducto:")
-  console.log(arrayProducto);
+  NO_CONSOLE_LOG ? null : console.log("INFO: Actualizado el localStorage");
+  NO_CONSOLE_LOG ? null : console.log("INFO de arrayProducto:")
+  NO_CONSOLE_LOG ? null : console.log(arrayProducto);
 
   // Vacía el arrayCarritoCompras
   for (var i = 0; i < arrayCarritoCompras.length; i++) {
@@ -726,24 +726,24 @@ const fncRealizarCompra = () => {
 
   // Se carga nuevamente la sección de Productos
   crearHtmlStockProductos(arrayProducto);
-  console.log("INFO: Cargado el DOM");
+  NO_CONSOLE_LOG ? null : console.log("INFO: Cargado el DOM");
 
 };
 
 // Main /////////////////////////////////////////////////////////////////////////////////
-console.log("Inicio\nACLARACIÓN: la consola sólo es a modo de debug, los mensajes de usuario serán \
+NO_CONSOLE_LOG ? null : console.log("Inicio\nACLARACIÓN: la consola sólo es a modo de debug, los mensajes de usuario serán \
 proporcionados por alert y prompt.");
 
 // LocalStorage Productos
 // IMPORTANTE: no se guardan los métodos de un objeto
 if (localStorage.getItem("arrayProductoLS")) {
   arrayProductoAlmacenado = JSON.parse(localStorage.getItem("arrayProductoLS"));
-  console.log(arrayProductoAlmacenado);
+  NO_CONSOLE_LOG ? null : console.log(arrayProductoAlmacenado);
 
   for (const obj of arrayProductoAlmacenado)
     arrayProducto.push(new Producto(obj));
 
-  console.log("INFO: Recuperado de localStorage");
+  NO_CONSOLE_LOG ? null : console.log("INFO: Recuperado de localStorage");
 } else {
   arrayProducto = [
     new Producto({ nombre: "Tornillo".toUpperCase(), precio: precTornillo, stock: cantTornillo, imagen: "./imagenes/tornillo.webp" }),
@@ -755,10 +755,10 @@ if (localStorage.getItem("arrayProductoLS")) {
   // Se guarda en localStorage
   // NOTA: no importa que guarde un arreglo de objetos, no guarda los métodos de dichos objetos
   localStorage.setItem("arrayProductoLS", JSON.stringify(arrayProducto));
-  console.log("INFO: Guardado en localStorage");
+  NO_CONSOLE_LOG ? null : console.log("INFO: Guardado en localStorage");
 }
-console.log("INFO de arrayProducto:")
-console.log(arrayProducto);
+NO_CONSOLE_LOG ? null : console.log("INFO de arrayProducto:")
+NO_CONSOLE_LOG ? null : console.log(arrayProducto);
 
 //
 btnComprarCarrito.addEventListener("click", fncRealizarCompra);

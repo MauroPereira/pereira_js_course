@@ -47,3 +47,6 @@ Algoritmo que se encarga a través de un menú interactivo de realizar una o má
     * boton Eliminar Producto o Vaciar todo el Carrito. 
     * boton Login tanto para Clientes como para Admin a fin de agregar más Productos o modificar cantidad de Stock.
 
+* v3.1 Se cambiaron los carteles de 'Error de cantidad pedida no disponible' y de 'Gracias por su compra' por Sweet Alert 2. Se mejoró el flujo de trabajo.
+* v3.2 Mejoras:
+    * Agregada NO_CONSOLE_LOG para deshabilitar todos los console.log().
