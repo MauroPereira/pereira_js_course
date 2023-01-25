@@ -17,15 +17,13 @@ let idProducto = -1;
 let idPersona = -1;
 let arrayProducto = [];
 const arrayCarritoCompras = [];  // Array donde se guardan los Productos a comprar
+const arrayPersona = [];
 
 // Declaraciones DOM
 let cartasStock = document.querySelector(".stock-row");
 let cartasCarritoCompras = document.querySelector(".container-carrito-de-compras");
 //let botonBorrarCarrito = document.querySelector("#btn-borrar-carrito");
-let inpNombres = document.querySelector("#input-nombres");
-let inpApellidos = document.querySelector("#input-apellidos");
-let inpDireccion = document.querySelector("#input-direccion");
-let inpEmail = document.querySelector("#input-email");
+let formDatosCompra = document.querySelector("#form-datos-compra");
 let chkbtnExentoIva = document.querySelector("#checkbox-exento-iva");
 let lblPrecioTotal = document.querySelector("#lbl-precio-total");
 let btnComprarCarrito = document.querySelector("#btn-comprar-carrito");
@@ -55,14 +53,14 @@ class Producto {
 
 class Persona {
   /* Clase Persona */
-  constructor(nombre, apellido, direccion, email, condicionIva) {
+  constructor(obj) {
     idPersona++;
     this.id = idPersona;
-    this.nombre = nombre;
-    this.apellido = apellido;
-    this.direccion = direccion;
-    this.email = email;
-    this.condicionIva = condicionIva;
+    this.nombre = obj.nombre;
+    this.apellido = obj.apellido;
+    this.direccion = obj.direccion;
+    this.email = obj.email;
+    this.condicionIva = obj.condicionIva;
   }
   /* Métodos */
 }
@@ -698,12 +696,8 @@ const fncRealizarCompra = () => {
     return;
   }
 
-  let nombres = inpNombres.value;
-  let apellidos = inpApellidos.value;
-  let direccion = inpDireccion.value;
-  let email = inpEmail.value;
-
-  NO_CONSOLE_LOG ? null : console.log(`INFO: ${nombres}, ${apellidos}, ${direccion}, ${email}`);
+  NO_CONSOLE_LOG ? null : console.log("Persona:\n${arrayPersona}");
+  const [nombres, apellidos, direccion, email] = arrayPersona;  // desestructuración de array
 
   Swal.fire({
     title: `Gracias por su compra ${nombres} ${apellidos}!`,
@@ -738,9 +732,20 @@ const fncRealizarCompra = () => {
   NO_CONSOLE_LOG ? null : console.log("INFO: Cargado el DOM");
 };
 
+const validarDatos = (e) => {
+  e.preventDefault();
+
+  console.log(e.target)
+
+  let arrayDatos = e.target;
+  const [nombres, apellidos, direccion, email] = arrayDatos;  // desestructuración de array
+  arrayPersona = [nombres, apellidos, direccion, email];
+
+  NO_CONSOLE_LOG ? null : console.log(`Persona:\n${arrayPersona}`);
+}
+
 // Main /////////////////////////////////////////////////////////////////////////////////
-NO_CONSOLE_LOG ? null : console.log("Inicio\nACLARACIÓN: la consola sólo es a modo de debug, los mensajes de usuario serán \
-proporcionados por alert y prompt.");
+NO_CONSOLE_LOG ? null : console.log("Inicio\nACLARACIÓN: la consola sólo es a modo de debug.");
 
 // LocalStorage Productos
 // IMPORTANTE: no se guardan los métodos de un objeto
@@ -768,7 +773,8 @@ if (localStorage.getItem("arrayProductoLS")) {
 NO_CONSOLE_LOG ? null : console.log("INFO de arrayProducto:")
 NO_CONSOLE_LOG ? null : console.log(arrayProducto);
 
-//
+// Listeners de nodos fijos
+formDatosCompra.addEventListener("submit", validarDatos);
 btnComprarCarrito.addEventListener("click", fncRealizarCompra);
 
 // Carga de DOM
