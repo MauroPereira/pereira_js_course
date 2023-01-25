@@ -682,9 +682,30 @@ function crearHtmlCarritoCompras(array) {
   });
 }
 
-const fncRealizarCompra = () => {
+const fncRealizarCompra = (e) => {
   /* Se encarga de leer los Datos de Compra
   */
+
+  e.preventDefault();  // validación de compras
+
+  let valNombres = document.querySelector("#input-nombres").value;
+  let valApellidos = document.querySelector("#input-apellidos").value;
+  let valDireccion = document.querySelector("#input-direccion").value;
+  let valEmail = document.querySelector("#input-email").value;
+
+  for (var i = 0; i < arrayPersona.length; i++) {
+    arrayPersona.shift();
+  }
+
+  arrayPersona.push(valNombres);
+  arrayPersona.push(valApellidos);
+  arrayPersona.push(valDireccion);
+  arrayPersona.push(valEmail);
+
+  console.log(arrayPersona);
+
+  NO_CONSOLE_LOG ? null : console.log(`Persona:\n${arrayPersona}`);
+
 
   if (arrayCarritoCompras.length === 0) {
     Swal.fire({
@@ -732,18 +753,6 @@ const fncRealizarCompra = () => {
   NO_CONSOLE_LOG ? null : console.log("INFO: Cargado el DOM");
 };
 
-const validarDatos = (e) => {
-  e.preventDefault();
-
-  console.log(e.target)
-
-  let arrayDatos = e.target;
-  const [nombres, apellidos, direccion, email] = arrayDatos;  // desestructuración de array
-  arrayPersona = [nombres, apellidos, direccion, email];
-
-  NO_CONSOLE_LOG ? null : console.log(`Persona:\n${arrayPersona}`);
-}
-
 // Main /////////////////////////////////////////////////////////////////////////////////
 NO_CONSOLE_LOG ? null : console.log("Inicio\nACLARACIÓN: la consola sólo es a modo de debug.");
 
@@ -774,8 +783,7 @@ NO_CONSOLE_LOG ? null : console.log("INFO de arrayProducto:")
 NO_CONSOLE_LOG ? null : console.log(arrayProducto);
 
 // Listeners de nodos fijos
-formDatosCompra.addEventListener("submit", validarDatos);
-btnComprarCarrito.addEventListener("click", fncRealizarCompra);
+formDatosCompra.addEventListener("submit", fncRealizarCompra);
 
 // Carga de DOM
 crearHtmlStockProductos(arrayProducto);
