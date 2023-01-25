@@ -28,8 +28,7 @@ let inpDireccion = document.querySelector("#input-direccion");
 let inpEmail = document.querySelector("#input-email");
 let chkbtnExentoIva = document.querySelector("#checkbox-exento-iva");
 let lblPrecioTotal = document.querySelector("#lbl-precio-total");
-let btnComprarCarrito = document.querySelector("#btn-comprar-carrito")
-let divGraciasPorSuCompra = document.querySelector("#div-gracias-por-su-compra");
+let btnComprarCarrito = document.querySelector("#btn-comprar-carrito");
 
 // Declaración de clases
 class Producto {
@@ -689,6 +688,16 @@ const fncRealizarCompra = () => {
   /* Se encarga de leer los Datos de Compra
   */
 
+  if (arrayCarritoCompras.length === 0) {
+    Swal.fire({
+      title: `Atención!`,
+      icon: 'warning',
+      text: `El carrito de compras está vacío.`,
+      confirmButtonText: 'OK',
+    });
+    return;
+  }
+
   let nombres = inpNombres.value;
   let apellidos = inpApellidos.value;
   let direccion = inpDireccion.value;
@@ -727,7 +736,6 @@ const fncRealizarCompra = () => {
   // Se carga nuevamente la sección de Productos
   crearHtmlStockProductos(arrayProducto);
   NO_CONSOLE_LOG ? null : console.log("INFO: Cargado el DOM");
-
 };
 
 // Main /////////////////////////////////////////////////////////////////////////////////
