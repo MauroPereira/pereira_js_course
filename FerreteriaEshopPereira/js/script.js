@@ -23,7 +23,9 @@ let cartasStock = document.querySelector(".stock-row");
 let cartasCarritoCompras = document.querySelector(".container-carrito-de-compras");
 //let botonBorrarCarrito = document.querySelector("#btn-borrar-carrito");
 let formDatosCompra = document.querySelector("#form-datos-compra");
-let chkbtnExentoIva = document.querySelector("#checkbox-exento-iva");
+let chckbxExentoIva = document.querySelector('input[type="checkbox"]');
+let lblPrecioSubtotal = document.querySelector("#lbl-precio-subtotal");
+let lblIncluyeIva = document.querySelector("#lbl-incluye-iva");
 let lblPrecioTotal = document.querySelector("#lbl-precio-total");
 let btnComprarCarrito = document.querySelector("#btn-comprar-carrito");
 
@@ -735,7 +737,14 @@ const fncRealizarCompra = (e) => {
   // Se carga nuevamente la sección de Productos
   crearHtmlStockProductos(arrayProducto);
   NO_CONSOLE_LOG ? null : console.log("INFO: Cargado el DOM");
-};
+}
+
+const fncAgregarIva = (e) => {
+  /* Se encarga de mostrar en pantalla o no el IVA
+  */
+
+  e.target.checked ? lblIncluyeIva.style.display = "inline" : lblIncluyeIva.style.display = "none";
+}
 
 // Main /////////////////////////////////////////////////////////////////////////////////
 NO_CONSOLE_LOG ? null : console.log("Inicio\nACLARACIÓN: la consola sólo es a modo de debug.");
@@ -768,6 +777,7 @@ NO_CONSOLE_LOG ? null : console.log(arrayProducto);
 
 // Listeners de nodos fijos
 formDatosCompra.addEventListener("submit", fncRealizarCompra);
+chckbxExentoIva.addEventListener("change", fncAgregarIva);
 
 // Carga de DOM
 crearHtmlStockProductos(arrayProducto);
