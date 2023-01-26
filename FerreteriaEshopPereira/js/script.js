@@ -635,15 +635,25 @@ function crearHtmlStockProductos(array) {
       opcion = menuPrincipalPedido(arrayProducto, parseInt(e.target.id), arrayCarritoCompras);
       NO_CONSOLE_LOG ? null : console.log("INFO: arrayCarritoCompras");
       NO_CONSOLE_LOG ? null : console.log(arrayCarritoCompras);
+      // Se inicializan a 0 los precios
+      let precioSubtotal = 0;
+      let precioIncluyeIva = 0;
       let precioTotal = 0;
+      // Se realiza la cuenta
       arrayCarritoCompras.forEach(object => {
         NO_CONSOLE_LOG ? null : console.log(object);
-        precioTotal += object.pedidoCantidad * object.precio;
+        precioSubtotal += object.pedidoCantidad * object.precio;
 
-      })
+      });
+
+      // Se muestra la info
       NO_CONSOLE_LOG ? null : console.log(`INFO: Precio total: $ ${precioTotal} `);
+      lblPrecioSubtotal.innerHTML = `Subtotal: $ ${precioSubtotal} `;
+      lblIncluyeIva.innerHTML = `Incluye IVA 21%: $ ${precioSubtotal * 0.21} `;
+      chckbxExentoIva.target.checked ? precioTotal = precioSubtotal * 1.21 : precioSubtotal;
       lblPrecioTotal.innerHTML = `Total: $ ${precioTotal} `;
 
+      // Se crea el carrito
       crearHtmlCarritoCompras(arrayCarritoCompras);
     });
   });
