@@ -751,9 +751,8 @@ const fncRealizarCompra = (e) => {
 const fncAgregarIva = (e) => {
   /* Se encarga de mostrar en pantalla o no el IVA
   */
-  if (e.target.checked)
-    console.log(lblIncluyeIva);
 
+  e.target.checked ? lblIncluyeIva.style.display = "inline" : lblIncluyeIva.style.display = "none";
 }
 
 // Main /////////////////////////////////////////////////////////////////////////////////
