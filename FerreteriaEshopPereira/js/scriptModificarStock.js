@@ -836,9 +836,6 @@ NO_CONSOLE_LOG ? null : console.log("INFO de arrayProducto:");
 NO_CONSOLE_LOG ? null : console.log(arrayProducto);
 
 // Listeners de nodos fijos
-formDatosCompra.addEventListener("submit", fncRealizarCompra);
-chckbxExentoIva.addEventListener("change", fncAgregarIva);
-btnModificarStock.addEventListener("click", fncModificarStock);
 
 // Carga de DOM
 crearHtmlStockProductos(arrayProducto);
