@@ -23,9 +23,11 @@ let cartasStock = document.querySelector(".stock-row");
 let cartasCarritoCompras = document.querySelector(".container-carrito-de-compras");
 //let botonBorrarCarrito = document.querySelector("#btn-borrar-carrito");
 let formDatosCompra = document.querySelector("#form-datos-compra");
-let chkbtnExentoIva = document.querySelector("#checkbox-exento-iva");
+let chckbxExentoIva = document.querySelector('input[type="checkbox"]');
+let lblPrecioSubtotal = document.querySelector("#lbl-precio-subtotal");
 let lblPrecioTotal = document.querySelector("#lbl-precio-total");
 let btnComprarCarrito = document.querySelector("#btn-comprar-carrito");
+let lblIncluyeIva = document.querySelector("#lbl-incluye-iva");
 
 // Declaración de clases
 class Producto {
@@ -633,14 +635,20 @@ function crearHtmlStockProductos(array) {
       opcion = menuPrincipalPedido(arrayProducto, parseInt(e.target.id), arrayCarritoCompras);
       NO_CONSOLE_LOG ? null : console.log("INFO: arrayCarritoCompras");
       NO_CONSOLE_LOG ? null : console.log(arrayCarritoCompras);
+      let precioSubtotal = 0;
       let precioTotal = 0;
       arrayCarritoCompras.forEach(object => {
         NO_CONSOLE_LOG ? null : console.log(object);
-        precioTotal += object.pedidoCantidad * object.precio;
-
+        precioSubtotal += object.pedidoCantidad * object.precio;
       })
-      NO_CONSOLE_LOG ? null : console.log(`INFO: Precio total: $ ${precioTotal} `);
+
+      // Cálculo del precio total con ternario 
+      lblPrecioSubtotal.innerHTML = `Subtotal: $ ${precioSubtotal}`;
+      lblIncluyeIva.innerHTML = `Incluye IVA 21%: $ ${precioSubtotal * 0.21}`;
+      chckbxExentoIva.target.checked ? precioTotal = precioSubtotal * 1.21 : precioSubtotal;
       lblPrecioTotal.innerHTML = `Total: $ ${precioTotal} `;
+      NO_CONSOLE_LOG ? null : console.log(`INFO: Precio subtotal: $ ${precioSubtotal} `);
+      NO_CONSOLE_LOG ? null : console.log(`INFO: Precio total: $ ${precioTotal} `);
 
       crearHtmlCarritoCompras(arrayCarritoCompras);
     });
@@ -729,13 +737,24 @@ const fncRealizarCompra = (e) => {
   for (var i = 0; i < arrayCarritoCompras.length; i++) {
     arrayCarritoCompras.shift();
   }
-  cartasCarritoCompras.innerHTML = "";  // Borra el DOM CarritoCompras
-  lblPrecioTotal.innerHTML = `Total: $ 0 `; // Se pone a 0 el DOM PrecioTotal
+  cartasCarritoCompras.innerHTML = "";  // borra el DOM CarritoCompras
+  // Se pone a 0 los DOM precios
+  lblIncluyeIva.innerHTML = `Incluye IVA 21%: $ 0`;
+  lblPrecioSubtotal.innerHTML = `Subtotal: $ 0 `;
+  lblPrecioTotal.innerHTML = `Total: $ 0 `;  // se pone a 0 el DOM PrecioTotal
 
   // Se carga nuevamente la sección de Productos
   crearHtmlStockProductos(arrayProducto);
   NO_CONSOLE_LOG ? null : console.log("INFO: Cargado el DOM");
-};
+}
+
+const fncAgregarIva = (e) => {
+  /* Se encarga de mostrar en pantalla o no el IVA
+  */
+  if (e.target.checked)
+    console.log(lblIncluyeIva);
+
+}
 
 // Main /////////////////////////////////////////////////////////////////////////////////
 NO_CONSOLE_LOG ? null : console.log("Inicio\nACLARACIÓN: la consola sólo es a modo de debug.");
@@ -768,6 +787,7 @@ NO_CONSOLE_LOG ? null : console.log(arrayProducto);
 
 // Listeners de nodos fijos
 formDatosCompra.addEventListener("submit", fncRealizarCompra);
+chckbxExentoIva.addEventListener("change", fncAgregarIva);
 
 // Carga de DOM
 crearHtmlStockProductos(arrayProducto);

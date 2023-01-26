@@ -70,6 +70,18 @@ section {
   font-family: 'Bakbak One', cursive;
 }
 
+#lbl-precio-subtotal {
+  font-size: 1.2rem;
+  color: lightcyan;
+  font-family: 'Bakbak One', cursive;
+}
+
+#lbl-incluye-iva {
+  font-size: 1rem;
+  color: lightcyan;
+  font-family: 'Bakbak One', cursive;
+}
+
 #lbl-precio-total {
   font-size: 1.5rem;
   color: lightcyan;
