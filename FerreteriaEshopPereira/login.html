@@ -48,12 +48,6 @@
           <img src="imagenes/icono_ferreteria.png" width="50" alt="Logo de la página web">
         </a>
         <ul class="navbar-nav d-flex justify-content-center align-items-center">
-          <a class="btn btn-primary" id="btn-modificar-stock" href="./login.html" role="button">Modificar stock
-            <i class="bi bi-box-arrow-in-right"></i>
-          </a>
-          <a class="btn btn-primary" href="#section-carrito-de-compras" role="button">Carrito de compras
-            <i class="bi bi-cart4"></i>
-          </a>
         </ul>
       </div>
     </div>
@@ -66,58 +60,22 @@
       <h2 class="titulo-secundario">E-Shop</h1>
     </div>
   </section>
-  <!-- Galeria de Stock -->
-  <section class="stock">
-    <div class="stock">
-      <div class="container text-center stock-contenedor">
-        <div class="row stock-row justify-content-between">
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- Seccion Carrito -->
-  <section id="section-carrito-de-compras" class="section-carrito-de-compras">
-    <div class="carrito-de-compras">
-      <h2 class="titulo-secundario text-center">Carrito de compras</h2>
-      <h3 id="titulo-productos-carrito" class="titulo-productos-carrito text-center">Productos</h3>
-      <form class="col" id="form-carrito-de-compras">
-        <div class="container-carrito-de-compras bcontent">
-        </div>
 
-        <hr>
-        <label class="lbl-precio-subtotal" id="lbl-precio-subtotal">Subtotal: $ 0</label>
-        <br>
-        <label class="lbl-incluye-iva" id="lbl-incluye-iva">Incluye IVA 21%: $ 0</label>
-        <hr>
-        <label class=" lbl-precio-total" id="lbl-precio-total">Total: $ 0</label>
-      </form>
-    </div>
+  <!-- Formulario Datos de usuario -->
+  <section class="sec-datos-usuario">
+    <h3 id="titulo-datos-usuario" class="text-center" style="padding-bottom: 0rem;">Datos del usuario</h3>
+    <form id="form-datos-usuario">
 
-    <!-- Formulario Datos de compra -->
-    <h3 id="titulo-formulario-compra" class="titulo-formulario-compra text-center">Datos de compra</h3>
-    <form id="form-datos-compra">
+      <label class="letra-pequena" for="in-usuario">Nombre del usuario</label>
+      <input type="text" class="form-control" id="input-usuario" placeholder="Nombre del usuario" required>
 
-      <label class="letra-pequena" for="input-nombres">Nombres</label>
-      <input type="text" class="form-control" id="input-nombres" placeholder="Nombres" required>
-
-
-      <label class="letra-pequena" for="input-apellidos">Apellidos</label>
-      <input type="text" class="form-control" id="input-apellidos" placeholder="Apellidos" required>
-
-
-      <label class="letra-pequena" for="input-direccion">Dirección</label>
-      <input type="text" class="form-control" id="input-direccion" placeholder="Dirección" required>
-
-
-      <label class="letra-pequena" for="input-email">E-mail</label>
-      <input type="email" class="form-control" id="input-email" placeholder="e-mail" required>
-
-
-      <input type="checkbox" class="form-check-input" id="chckbx-exento-iva">
-      <label class="form-check-label letra-pequena" for="chckbx-exento-iva">Exento IVA</label>
+      <label class="letra-pequena" for="in-contrasena">Contraseña</label>
+      <input type="password" class="form-control" id="in-contrasena" placeholder="Contraseña" required>
 
       <div class="col text-center">
-        <input type="submit" id="btn-comprar-carrito" class="btn btn-primary" value="Comprar carrito"></input>
+        <input type="button" id="btn-volver" class="btn btn-danger btn-login" href="./index.html"
+          value="Volver"></input>
+        <input type="submit" id="btn-loguearse" class="btn btn-success btn-login" value="Loguearse"></input>
       </div>
     </form>
   </section>
@@ -125,7 +83,7 @@
   <!-- Sweet Alert 2 -->
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <!-- Script JS -->
-  <script src="js/script.js"></script>
+  <script src="js/scriptLogin.js"></script>
 </body>
 
 </html>

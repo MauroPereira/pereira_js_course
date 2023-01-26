@@ -110,3 +110,17 @@ section {
   color: lightcyan;
   font-family: 'Bakbak One', cursive;
 }
+
+
+/* Login.html */
+.btn-login {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#titulo-datos-usuario {
+  padding: 1rem;
+  font-size: 1.5rem;
+  color: lightcyan;
+  font-family: 'Bakbak One', cursive;
+}
