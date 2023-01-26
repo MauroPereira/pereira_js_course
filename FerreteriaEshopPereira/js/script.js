@@ -17,6 +17,10 @@ let idProducto = -1;
 let idPersona = -1;
 let arrayProducto = [];
 const arrayCarritoCompras = [];  // Array donde se guardan los Productos a comprar
+let flagIncluyeIva = false;  // flag que indica si se incluye IVA o no
+let precioSubtotal = 0;
+let precioIncluyeIva = 0;
+let precioTotal = 0;
 
 // Declaraciones DOM
 let cartasStock = document.querySelector(".stock-row");
@@ -635,10 +639,12 @@ function crearHtmlStockProductos(array) {
       opcion = menuPrincipalPedido(arrayProducto, parseInt(e.target.id), arrayCarritoCompras);
       NO_CONSOLE_LOG ? null : console.log("INFO: arrayCarritoCompras");
       NO_CONSOLE_LOG ? null : console.log(arrayCarritoCompras);
-      // Se inicializan a 0 los precios
-      let precioSubtotal = 0;
-      let precioIncluyeIva = 0;
-      let precioTotal = 0;
+
+      // Se borran los precios
+      precioSubtotal = 0;
+      precioIncluyeIva = 0;
+      precioTotal = 0;
+
       // Se realiza la cuenta
       arrayCarritoCompras.forEach(object => {
         NO_CONSOLE_LOG ? null : console.log(object);
@@ -646,11 +652,10 @@ function crearHtmlStockProductos(array) {
 
       });
 
-      // Se muestra la info
-      NO_CONSOLE_LOG ? null : console.log(`INFO: Precio total: $ ${precioTotal} `);
-      lblPrecioSubtotal.innerHTML = `Subtotal: $ ${precioSubtotal} `;
-      lblIncluyeIva.innerHTML = `Incluye IVA 21%: $ ${precioSubtotal * 0.21} `;
-      chckbxExentoIva.target.checked ? precioTotal = precioSubtotal * 1.21 : precioSubtotal;
+      // Se actualiza la información de precios      
+      lblPrecioSubtotal.innerHTML = `Subtotal: $ ${precioSubtotal}`;
+      lblIncluyeIva.innerHTML = `Incluye IVA 21%: $ ${precioSubtotal * 0.21}`;
+      flagIncluyeIva ? precioTotal = precioSubtotal * 1.21 : precioTotal = precioSubtotal;
       lblPrecioTotal.innerHTML = `Total: $ ${precioTotal} `;
 
       // Se crea el carrito
@@ -742,9 +747,13 @@ const fncRealizarCompra = (e) => {
     arrayCarritoCompras.shift();
   }
   cartasCarritoCompras.innerHTML = "";  // Borra el DOM CarritoCompras
-  // Se pone a 0 los DOM precios
-  lblIncluyeIva.innerHTML = `Incluye IVA 21%: $ 0`;
+
+  // Se borran los precios y actualizan el DOM
+  precioSubtotal = 0;
+  precioIncluyeIva = 0;
+  precioTotal = 0;
   lblPrecioSubtotal.innerHTML = `Subtotal: $ 0 `;
+  lblIncluyeIva.innerHTML = `Incluye IVA 21%: $ 0`;
   lblPrecioTotal.innerHTML = `Total: $ 0 `;  // se pone a 0 el DOM PrecioTotal
 
   // Se carga nuevamente la sección de Productos
@@ -756,7 +765,20 @@ const fncAgregarIva = (e) => {
   /* Se encarga de mostrar en pantalla o no el IVA
   */
 
-  e.target.checked ? lblIncluyeIva.style.display = "inline" : lblIncluyeIva.style.display = "none";
+  if (e.target.checked) {
+    lblIncluyeIva.style.display = "inline";
+    flagIncluyeIva = true;
+  }
+  else {
+    lblIncluyeIva.style.display = "none";
+    flagIncluyeIva = false;
+  }
+
+  // Se actualiza la información de precios      
+  lblPrecioSubtotal.innerHTML = `Subtotal: $ ${precioSubtotal}`;
+  lblIncluyeIva.innerHTML = `Incluye IVA 21%: $ ${precioSubtotal * 0.21}`;
+  flagIncluyeIva ? precioTotal = precioSubtotal * 1.21 : precioTotal = precioSubtotal;
+  lblPrecioTotal.innerHTML = `Total: $ ${precioTotal} `;
 }
 
 // Main /////////////////////////////////////////////////////////////////////////////////
