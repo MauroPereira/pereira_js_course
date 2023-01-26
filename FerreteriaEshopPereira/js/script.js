@@ -732,7 +732,10 @@ const fncRealizarCompra = (e) => {
     arrayCarritoCompras.shift();
   }
   cartasCarritoCompras.innerHTML = "";  // Borra el DOM CarritoCompras
-  lblPrecioTotal.innerHTML = `Total: $ 0 `; // Se pone a 0 el DOM PrecioTotal
+  // Se pone a 0 los DOM precios
+  lblIncluyeIva.innerHTML = `Incluye IVA 21%: $ 0`;
+  lblPrecioSubtotal.innerHTML = `Subtotal: $ 0 `;
+  lblPrecioTotal.innerHTML = `Total: $ 0 `;  // se pone a 0 el DOM PrecioTotal
 
   // Se carga nuevamente la sección de Productos
   crearHtmlStockProductos(arrayProducto);
@@ -772,7 +775,7 @@ if (localStorage.getItem("arrayProductoLS")) {
   localStorage.setItem("arrayProductoLS", JSON.stringify(arrayProducto));
   NO_CONSOLE_LOG ? null : console.log("INFO: Guardado en localStorage");
 }
-NO_CONSOLE_LOG ? null : console.log("INFO de arrayProducto:")
+NO_CONSOLE_LOG ? null : console.log("INFO de arrayProducto:");
 NO_CONSOLE_LOG ? null : console.log(arrayProducto);
 
 // Listeners de nodos fijos
