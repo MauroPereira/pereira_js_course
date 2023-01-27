@@ -738,7 +738,7 @@ const fncRealizarCompra = (e) => {
   });
 
   // Se actualiza el local storage
-  localStorage.setItem("arrayProductoAlmacenado", JSON.stringify(arrayProducto));
+  localStorage.setItem("arrayProductoLS", JSON.stringify(arrayProducto));
   NO_CONSOLE_LOG ? null : console.log("INFO: Actualizado el localStorage");
   NO_CONSOLE_LOG ? null : console.log("INFO de arrayProducto:")
   NO_CONSOLE_LOG ? null : console.log(arrayProducto);

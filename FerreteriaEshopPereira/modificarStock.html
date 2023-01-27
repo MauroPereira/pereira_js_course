@@ -49,7 +49,7 @@
         </a>
         <ul class="navbar-nav d-flex justify-content-center align-items-center">
           <a class="btn btn-primary" id="boton-salir" href="./index.html" role="button">Salir
-            <i class="bi bi-cart4"></i>
+            <i class="bi bi-box-arrow-right"></i>
           </a>
         </ul>
       </div>
@@ -72,52 +72,31 @@
       </div>
     </div>
   </section>
-  <!-- Seccion Carrito -->
-  <!-- <section id="section-carrito-de-compras" class="section-carrito-de-compras">
-    <div class="carrito-de-compras">
-      <h2 class="titulo-secundario text-center">Carrito de compras</h2>
-      <h3 id="titulo-productos-carrito" class="titulo-productos-carrito text-center">Productos</h3>
-      <form class="col" id="form-carrito-de-compras">
-        <div class="container-carrito-de-compras bcontent">
-        </div>
+  <hr>
+  <!-- Formulario Agregar Producto -->
+  <section class="sec-agregar-producto">
+    <h3 id="titulo-agregar-producto" class="text-center" style="padding-bottom: 0rem;">Agregar producto</h3>
 
-        <hr>
-        <label class="lbl-precio-subtotal" id="lbl-precio-subtotal">Subtotal: $ 0</label>
-        <br>
-        <label class="lbl-incluye-iva" id="lbl-incluye-iva">Incluye IVA 21%: $ 0</label>
-        <hr>
-        <label class=" lbl-precio-total" id="lbl-precio-total">Total: $ 0</label>
-      </form>
-    </div> -->
+    <form id="form-agregar-producto">
+      <label class="letra-pequena" for="in-nombre-producto">Nombre del producto</label>
+      <input type="text" class="form-control" id="in-nombre-producto" placeholder="Nombre del usuario" required>
 
-  <!-- Formulario Datos de compra -->
-  <!-- <h3 id="titulo-formulario-compra" class="titulo-formulario-compra text-center">Datos de compra</h3>
-    <form id="form-datos-compra">
+      <label class="letra-pequena" for="in-precio-unidad">Precio por unidad</label>
+      <input type="number" step="0.001" class="form-control" id="in-precio-unidad" placeholder="0.000" required>
 
-      <label class="letra-pequena" for="input-nombres">Nombres</label>
-      <input type="text" class="form-control" id="input-nombres" placeholder="Nombres" required>
+      <label class="letra-pequena" for="in-unidades-disponibles">Unidades disponibles</label>
+      <input type="number" class="form-control" id="in-unidades-disponibles" placeholder="0" required>
 
-
-      <label class="letra-pequena" for="input-apellidos">Apellidos</label>
-      <input type="text" class="form-control" id="input-apellidos" placeholder="Apellidos" required>
-
-
-      <label class="letra-pequena" for="input-direccion">Dirección</label>
-      <input type="text" class="form-control" id="input-direccion" placeholder="Dirección" required>
-
-
-      <label class="letra-pequena" for="input-email">E-mail</label>
-      <input type="email" class="form-control" id="input-email" placeholder="e-mail" required>
-
-
-      <input type="checkbox" class="form-check-input" id="chckbx-exento-iva">
-      <label class="form-check-label letra-pequena" for="chckbx-exento-iva">Exento IVA</label>
+      <label class="letra-pequena" for="in-link-imagen">Link a imagen</label>
+      <input type="url" class="form-control" id="in-link-imagen" placeholder="https://i.postimg.cc/fRLFvbh4/bulon.jpg"
+        required>
 
       <div class="col text-center">
-        <input type="submit" id="btn-comprar-carrito" class="btn btn-primary" value="Comprar carrito"></input>
+        <input type="submit" id="btn-agregar-producto" class="btn btn-success btn-login"
+          value="Agregar producto"></input>
       </div>
     </form>
-  </section> -->
+  </section>
 
   <!-- Sweet Alert 2 -->
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>

@@ -1,38 +1,14 @@
 // Declaración de constantes
 const NO_CONSOLE_LOG = false;
 
-// Productos por defecto
-const cantTornillo = 10;
-const precTornillo = 1.5;
-const cantTuerca = 100;
-const precTuerca = 2.0;
-const cantClavo = 50;
-const precClavo = 3.5;
-const cantArandela = 10;
-const precArandela = 4.52;
-
 // Declaración de variables
 let opcion = -1
 let idProducto = -1;
-let idPersona = -1;
 let arrayProducto = [];
-const arrayCarritoCompras = [];  // Array donde se guardan los Productos a comprar
-let flagIncluyeIva = false;  // flag que indica si se incluye IVA o no
-let precioSubtotal = 0;
-let precioIncluyeIva = 0;
-let precioTotal = 0;
 
 // Declaraciones DOM
 let cartasStock = document.querySelector(".stock-row");
-let cartasCarritoCompras = document.querySelector(".container-carrito-de-compras");
-//let botonBorrarCarrito = document.querySelector("#btn-borrar-carrito");
-let formDatosCompra = document.querySelector("#form-datos-compra");
-let chckbxExentoIva = document.querySelector('input[type="checkbox"]');
-let lblPrecioSubtotal = document.querySelector("#lbl-precio-subtotal");
-let lblIncluyeIva = document.querySelector("#lbl-incluye-iva");
-let lblPrecioTotal = document.querySelector("#lbl-precio-total");
-let btnComprarCarrito = document.querySelector("#btn-comprar-carrito");
-let btnModificarStock = document.querySelector("#btn-modificar-stock");
+let formAgregarProducto = document.querySelector("#form-agregar-producto");
 
 // Declaración de clases
 class Producto {
@@ -55,20 +31,6 @@ class Producto {
     this.id = id;
     idProducto = id;
   }
-}
-
-class Persona {
-  /* Clase Persona */
-  constructor(obj) {
-    idPersona++;
-    this.id = idPersona;
-    this.nombre = obj.nombre;
-    this.apellido = obj.apellido;
-    this.direccion = obj.direccion;
-    this.email = obj.email;
-    this.condicionIva = obj.condicionIva;
-  }
-  /* Métodos */
 }
 
 // Declaración de funciones
@@ -617,7 +579,6 @@ function crearHtmlStockProductos(array) {
               <h6 class="card-title">${nombre}</h6>
               <p class="card-text card-precio">$${precio} por unidad</p>
               <p class="card-text card-unidad">${stock} unidades disponibles</p>
-              <a href="#" id="${id}" class="btn btn-primary btn-agregar-carrito">Agregar al carrito</a>
             </div>
         </div>
       </div>
@@ -631,131 +592,26 @@ function crearHtmlStockProductos(array) {
 
   NO_CONSOLE_LOG ? null : console.log("INFO:");
   NO_CONSOLE_LOG ? null : console.log(elBtnAgregarCarrito);
-
-  // Listeners
-  elBtnAgregarCarrito.forEach(object => {
-    NO_CONSOLE_LOG ? null : console.log(object);
-    object.addEventListener("click", e => {
-      NO_CONSOLE_LOG ? null : console.log(`ID del Producto ckickeado: ${e.target.id} `);
-      opcion = menuPrincipalPedido(arrayProducto, parseInt(e.target.id), arrayCarritoCompras);
-      NO_CONSOLE_LOG ? null : console.log("INFO: arrayCarritoCompras");
-      NO_CONSOLE_LOG ? null : console.log(arrayCarritoCompras);
-
-      // Se borran los precios
-      precioSubtotal = 0;
-      precioIncluyeIva = 0;
-      precioTotal = 0;
-
-      // Se realiza la cuenta
-      arrayCarritoCompras.forEach(object => {
-        NO_CONSOLE_LOG ? null : console.log(object);
-        precioSubtotal += object.pedidoCantidad * object.precio;
-
-      });
-
-      // Se actualiza la información de precios      
-      lblPrecioSubtotal.innerHTML = `Subtotal: $ ${precioSubtotal}`;
-      lblIncluyeIva.innerHTML = `Incluye IVA 21%: $ ${precioSubtotal * 0.21}`;
-      flagIncluyeIva ? precioTotal = precioSubtotal * 1.21 : precioTotal = precioSubtotal;
-      lblPrecioTotal.innerHTML = `Total: $ ${precioTotal} `;
-
-      // Se crea el carrito
-      crearHtmlCarritoCompras(arrayCarritoCompras);
-    });
-  });
 }
 
-function crearHtmlCarritoCompras(array) {
-  /* Se encarga de crear las card de forma dinámica del Carrito de Compras */
-
-  let html;
-
-  cartasCarritoCompras.innerHTML = html;  // Borra el DOM
-
-  cartasCarritoCompras.innerHTML = "";
-
-  array.forEach((el) => {
-    const { id, nombre, precio, pedidoCantidad, imagen } = el; // destructuring
-    if (pedidoCantidad != 0) {
-      html = `
-        <div class="card card-carrito" style="width: 500px;">
-          <div class="row no-gutters">
-            <div class="col-sm-5">
-              <img class="card-img" src="${imagen}" alt="Imagen de ${nombre}">
-            </div>
-            <div class="col-sm-7">
-              <div class="card-body">
-                <h5 class="card-title">${nombre}</h5>
-                <p class="card-text">Cantidad pedida: ${pedidoCantidad}</p>
-                <p class="card-text">Precio por unidad: $${precio}</p>
-                <!-- Todavía no implementado -->
-                <!-- <a href="#" id="${id}" class="btn btn-primary btn-eliminar-del-carrito">Eliminar producto</a>  -->
-              </div>
-            </div>
-          </div>
-        </div>
-    `;
-    }
-
-    cartasCarritoCompras.innerHTML += html;
-  });
-}
-
-const fncRealizarCompra = (e) => {
+const fncAgregarProducto = (e) => {
   /* Se encarga de leer los Datos de Compra
   */
 
   e.preventDefault();  // validación de compras
 
-  let valNombres = document.querySelector("#input-nombres").value;
-  let valApellidos = document.querySelector("#input-apellidos").value;
-  let valDireccion = document.querySelector("#input-direccion").value;
-  let valEmail = document.querySelector("#input-email").value;
+  let valNombreProducto = (document.querySelector("#in-nombre-producto").value).toUpperCase();
+  let valPrecioUnidad = parseFloat(document.querySelector("#in-precio-unidad").value);
+  let valUnidadesDisponibles = parseInt(document.querySelector("#in-unidades-disponibles").value);
+  let valLinkImagen = document.querySelector("#in-link-imagen").value;
 
-  if (arrayCarritoCompras.length === 0) {
-    Swal.fire({
-      title: `Atención!`,
-      icon: 'warning',
-      text: `El carrito de compras está vacío.`,
-      confirmButtonText: 'OK',
-    });
-    return;
-  }
-
-  Swal.fire({
-    title: `Gracias por su compra ${valNombres} ${valApellidos}!`,
-    icon: 'success',
-    text: `Destino del envio: ${valDireccion}.\nSe le enviará un email a ${valEmail} con toda la información de compra.`,
-    confirmButtonText: 'OK',
-    timer: 10000
-  });
-
-  // Actualiza los Productos del carrito de compras
-  arrayCarritoCompras.forEach(object => {
-    NO_CONSOLE_LOG ? null : console.log(object);
-    object.actualizarStock();
-    object.pedidoCantidad = 0;
-  });
+  arrayProducto.push(new Producto({ nombre: valNombreProducto, precio: valPrecioUnidad, stock: valUnidadesDisponibles, imagen: valLinkImagen }));
 
   // Se actualiza el local storage
-  localStorage.setItem("arrayProductoAlmacenado", JSON.stringify(arrayProducto));
+  localStorage.setItem("arrayProductoLS", JSON.stringify(arrayProducto));
   NO_CONSOLE_LOG ? null : console.log("INFO: Actualizado el localStorage");
   NO_CONSOLE_LOG ? null : console.log("INFO de arrayProducto:")
   NO_CONSOLE_LOG ? null : console.log(arrayProducto);
-
-  // Vacía el arrayCarritoCompras
-  for (var i = 0; i < arrayCarritoCompras.length; i++) {
-    arrayCarritoCompras.shift();
-  }
-  cartasCarritoCompras.innerHTML = "";  // Borra el DOM CarritoCompras
-
-  // Se borran los precios y actualizan el DOM
-  precioSubtotal = 0;
-  precioIncluyeIva = 0;
-  precioTotal = 0;
-  lblPrecioSubtotal.innerHTML = `Subtotal: $ 0 `;
-  lblIncluyeIva.innerHTML = `Incluye IVA 21%: $ 0`;
-  lblPrecioTotal.innerHTML = `Total: $ 0 `;  // se pone a 0 el DOM PrecioTotal
 
   // Se carga nuevamente la sección de Productos
   crearHtmlStockProductos(arrayProducto);
@@ -811,8 +667,9 @@ if (localStorage.getItem("arrayProductoLS")) {
 NO_CONSOLE_LOG ? null : console.log("INFO de arrayProducto:");
 NO_CONSOLE_LOG ? null : console.log(arrayProducto);
 
-// Listeners de nodos fijos
-
 // Carga de DOM
 crearHtmlStockProductos(arrayProducto);
+
+// Listeners de nodos fijos
+formAgregarProducto.addEventListener("submit", fncAgregarProducto);
 ///////////////////////////////////////////////////////////////////////////////////

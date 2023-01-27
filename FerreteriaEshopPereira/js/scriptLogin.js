@@ -62,7 +62,8 @@ const fncLoguearse = (e) => {
       text: `Presione OK o espere, será trasladado a la página para modificar el stock`,
       confirmButtonText: 'OK',
       timer: 10000
-    });
+    }).then(() => window.location.href = './modificarStock.html'
+    );
   }
 }
 

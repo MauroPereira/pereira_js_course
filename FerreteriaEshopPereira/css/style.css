@@ -118,7 +118,8 @@ section {
   margin-bottom: 10px;
 }
 
-#titulo-datos-usuario {
+#titulo-datos-usuario,
+#titulo-agregar-producto {
   padding: 1rem;
   font-size: 1.5rem;
   color: lightcyan;
