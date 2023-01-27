@@ -64,20 +64,24 @@
   <!-- Formulario Datos de usuario -->
   <section class="sec-datos-usuario">
     <h3 id="titulo-datos-usuario" class="text-center" style="padding-bottom: 0rem;">Datos del usuario</h3>
-    <form id="form-datos-usuario">
 
+    <form id="form-datos-usuario">
       <label class="letra-pequena" for="in-usuario">Nombre del usuario</label>
-      <input type="text" class="form-control" id="input-usuario" placeholder="Nombre del usuario" required>
+      <input type="text" class="form-control" id="in-usuario" placeholder="Nombre del usuario" required>
 
       <label class="letra-pequena" for="in-contrasena">Contraseña</label>
       <input type="password" class="form-control" id="in-contrasena" placeholder="Contraseña" required>
 
       <div class="col text-center">
-        <input type="button" id="btn-volver" class="btn btn-danger btn-login" href="./index.html"
-          value="Volver"></input>
         <input type="submit" id="btn-loguearse" class="btn btn-success btn-login" value="Loguearse"></input>
       </div>
     </form>
+
+    <ul class="navbar-nav d-flex justify-content-center align-items-center">
+      <a class="btn btn-danger btn-login" id="btn-volver" href="./index.html" role="button">Volver a pagina
+        principal
+      </a>
+    </ul>
   </section>
 
   <!-- Sweet Alert 2 -->

@@ -53,4 +53,4 @@ Algoritmo que se encarga a través de un menú interactivo de realizar una o má
     * Validación del formulario.
     * No carga el carrito si la unidades disponibles son 0.
     * Agregada la opción de incluir iva.
-    * Incluye html y js de logueo.
+    * Incluye html y js de logueo de admin.
