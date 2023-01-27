@@ -1,5 +1,5 @@
 // Declaración de constantes
-const NO_CONSOLE_LOG = false;
+const NO_CONSOLE_LOG = true;
 
 // Declaración de variables
 let opcion = -1
@@ -607,6 +607,13 @@ const fncAgregarProducto = (e) => {
 
   arrayProducto.push(new Producto({ nombre: valNombreProducto, precio: valPrecioUnidad, stock: valUnidadesDisponibles, imagen: valLinkImagen }));
 
+  Swal.fire({
+    title: `Producto ${valNombreProducto} agregado correctamente.`,
+    icon: 'success',
+    confirmButtonText: 'OK',
+    timer: 5000
+  });
+
   // Se actualiza el local storage
   localStorage.setItem("arrayProductoLS", JSON.stringify(arrayProducto));
   NO_CONSOLE_LOG ? null : console.log("INFO: Actualizado el localStorage");
@@ -651,19 +658,8 @@ if (localStorage.getItem("arrayProductoLS")) {
     arrayProducto.push(new Producto(obj));
 
   NO_CONSOLE_LOG ? null : console.log("INFO: Recuperado de localStorage");
-} else {
-  arrayProducto = [
-    new Producto({ nombre: "Tornillo".toUpperCase(), precio: precTornillo, stock: cantTornillo, imagen: "./imagenes/tornillo.webp" }),
-    new Producto({ nombre: "Tuerca".toUpperCase(), precio: precTuerca, stock: cantTuerca, imagen: "./imagenes/tuerca.jpeg" }),
-    new Producto({ nombre: "Clavo".toUpperCase(), precio: precClavo, stock: cantClavo, imagen: "./imagenes/clavo.webp" }),
-    new Producto({ nombre: "Arandela".toUpperCase(), precio: precArandela, stock: cantArandela, imagen: "./imagenes/arandela.jpeg" })
-  ];
-
-  // Se guarda en localStorage
-  // NOTA: no importa que guarde un arreglo de objetos, no guarda los métodos de dichos objetos
-  localStorage.setItem("arrayProductoLS", JSON.stringify(arrayProducto));
-  NO_CONSOLE_LOG ? null : console.log("INFO: Guardado en localStorage");
 }
+
 NO_CONSOLE_LOG ? null : console.log("INFO de arrayProducto:");
 NO_CONSOLE_LOG ? null : console.log(arrayProducto);
 

@@ -55,3 +55,5 @@ Algoritmo que se encarga a través de un menú interactivo de realizar una o má
     * Agregada la opción de incluir iva.
     * Incluye html y js de logueo de admin (usuario: admin, contraseña: admin).
     * Incluye html y js de Agregar Producto.
+    * Agregado mensaje de Producto agregado exitosamente.
+    * Tanto objetos Personas como Productos son cargados una sola vez en el LocalStorage y luego son leídos de este.
