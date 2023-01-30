@@ -806,8 +806,12 @@ const fncModificarStock = () => {
   })
 }
 
-fetch('https://jsonplaceholder.typicode.com/posts')
-  .then((resp) => console.log(resp));
+fetch('https://www.dolarsi.com/api/api.php?type=valoresprincipales'
+)
+  .then((resp) => resp.json())
+  .then((data) => {
+    console.log(data)
+  })
 
 // Main /////////////////////////////////////////////////////////////////////////////////
 NO_CONSOLE_LOG ? null : console.log("Inicio\nACLARACIÓN: la consola sólo es a modo de debug.");
