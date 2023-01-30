@@ -1,0 +1,12 @@
+Registración al API
+Su TOKEN de acceso para el API es:
+
+eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDY1OTEyNTAsInR5cGUiOiJleHRlcm5hbCIsInVzZXIiOiJtYXVyby5hLnBlcmVpcmFAZ21haWwuY29tIn0.-gA0e9S2QliBL2FU9XXBEiIg0C4wqe5NL9j9WSSO7f9ithpfNZqnFMf0cr2TCp6Oj02Y6xzjUzu2uCZwS3XxuA
+
+El Header que debe agregar a sus requests al API es:
+
+Authorization: BEARER eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDY1OTEyNTAsInR5cGUiOiJleHRlcm5hbCIsInVzZXIiOiJtYXVyby5hLnBlcmVpcmFAZ21haWwuY29tIn0.-gA0e9S2QliBL2FU9XXBEiIg0C4wqe5NL9j9WSSO7f9ithpfNZqnFMf0cr2TCp6Oj02Y6xzjUzu2uCZwS3XxuA
+
+El TOKEN es valido hasta:
+
+2024-01-30 03:07:30

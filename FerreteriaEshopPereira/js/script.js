@@ -806,6 +806,9 @@ const fncModificarStock = () => {
   })
 }
 
+fetch('https://jsonplaceholder.typicode.com/posts')
+  .then((resp) => console.log(resp));
+
 // Main /////////////////////////////////////////////////////////////////////////////////
 NO_CONSOLE_LOG ? null : console.log("Inicio\nACLARACIÓN: la consola sólo es a modo de debug.");
 
