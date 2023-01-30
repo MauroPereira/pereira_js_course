@@ -33,6 +33,7 @@ let lblIncluyeIva = document.querySelector("#lbl-incluye-iva");
 let lblPrecioTotal = document.querySelector("#lbl-precio-total");
 let btnComprarCarrito = document.querySelector("#btn-comprar-carrito");
 let btnModificarStock = document.querySelector("#btn-modificar-stock");
+let bdgCotizacionDolar = document.querySelector("#bdg-cotizacion-dolar");
 
 // Declaración de clases
 class Producto {
@@ -782,28 +783,41 @@ const fncAgregarIva = (e) => {
   lblPrecioTotal.innerHTML = `Total: $ ${precioTotal} `;
 }
 
+const pedirCotizacionDolar = () => {
+  /* A traves de un fetch (peticiones asíncronas que trabajan con promesas) 
+  obtiene la cotización del dolar a traves de una API externa.
+  */
 
-const fncModificarStock = () => {
-  Swal.fire({
-    title: 'Login Form',
-    html: `<input type="text" id="login" class="swal2-input" placeholder="Username">
-    <input type="password" id="password" class="swal2-input" placeholder="Password">`,
-    confirmButtonText: 'Sign in',
-    focusConfirm: false,
-    preConfirm: () => {
-      const login = Swal.getPopup().querySelector('#login').value
-      const password = Swal.getPopup().querySelector('#password').value
-      if (!login || !password) {
-        Swal.showValidationMessage(`Please enter login and password`)
-      }
-      return { login: login, password: password }
-    }
-  }).then((result) => {
-    Swal.fire(`
-      Login: ${result.value.login}
-      Password: ${result.value.password}
-    `.trim())
-  })
+  fetch('https://www.dolarsi.com/api/api.php?type=valoresprincipales')
+    .then((resp) => resp.json())
+    .then((data) => {
+      return data[0].casa.venta;
+    })
+    .catch((error) => {
+      return error
+    })
+}
+
+const renderizarPrecioDolar = () => {
+  /* Muestra por DOM en la parte superior la cotización 
+  del dolar
+  */
+
+  // let html;
+
+  // bdgCotizacionDolar.innerHTML = html;  // Borra el DOM
+  // bdgCotizacionDolar.innerHTML = "";
+  // html =
+
+  //   array.forEach((el) => {
+  //     const { id, nombre, precio, pedidoCantidad, imagen } = el; // destructuring
+  //     if (pedidoCantidad != 0) {
+  //       html = ``;
+  //     }
+
+  //     bdgCotizacionDolar.innerHTML = html;
+  //   });
+
 }
 
 // Main /////////////////////////////////////////////////////////////////////////////////
@@ -842,11 +856,7 @@ chckbxExentoIva.addEventListener("change", fncAgregarIva);
 // Carga de DOM
 crearHtmlStockProductos(arrayProducto);
 
-// Consulta fetch dolar oficial
-fetch('https://www.dolarsi.com/api/api.php?type=valoresprincipales'
-)
-  .then((resp) => resp.json())
-  .then((data) => {
-    console.log(data)
-  })
+// Consulta fetch API dolar oficial
+let precioDolar = pedirCotizacionDolar();
+renderizarPrecioDolar(precioDolar);
 ///////////////////////////////////////////////////////////////////////////////////

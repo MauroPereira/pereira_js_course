@@ -66,13 +66,11 @@ Algoritmo que se encarga a través de un menú interactivo de realizar una o má
 * Utilizar Javascript para mejorar la interacción y dinamismo de la página, generando una interfaz coherente y atractiva.
 ### Objetivos específicos
 * Contar con una estructura de datos clara, basada en Arrays y Objetos.
-* Utilizar funciones, condicionales e iteradores
-para manipular los datos de la app.
+* Utilizar funciones, condicionales e iteradores para manipular los datos de la app.
 * Generar y manipular el DOM.
 * Crear vistas a partir de datos de la app y generar eventos para responder a la interacción del usuario.
 * Utilizar alguna librería relevante para el simulador.
-* Utilizar asincronía y fetch para cargar datos estáticos o
-consumir una API.
+* Utilizar asincronía y fetch para cargar datos estáticos o consumir una API.
 ### Se debe entregar
 * Objetos y Arrays. Métodos de Arrays.
 * Funciones y condicionales.
