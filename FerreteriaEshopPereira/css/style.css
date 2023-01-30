@@ -35,6 +35,12 @@ section {
   margin-right: 5px;
 }
 
+/* Sección cabecera */
+#bdg-cotizacion-dolar {
+  margin-right: 2rem;
+  font-size: 1rem;
+}
+
 /* Sección Stock */
 .card-precio {
   font-size: 0.9rem;

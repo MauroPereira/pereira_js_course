@@ -791,33 +791,24 @@ const pedirCotizacionDolar = () => {
   fetch('https://www.dolarsi.com/api/api.php?type=valoresprincipales')
     .then((resp) => resp.json())
     .then((data) => {
-      return data[0].casa.venta;
+      console.log(data[0].casa.venta);
+      return (data[0].casa.venta);
     })
-    .catch((error) => {
-      return error
-    })
+  // .catch((error) => {
+  //   return error;
+  // })
 }
 
-const renderizarPrecioDolar = () => {
+const renderizarPrecioDolar = (precioDolar) => {
   /* Muestra por DOM en la parte superior la cotización 
   del dolar
   */
 
-  // let html;
+  let html;
 
-  // bdgCotizacionDolar.innerHTML = html;  // Borra el DOM
-  // bdgCotizacionDolar.innerHTML = "";
-  // html =
-
-  //   array.forEach((el) => {
-  //     const { id, nombre, precio, pedidoCantidad, imagen } = el; // destructuring
-  //     if (pedidoCantidad != 0) {
-  //       html = ``;
-  //     }
-
-  //     bdgCotizacionDolar.innerHTML = html;
-  //   });
-
+  bdgCotizacionDolar.innerHTML = html;  // Borra el DOM
+  bdgCotizacionDolar.innerHTML = "";
+  bdgCotizacionDolar.innerHTML = `Cotización dolar: $${precioDolar}`;
 }
 
 // Main /////////////////////////////////////////////////////////////////////////////////
@@ -858,5 +849,6 @@ crearHtmlStockProductos(arrayProducto);
 
 // Consulta fetch API dolar oficial
 let precioDolar = pedirCotizacionDolar();
+console.log(precioDolar);
 renderizarPrecioDolar(precioDolar);
 ///////////////////////////////////////////////////////////////////////////////////
