@@ -792,11 +792,11 @@ const pedirCotizacionDolar = () => {
     .then((resp) => resp.json())
     .then((data) => {
       console.log(data[0].casa.venta);
-      return (data[0].casa.venta);
+      renderizarPrecioDolar(data[0].casa.venta);
     })
-  // .catch((error) => {
-  //   return error;
-  // })
+    .catch((error) => {
+      renderizarPrecioDolar("NF");
+    })
 }
 
 const renderizarPrecioDolar = (precioDolar) => {
@@ -848,7 +848,5 @@ chckbxExentoIva.addEventListener("change", fncAgregarIva);
 crearHtmlStockProductos(arrayProducto);
 
 // Consulta fetch API dolar oficial
-let precioDolar = pedirCotizacionDolar();
-console.log(precioDolar);
-renderizarPrecioDolar(precioDolar);
+pedirCotizacionDolar();
 ///////////////////////////////////////////////////////////////////////////////////
