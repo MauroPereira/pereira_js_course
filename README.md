@@ -79,3 +79,14 @@ Algoritmo que se encarga a través de un menú interactivo de realizar una o má
 * Al menos una librería de uso relevante para el proyecto.
 * Manejo de promesas con fetch.
 * Carga de datos desde un JSON local o desde una API externa.
+### Versiones
+* v4.0 Mejoras:
+    * Consulta por fetch a una API externa la cual devuelve la cotización del dolar.
+    * Cambiados todos las unidades a dolar. Muestra un total en dolares y en pesos, gracias a la consulta fetch.
+    * Desde la versión 3.1 incluye el uso de la librería Sweet Alert 2, para mensajes como el de Cantidad pedida no disponible y Gracias por su compra.
+    * Desde la version 3.3 se incluye:
+        *  Ternarios para deshabilitar todos los console.log a través de la constante NO_CONSOLE_LOG.
+        *  Validación de formularios.
+        *  Boton para agregar stock y logueo (usuario: admin, contraseña: admin).
+        *  Los objetos Personas (admin en esta versión) como Productos son cargados una sola vez en el LocalStorage y luego son leídos de este. Cabe recalcar que al agregar un Producto nuevo, este se actualiza en el LocalStorage.
+  
