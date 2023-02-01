@@ -25,7 +25,6 @@ let precioTotal = 0;
 // Declaraciones DOM
 let cartasStock = document.querySelector(".stock-row");
 let cartasCarritoCompras = document.querySelector(".container-carrito-de-compras");
-//let botonBorrarCarrito = document.querySelector("#btn-borrar-carrito");
 let formDatosCompra = document.querySelector("#form-datos-compra");
 let chckbxExentoIva = document.querySelector('input[type="checkbox"]');
 let lblPrecioSubtotal = document.querySelector("#lbl-precio-subtotal");
@@ -285,44 +284,6 @@ const preguntarCondicionIva = () => {
   return condicion;
 }
 
-const confirmarCompra = (arrayCarritoCompras, personaComprador) => {
-  /* Se encarga de retornar en forma de tabla todos los productos
-  */
-
-  const stringEncabezado = "######## Confirmar compra ########\n";
-
-  const stringPie = `A nombre de: ${personaComprador.apellido}, ${personaComprador.nombre}\nDirección de entrega: ${personaComprador.direccion}. E-mail: ${personaComprador.email}\n\nOpciones:\n* Clickee 'Aceptar' para confirmar la compra. \n* Clickee 'Cancelar' para cancelar la compra.\nNo ingrese ningún valor en el cuadro de texto.`;
-
-  let stringBuffer = stringEncabezado;
-  let precioTotal = 0.0;
-
-  NO_CONSOLE_LOG ? null : console.log(personaComprador.condicionIva);
-
-  // Crea un string de todo el stock
-  for (const index of arrayCarritoCompras) {
-    stringBuffer = stringBuffer + `${index.pedidoCantidad} uni de ${index.nombre}  | Pre. uni: $ ${index.precio} | Subtotal: $ ${index.precio * index.pedidoCantidad}\n`
-    precioTotal = precioTotal + index.pedidoCantidad * index.precio;
-  };
-
-  if (personaComprador.condicionIva == 2) {
-    stringBuffer = stringBuffer + `Subtotal s/iva: $ ${precioTotal} | TOTAL A PAGAR c/iva 21%: $ ${precioTotal * 1.21}\n`;
-  }
-  else {
-    stringBuffer = stringBuffer + `TOTAL A PAGAR: $ ${precioTotal}\n`;
-  }
-
-  stringBuffer = stringBuffer + stringPie;
-
-  while (true) {
-    opcion = prompt(stringBuffer);
-    if (opcion != null && opcion != "") {
-      alert(`Error por escritura en cuadro. Clickee 'Aceptar' para continuar.`);
-    }
-    else {
-      return opcion;
-    }
-  }
-}
 
 const chequearStock = (stock, cantSolicitada) => {
   /* Algoritmo que chequea si hay stock suficiente, caso contrario lo advierte 
@@ -357,56 +318,12 @@ const calcularPrecioFinal = (matchProducto, productoCantidad, ivaComprador) => {
   return precioFinal;
 }
 
-const graciasCompra = () => {
-  /* Mensaje de gracias por la compra
-  */
-
-  alert("Muchas gracias por su compra!");
-}
-
-const compraCancelada = () => {
-  /* Mensaje de compra cancelada
-  */
-
-  alert("Atención: Compra cancelada!");
-}
-
-const mostrarCanastaYconsultar = (arrayProducto) => {
-  /* Se encarga de mostrar la Canasta actual y preguntar si
-  se desea seguir comprando 
-  */
-
-  const stringEncabezado = "######## Canasta de productos ########\nItems   Cantidad   Subtotal\n";
-  const stringPie = "\nOpciones: \n" +
-    "* Clickee 'Aceptar' sin escribir en el cuadro para proceder con la compra de la canasta.\n" +
-    "* Clickee 'Cancelar' para agregar más productos a la canasta.";
-
-  let opcion;
-
-  while (true) {
-    opcion = funcionMensajeAlertCanasta(stringEncabezado, arrayProducto, stringPie);
-    NO_CONSOLE_LOG ? null : console.log(opcion);
-
-    if (opcion != null && opcion != "") {
-      alert(`Error por escritura en cuadro. Clickee 'Aceptar' para continuar.`);
-    }
-    else {
-      return opcion;
-    }
-  }
-}
-
 const menuPrincipalPedido = (arrayProducto, id, arrayCarritoCompras) => {
   /* Se encarga del proceso de tomar el pedido */
   let repeat = true;
   let repeat2 = true;
   let matchProducto = -1;
   let productoCantidad;
-  let nombresComprador;
-  let apellidosComprador;
-  let emailComprador;
-  let ivaComprador;
-  let confirmaCompra;
 
   while (repeat == true) {
     repeat = false;
@@ -467,137 +384,6 @@ const menuPrincipalPedido = (arrayProducto, id, arrayCarritoCompras) => {
   }
 
   return -1;
-
-  // Bloque que se encarga de tomar los datos del comprador y crear un objeto Persona
-  nombresComprador = "Comprador";
-  apellidosComprador = "Comprador";
-  direccionComprador = "Comprador";
-  emailComprador = "Comprador";
-  ivaComprador = 2;
-  NO_CONSOLE_LOG ? null : console.log(`ivaComprador: ${ivaComprador}`);
-
-  const personaComprador = new Persona(nombresComprador, apellidosComprador, direccionComprador, emailComprador, ivaComprador);
-  ///////////////////////////////////////////////////////////////////////////////////
-
-  confirmaCompra = confirmarCompra(arrayCarritoCompras, personaComprador);
-  NO_CONSOLE_LOG ? null : console.log("post confirmaCompra:");
-  NO_CONSOLE_LOG ? null : console.log(arrayCarritoCompras);
-
-  if (confirmaCompra != null) { // El usuario apretó 'Aceptar' en la pantalla anterior
-    // Bloque que al efectuarse la compra, se encarga de extraer del stock las cantidades
-    // pedidas por el usuario. Luego setea a 0 las cantidades pedidas dentro de cada objeto
-    // Producto
-    arrayCarritoCompras.forEach(object => {
-      NO_CONSOLE_LOG ? null : console.log(object);
-      object.actualizarStock();
-      object.pedidoCantidad = 0;
-    })
-    /////////////////////////////////////////////////////////////////////////////////////
-    graciasCompra();
-  } else {
-    arrayCarritoCompras.forEach(object => {
-      object.pedidoCantidad = 0;
-    })
-    compraCancelada();
-  }
-  return -1;
-}
-
-const mensajeOpcionNoValida = (mensaje, genero = "o") => {
-  /* Mensaje de opcion no valida con opciones de visualización
-  */
-
-  if (genero == "o") {
-    alert(`Error por ingreso de ${mensaje} no válido. Clickee 'Aceptar' para continuar.`);
-  }
-  else {
-    alert(`Error por ingreso de ${mensaje} no válida. Clickee 'Aceptar' para continuar.`);
-  }
-}
-
-const menuPrincipalLog = (arrayAdmin, arrayProducto) => {
-  /* Pantalla de logueo */
-  const stringEncabezado = `######## Login ########\n`;
-  const stringPie = `Ingrese su nick y clickee en 'Aceptar'. Cancelar para volver al menú principal.\n\n`;
-  const stringPie2 = `Ingrese su contraseña y clickee en 'Aceptar'. Cancelar para volver al menú principal.\n\n`;
-  let matchAdmin;
-
-  let stringBuffer = stringEncabezado + stringPie;
-  while (true) {
-    let nick = prompt(stringBuffer);
-    if (nick == undefined) {
-      return -1;
-    }
-    nick = nick.toLowerCase();
-    matchAdmin = arrayAdmin.find(objeto => objeto.nick === nick.toLowerCase());
-    if (matchAdmin == undefined) {
-      alert(`Nick no encontrado. Clickee 'Aceptar' para continuar`);
-    } else {
-      break;
-    }
-  }
-  NO_CONSOLE_LOG ? null : console.log(`Nick ${matchAdmin.nick} encontrado.`);
-
-  stringBuffer = stringEncabezado + stringPie2;
-  while (true) {
-    let password = prompt(stringBuffer);
-    NO_CONSOLE_LOG ? null : console.log(password);
-
-    if (password == undefined) {
-      return -1;
-    }
-    if (matchAdmin.password != password) {
-      alert(`Password inválido. Clickee 'Aceptar' para continuar`);
-    } else {
-      break;
-    }
-  }
-  NO_CONSOLE_LOG ? null : console.log(`Password ${matchAdmin.password} encontrado.`);
-
-  return menuPrincipalAgregarProducto(arrayProducto);
-}
-
-const pantallaAgregarProducto = (arrayProducto) => {
-  /* Pantalla donde se agregan productos
-  */
-
-  const stringEncabezado = `######## Agregar producto ########\n`;
-  const stringPie = `Ingrese el nombre del producto y clickee en 'Aceptar'. Cancelar para volver al menú principal.\n\n`;
-  const stringPie2 = `Ingrese el precio del producto y clickee en 'Aceptar'. Cancelar para volver al menú principal.\n\n`;
-  const stringPie3 = `Ingrese el stock del producto y clickee en 'Aceptar'. Cancelar para volver al menú principal.\n\n`;
-  let stringBuffer = stringEncabezado + stringPie;
-  let nombreProductoNuevo;
-  let precioProductoNuevo;
-  let stockProductoNuevo;
-
-  nombreProductoNuevo = chequearEspacioVacio(stringBuffer);
-  if (nombreProductoNuevo == undefined || nombreProductoNuevo == null) {
-    return -1;
-  }
-
-  stringBuffer = stringEncabezado + stringPie2;
-  precioProductoNuevo = chequearEspacioVacio(stringBuffer);
-  if (precioProductoNuevo == undefined || precioProductoNuevo == null) {
-    return -1;
-  }
-
-  stringBuffer = stringEncabezado + stringPie3;
-  stockProductoNuevo = chequearEspacioVacio(stringBuffer);
-  if (stockProductoNuevo == undefined || stockProductoNuevo == null) {
-    return -1;
-  }
-
-  // ///////////////////
-  // stringEncabezado = "######## Nuevo Stock ########\nItems      Precio por unidad (USD)   Cantidad en stock\n";
-  // const stringPie = "Opciones: \n" +
-  //   "* Para realizar un pedido ingrese 1 en el cuadro y luego clickee 'Aceptar':\n" +
-  //   "* Clickee 'Cancelar' para volver atrás.";
-
-  // return funcionMensajeAlert(stringEncabezado, arrayProducto, stringPie);
-  // /////////////
-
-
-  return -1;
 }
 
 function crearHtmlStockProductos(array) {
@@ -616,7 +402,7 @@ function crearHtmlStockProductos(array) {
             <img src="${imagen}" class="card-img-top card-img" alt="Imagen de ${nombre}">
             <div class="card-body">
               <h6 class="card-title">${nombre}</h6>
-              <p class="card-text card-precio">$${precio} por unidad (USD)</p>
+              <p class="card-text card-precio">$${precio} USD por unidad</p>
               <p class="card-text card-unidad">${stock} unidades disponibles</p>
               <a href="#" id="${id}" class="btn btn-primary btn-agregar-carrito">Agregar al carrito</a>
             </div>
@@ -655,10 +441,10 @@ function crearHtmlStockProductos(array) {
       });
 
       // Se actualiza la información de precios      
-      lblPrecioSubtotal.innerHTML = `Subtotal: $ ${precioSubtotal}`;
-      lblIncluyeIva.innerHTML = `Incluye IVA 21%: $ ${precioSubtotal * 0.21}`;
+      lblPrecioSubtotal.innerHTML = `Subtotal: $${precioSubtotal} USD`;
+      lblIncluyeIva.innerHTML = `Incluye IVA 21%: $${precioSubtotal * 0.21} USD`;
       flagIncluyeIva ? precioTotal = precioSubtotal * 1.21 : precioTotal = precioSubtotal;
-      lblPrecioTotal.innerHTML = `Total: $ ${precioTotal} `;
+      lblPrecioTotal.innerHTML = `Total: $${precioTotal} USD`;
 
       // Se crea el carrito
       crearHtmlCarritoCompras(arrayCarritoCompras);
@@ -667,7 +453,8 @@ function crearHtmlStockProductos(array) {
 }
 
 function crearHtmlCarritoCompras(array) {
-  /* Se encarga de crear las card de forma dinámica del Carrito de Compras */
+  /* Se encarga de crear las card de forma dinámica del Carrito de Compras 
+  */
 
   let html;
 
@@ -688,7 +475,7 @@ function crearHtmlCarritoCompras(array) {
               <div class="card-body">
                 <h5 class="card-title">${nombre}</h5>
                 <p class="card-text">Cantidad pedida: ${pedidoCantidad}</p>
-                <p class="card-text">Precio por unidad (USD): $${precio}</p>
+                <p class="card-text">Precio por unidad: $${precio} USD</p>
                 <!-- Todavía no implementado -->
                 <!-- <a href="#" id="${id}" class="btn btn-primary btn-eliminar-del-carrito">Eliminar producto</a>  -->
               </div>
@@ -754,9 +541,9 @@ const fncRealizarCompra = (e) => {
   precioSubtotal = 0;
   precioIncluyeIva = 0;
   precioTotal = 0;
-  lblPrecioSubtotal.innerHTML = `Subtotal: $ 0 `;
-  lblIncluyeIva.innerHTML = `Incluye IVA 21%: $ 0`;
-  lblPrecioTotal.innerHTML = `Total: $ 0 `;  // se pone a 0 el DOM PrecioTotal
+  lblPrecioSubtotal.innerHTML = `Subtotal: $0 USD`;
+  lblIncluyeIva.innerHTML = `Incluye IVA 21%: $0 USD`;
+  lblPrecioTotal.innerHTML = `Total: $0 USD`;  // se pone a 0 el DOM PrecioTotal
 
   // Se carga nuevamente la sección de Productos
   crearHtmlStockProductos(arrayProducto);
@@ -777,10 +564,10 @@ const fncAgregarIva = (e) => {
   }
 
   // Se actualiza la información de precios      
-  lblPrecioSubtotal.innerHTML = `Subtotal: $ ${precioSubtotal}`;
-  lblIncluyeIva.innerHTML = `Incluye IVA 21%: $ ${precioSubtotal * 0.21}`;
+  lblPrecioSubtotal.innerHTML = `Subtotal: $${precioSubtotal} USD`;
+  lblIncluyeIva.innerHTML = `Incluye IVA 21%: $${precioSubtotal * 0.21} USD`;
   flagIncluyeIva ? precioTotal = precioSubtotal * 1.21 : precioTotal = precioSubtotal;
-  lblPrecioTotal.innerHTML = `Total: $ ${precioTotal} `;
+  lblPrecioTotal.innerHTML = `Total: $${precioTotal} USD`;
 }
 
 const pedirCotizacionDolar = () => {
