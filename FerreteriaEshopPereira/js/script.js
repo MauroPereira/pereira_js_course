@@ -21,6 +21,7 @@ let flagIncluyeIva = false;  // flag que indica si se incluye IVA o no
 let precioSubtotal = 0;
 let precioIncluyeIva = 0;
 let precioTotal = 0;
+let precioDolar = 0.00;
 
 // Declaraciones DOM
 let cartasStock = document.querySelector(".stock-row");
@@ -30,6 +31,7 @@ let chckbxExentoIva = document.querySelector('input[type="checkbox"]');
 let lblPrecioSubtotal = document.querySelector("#lbl-precio-subtotal");
 let lblIncluyeIva = document.querySelector("#lbl-incluye-iva");
 let lblPrecioTotal = document.querySelector("#lbl-precio-total");
+let lblPrecioTotalPesos = document.querySelector("#lbl-precio-total-pesos");
 let btnComprarCarrito = document.querySelector("#btn-comprar-carrito");
 let btnModificarStock = document.querySelector("#btn-modificar-stock");
 let bdgCotizacionDolar = document.querySelector("#bdg-cotizacion-dolar");
@@ -70,220 +72,6 @@ class Persona {
   }
   /* Métodos */
 }
-
-// Declaración de funciones
-const funcionMensajeAlert = (stringEncabezado, arrayVar, stringPie) => {
-  /* Se encarga de armar un Alert con toda la informacion */
-
-  let stringBuffer = stringEncabezado;
-
-  // Crea un string de todo el stock
-  for (const index of arrayVar) {
-    stringBuffer = stringBuffer + `${index.nombre}      $ ${index.precio}      ${index.stock} uni\n`
-  };
-
-  stringBuffer = stringBuffer + stringPie;
-
-  return parseInt(prompt(stringBuffer));
-}
-
-const funcionMensajeAlertCanasta = (stringEncabezado, arrayVar, stringPie) => {
-  /* Se encarga de armar un Alert con toda la informacion pero en formato Canasta */
-
-  let stringBuffer = stringEncabezado;
-
-  // Crea un string de todo el stock
-  for (const index of arrayVar) {
-    stringBuffer = stringBuffer + `${index.nombre}   ${index.pedidoCantidad} uni  $ ${index.pedidoCantidad * index.precio}\n`
-  };
-
-  stringBuffer = stringBuffer + stringPie;
-
-  return prompt(stringBuffer);
-}
-
-const mostrarTablaStock = (arrayProducto) => {
-  /* Se encarga de retornar en forma de tabla todos los productos
-  */
-
-  const stringEncabezado = "######## Stock ########\nItems      Precio por unidad (USD)   Cantidad en stock\n";
-  const stringPie = "Opciones: \n" +
-    "* Para realizar un pedido ingrese 1 en el cuadro y luego clickee 'Aceptar':\n" +
-    "* Clickee 'Cancelar' para volver atrás.";
-
-  return funcionMensajeAlert(stringEncabezado, arrayProducto, stringPie);
-}
-
-const mostrarMenuPrincipal = () => {
-  /* Se encarga de retornar en forma de tabla el menú principal
-  */
-
-  return (
-    "######## E-Shop de Ferretería ########" + "\n" +
-    "Ingrese algunas de las opciones y luego clickee 'Aceptar':\n" +
-    "* 1 - Ver stock general" + "\n" +
-    "* 2 - Realizar pedido" + "\n" +
-    "* 3 - Loguearse" + "\n\n" +
-    "* Clickee 'Cancelar' para salir."
-  )
-}
-
-const menuTomarProducto = (arrayProducto, id) => {
-  /* Se encarga de retornar el id de un producto
-  */
-
-  let matchProducto = -1;
-
-  matchProducto = arrayProducto.find(objeto => objeto.id === id);
-  NO_CONSOLE_LOG ? null : console.log(matchProducto);
-
-  return matchProducto;
-
-}
-
-const preguntarCantidad = (objectProducto) => {
-  /* Obtiene la cantidad de producto
-  */
-
-  let cantProducto;
-
-  while (true) {
-    const stringEncabezado = `######## Pedido - Cantidad ########\n`;
-    const stringPie = `Opciones:\n* Ingrese la cantidad de ${objectProducto.nombre} en el cuadro y luego clickee 'Aceptar'. \n * Clickee 'Cancelar' para volver hacia atrás.`;
-
-    cantProducto = prompt(`${stringEncabezado} ${stringPie}`);
-
-    if (cantProducto == null) {
-      return -1;
-    }
-
-    if (parseInt(cantProducto) > 0) {
-      return parseInt(cantProducto);
-    }
-    else {
-      alert(`Error por cantidad ingresada menor a 1. Clickee 'Aceptar' para continuar`);
-    }
-  }
-}
-
-const chequearNanEspacioVacio = (mensaje) => {
-  /* Se encarga de chequear que no sea NaN o 
-  un espacio en blanco, independientemente del
-  mensaje mostrado
-  */
-
-  let condicion = true;
-
-  while (condicion == true) {
-    valor = prompt(mensaje);
-    NO_CONSOLE_LOG ? null : console.log(valor);
-    if (valor == "" || valor == null) {
-      condicion = true;
-      alert("Error: no se ha ingresado ningún valor o se ha clickeado sobre 'Cancelar'");
-    } else {
-      condicion = false;
-    }
-  }
-
-  return valor;
-}
-
-const chequearEspacioVacio = (mensaje) => {
-  /* Se encarga de chequear que no se ingrese 
-  un espacio en blanco, independientemente del
-  mensaje mostrado
-  */
-
-  let condicion = true;
-
-  while (condicion == true) {
-    valor = prompt(mensaje);
-    NO_CONSOLE_LOG ? null : console.log(valor);
-    if (valor == "") {
-      condicion = true;
-      alert("Error: no se ha ingresado ningún valor. Clickee en 'Aceptar' para continuar.");
-    } else {
-      condicion = false;
-    }
-  }
-
-  return valor;
-}
-
-const preguntarNombres = () => {
-  /* Se encarga de preguntar nombres
-  */
-
-  valor = 0
-
-  return chequearNanEspacioVacio(
-    "######## Pedido - Nombres ########" + "\n" +
-    "Ingrese su/s nombre/s:"
-  );
-}
-
-const preguntarApellidos = () => {
-  /* Se encarga de preguntar apellidos
-  */
-
-  return chequearNanEspacioVacio(
-    "######## Pedido - Apellidos ########" + "\n" +
-    "Ingrese su/s apellido/s:"
-  )
-}
-
-const preguntarDireccion = () => {
-  /* Se encarga de preguntar la dirección
-  */
-
-  return chequearNanEspacioVacio(
-    "######## Pedido - Dirección ########" + "\n" +
-    "Ingrese su dirección:"
-  )
-}
-
-const preguntarEmail = () => {
-  /* Se encarga de preguntar el email
-  */
-
-  return chequearNanEspacioVacio(
-    "######## Pedido - E-mail ########" + "\n" +
-    "Ingrese la dirección de su correo:"
-  )
-}
-
-const emailComprador = () => {
-  /* Se encarga de preguntar la dirección
-  */
-  return (
-    "######## Pedido - Dirección ########" + "\n" +
-    "Ingrese su dirección:"
-  )
-}
-
-const preguntarCondicionIva = () => {
-  /* Se encarga de preguntar la dirección
-  */
-
-  let condicion = -1;
-
-  while (condicion == -1) {
-    condicion = parseInt(prompt(
-      "######## Pedido - IVA ########" + "\n" +
-      "Condiciones frente al IVA:\n" +
-      "1 - Exento" + "\n" +
-      "2 - No exento" + "\n\n" +
-      "Ingrese su condición:"
-    ));
-    if (!(condicion > 0 && condicion <= 2)) {
-      condicion = -1;
-      mensajeOpcionNoValida();
-    }
-  }
-
-  return condicion;
-}
-
 
 const chequearStock = (stock, cantSolicitada) => {
   /* Algoritmo que chequea si hay stock suficiente, caso contrario lo advierte 
@@ -432,6 +220,7 @@ function crearHtmlStockProductos(array) {
       precioSubtotal = 0;
       precioIncluyeIva = 0;
       precioTotal = 0;
+      precioTotalPesos = 0;
 
       // Se realiza la cuenta
       arrayCarritoCompras.forEach(object => {
@@ -441,10 +230,11 @@ function crearHtmlStockProductos(array) {
       });
 
       // Se actualiza la información de precios      
-      lblPrecioSubtotal.innerHTML = `Subtotal: $${precioSubtotal} USD`;
-      lblIncluyeIva.innerHTML = `Incluye IVA 21%: $${precioSubtotal * 0.21} USD`;
+      lblPrecioSubtotal.innerHTML = `Subtotal: $${precioSubtotal.toFixed(3)} USD`;
+      lblIncluyeIva.innerHTML = `Incluye IVA 21%: $${(precioSubtotal * 0.21).toFixed(3)} USD`;
       flagIncluyeIva ? precioTotal = precioSubtotal * 1.21 : precioTotal = precioSubtotal;
-      lblPrecioTotal.innerHTML = `Total: $${precioTotal} USD`;
+      lblPrecioTotal.innerHTML = `Total: $${precioTotal.toFixed(3)} USD`;
+      lblPrecioTotalPesos.innerHTML = `Total: $${(precioTotal * precioDolar).toFixed(2)} ARS`;
 
       // Se crea el carrito
       crearHtmlCarritoCompras(arrayCarritoCompras);
@@ -541,9 +331,10 @@ const fncRealizarCompra = (e) => {
   precioSubtotal = 0;
   precioIncluyeIva = 0;
   precioTotal = 0;
-  lblPrecioSubtotal.innerHTML = `Subtotal: $0 USD`;
-  lblIncluyeIva.innerHTML = `Incluye IVA 21%: $0 USD`;
-  lblPrecioTotal.innerHTML = `Total: $0 USD`;  // se pone a 0 el DOM PrecioTotal
+  lblPrecioSubtotal.innerHTML = `Subtotal: $0.000 USD`;
+  lblIncluyeIva.innerHTML = `Incluye IVA 21%: $0.000 USD`;
+  lblPrecioTotal.innerHTML = `Total: $0.000 USD`;  // se pone a 0 el DOM PrecioTotal
+  lblPrecioTotalPesos.innerHTML = `Total: $0.00 ARS`;
 
   // Se carga nuevamente la sección de Productos
   crearHtmlStockProductos(arrayProducto);
@@ -564,10 +355,11 @@ const fncAgregarIva = (e) => {
   }
 
   // Se actualiza la información de precios      
-  lblPrecioSubtotal.innerHTML = `Subtotal: $${precioSubtotal} USD`;
-  lblIncluyeIva.innerHTML = `Incluye IVA 21%: $${precioSubtotal * 0.21} USD`;
+  lblPrecioSubtotal.innerHTML = `Subtotal: $${precioSubtotal.toFixed(3)} USD`;
+  lblIncluyeIva.innerHTML = `Incluye IVA 21%: $${(precioSubtotal * 0.21).toFixed(3)} USD`;
   flagIncluyeIva ? precioTotal = precioSubtotal * 1.21 : precioTotal = precioSubtotal;
-  lblPrecioTotal.innerHTML = `Total: $${precioTotal} USD`;
+  lblPrecioTotal.innerHTML = `Total: $${precioTotal.toFixed(3)} USD`;
+  lblPrecioTotalPesos.innerHTML = `Total: $${(precioTotal * precioDolar).toFixed(2)} ARS`;
 }
 
 const pedirCotizacionDolar = () => {
@@ -579,14 +371,15 @@ const pedirCotizacionDolar = () => {
     .then((resp) => resp.json())
     .then((data) => {
       NO_CONSOLE_LOG ? null : console.log(data[0].casa.venta);
-      renderizarPrecioDolar(data[0].casa.venta);
+      precioDolar = parseFloat((data[0].casa.venta).replace(',', '.'));
+      renderizarPrecioDolar(data[0].casa.venta.replace(',', '.'));
     })
     .catch((error) => {
-      renderizarPrecioDolar("NF");
+      renderizarPrecioDolar(0.00);
     })
 }
 
-const renderizarPrecioDolar = (precioDolar) => {
+const renderizarPrecioDolar = (strPrecioDolar) => {
   /* Muestra por DOM en la parte superior la cotización 
   del dolar
   */
@@ -595,7 +388,7 @@ const renderizarPrecioDolar = (precioDolar) => {
 
   bdgCotizacionDolar.innerHTML = html;  // Borra el DOM
   bdgCotizacionDolar.innerHTML = "";
-  bdgCotizacionDolar.innerHTML = `Cotización dolar: $${precioDolar} ARS`;
+  bdgCotizacionDolar.innerHTML = `Cotización dolar: $${strPrecioDolar} ARS`;
 }
 
 // Main /////////////////////////////////////////////////////////////////////////////////

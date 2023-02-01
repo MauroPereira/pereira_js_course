@@ -89,7 +89,8 @@ section {
   font-family: 'Bakbak One', cursive;
 }
 
-#lbl-precio-total {
+#lbl-precio-total,
+#lbl-precio-total-pesos {
   font-size: 1.5rem;
   color: lightcyan;
   font-family: 'Bakbak One', cursive;
