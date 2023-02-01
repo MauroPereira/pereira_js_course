@@ -107,7 +107,7 @@ const mostrarTablaStock = (arrayProducto) => {
   /* Se encarga de retornar en forma de tabla todos los productos
   */
 
-  const stringEncabezado = "######## Stock ########\nItems      Precio por unidad   Cantidad en stock\n";
+  const stringEncabezado = "######## Stock ########\nItems      Precio por unidad (USD)   Cantidad en stock\n";
   const stringPie = "Opciones: \n" +
     "* Para realizar un pedido ingrese 1 en el cuadro y luego clickee 'Aceptar':\n" +
     "* Clickee 'Cancelar' para volver atrás.";
@@ -588,7 +588,7 @@ const pantallaAgregarProducto = (arrayProducto) => {
   }
 
   // ///////////////////
-  // stringEncabezado = "######## Nuevo Stock ########\nItems      Precio por unidad   Cantidad en stock\n";
+  // stringEncabezado = "######## Nuevo Stock ########\nItems      Precio por unidad (USD)   Cantidad en stock\n";
   // const stringPie = "Opciones: \n" +
   //   "* Para realizar un pedido ingrese 1 en el cuadro y luego clickee 'Aceptar':\n" +
   //   "* Clickee 'Cancelar' para volver atrás.";
@@ -616,7 +616,7 @@ function crearHtmlStockProductos(array) {
             <img src="${imagen}" class="card-img-top card-img" alt="Imagen de ${nombre}">
             <div class="card-body">
               <h6 class="card-title">${nombre}</h6>
-              <p class="card-text card-precio">$${precio} por unidad</p>
+              <p class="card-text card-precio">$${precio} por unidad (USD)</p>
               <p class="card-text card-unidad">${stock} unidades disponibles</p>
               <a href="#" id="${id}" class="btn btn-primary btn-agregar-carrito">Agregar al carrito</a>
             </div>
@@ -688,7 +688,7 @@ function crearHtmlCarritoCompras(array) {
               <div class="card-body">
                 <h5 class="card-title">${nombre}</h5>
                 <p class="card-text">Cantidad pedida: ${pedidoCantidad}</p>
-                <p class="card-text">Precio por unidad: $${precio}</p>
+                <p class="card-text">Precio por unidad (USD): $${precio}</p>
                 <!-- Todavía no implementado -->
                 <!-- <a href="#" id="${id}" class="btn btn-primary btn-eliminar-del-carrito">Eliminar producto</a>  -->
               </div>
@@ -791,7 +791,7 @@ const pedirCotizacionDolar = () => {
   fetch('https://www.dolarsi.com/api/api.php?type=valoresprincipales')
     .then((resp) => resp.json())
     .then((data) => {
-      console.log(data[0].casa.venta);
+      NO_CONSOLE_LOG ? null : console.log(data[0].casa.venta);
       renderizarPrecioDolar(data[0].casa.venta);
     })
     .catch((error) => {
@@ -808,7 +808,7 @@ const renderizarPrecioDolar = (precioDolar) => {
 
   bdgCotizacionDolar.innerHTML = html;  // Borra el DOM
   bdgCotizacionDolar.innerHTML = "";
-  bdgCotizacionDolar.innerHTML = `Cotización dolar: $${precioDolar}`;
+  bdgCotizacionDolar.innerHTML = `Cotización dolar: $${precioDolar} ARS`;
 }
 
 // Main /////////////////////////////////////////////////////////////////////////////////
